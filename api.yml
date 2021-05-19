@@ -1,0 +1,282 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: ContactManager API
+  description: The API documentation for Contactmanager, a Web-based contact manager created for the small project for COP 4331.
+    <br><br>Please note that all API documentation will be done with a local instance of Swagger, will use OpenAPI 3.0.0, and [can be found on our GitHub](https://github.com/jeffreydivi/ContactManager).
+
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0
+  - description: ContactManager Production
+    url: https://contactmanager.xyz/api/
+
+tags:
+  - name: Account
+    description: Authenticate and manage accounts.
+  - name: Contacts
+    description: Manage the contact library.
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Error:
+      type: object
+      required:
+        - err_code
+        - description
+      properties:
+        err_code:
+          type: integer
+          description: A numeric error code.
+          example: 400
+        description:
+          type: string
+          description: A human-readable explanation of the error.
+          example: You are not logged in.
+    CurrentUser:
+      type: object
+      required:
+        - username
+        - id
+        - creation
+      properties:
+        user_id:
+          type: integer
+          description: The user ID.
+          example: 7
+        creation:
+          type: integer
+          description: A Unix timestamp of the account's creation date.
+          example: 1621450014
+        last_login:
+          type: integer
+          description: A Unix timestamp of the account's last login time.
+          example: 1621454014
+        first_name:
+          type: string
+          description: The user's first name.
+          example: John
+        last_name:
+          type: string
+          description: The user's last name.
+          example: Smith
+        username:
+          type: string
+          description: The user's username.
+          example: jsmith
+      description: Get information for the current user.
+    EditContact:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The contact's first name.
+          example: Rose
+        last_name:
+          type: string
+          description: The contact's last name.
+          example: Tyler
+        phone:
+          type: string
+          description: The contact's phone number.
+          example: (407) 555-1337
+        email:
+          type: string
+          description: The contact's email address.
+          example: rtyler@example.com
+        address:
+          type: string
+          description: The contact's address.
+          example: 2000 Central Florida Avenue. Orlando, FL 32816
+      description: A complete single contact entry.
+    Contact:
+      allOf:
+        - type: object
+          required:
+            - user_id
+            - id
+          properties:
+            user_id:
+              type: integer
+              description: The user who created the contact.
+              example: 7
+            id:
+              type: integer
+              description: The contact entry ID.
+              example: 42
+            creation:
+              type: integer
+              description: A Unix timestamp of the contact's creation date.
+              example: 1621450414
+        - $ref: '#/components/schemas/EditContact'
+      description: The user-editable sections of a contact entry.
+security:
+  - BasicAuth: []
+
+paths:
+  /user:
+    get:
+      tags:
+        - Account
+      description: Returns an authenticated user's profile
+      responses:
+        '200':
+          description: Return the currently logged-in user's account information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+        '400':
+          description: The user is not logged in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /contact/list:
+    get:
+      tags:
+        - Contacts
+      description: Get a list of all contacts
+      responses:
+        '200':
+          description: Returns an array of all known contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CurrentUser'
+        '400':
+          description: The user is not logged in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /contact/add/:
+    post:
+      tags:
+        - Contacts
+      description: Add a new contact.
+      responses:
+        '200':
+          description: Returns the newly-created contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+      parameters:
+        - in: body
+          name: user
+          description: The user to create.
+          schema:
+            $ref: '#/components/schemas/EditContact'
+
+  /contact/{id}/:
+    get:
+      tags:
+        - Contacts
+      description: Get a single contact.
+      parameters:
+        - name: id
+          in: path
+          description: Contact ID
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Return a signle contact entry by its ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+        '400':
+          description: The user is not logged in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: A user accesses a contact they do not own.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+                  - properties:
+                      err_code:
+                        example: 403
+                      description:
+                        example: You do not have permission to view this contact.
+        '404':
+          description: The contact is not found.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+                  - properties:
+                      err_code:
+                        example: 404
+                      description:
+                        example: Contact not found.
+    delete:
+      tags:
+        - Contacts
+      description: Delete a contact.
+      parameters:
+        - name: id
+          in: path
+          description: Contact ID
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Returns success of deletion.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  description:
+                    type: string
+                    example: Contact successfully deleted.
+        '400':
+          description: The user is not logged in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: A user accesses a contact they do not own.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+                  - properties:
+                      err_code:
+                        example: 403
+                      description:
+                        example: You do not have permission to view this contact.
+        '404':
+          description: The contact is not found.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+                  - properties:
+                      err_code:
+                        example: 404
+                      description:
+                        example: Contact not found.
