@@ -21,8 +21,8 @@ def errorSchema(err_code):
         description = "Success!"
 
     return {
-        err_code: err_code,
-        description: description
+        "err_code": err_code,
+        "description": description
     }
 
 
@@ -30,11 +30,14 @@ def errorSchema(err_code):
 def authenticate(d):
     @wraps(d)
     def wrapper(*args, **kwargs):
+        print(kwargs)
         try:
             auth = request.authorization
-            print(auth["username"])
+            if not auth:
+                return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
             # (do database checking code here)
-            if auth["username"] == "401plz":
+            # Access username/password via auth["username"] and auth["password"].
+            if False:
                 # Return error 401.
                 return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
         except:
@@ -42,7 +45,7 @@ def authenticate(d):
             return Response(json.dumps(errorSchema(500)), mimetype="application/json", status=500)
         # Everything worked. Carry on!
         return d(*args, **kwargs)
-
+    return wrapper
 
 @app.route("/")
 def index():

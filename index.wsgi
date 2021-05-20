@@ -1,4 +1,4 @@
-#! /usr/share/python3
+#!/usr/bin/python3.8
 
 import logging
 import sys
