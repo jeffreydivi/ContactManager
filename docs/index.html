@@ -790,7 +790,7 @@
     "err_code" : {
       "type" : "integer",
       "description" : "A numeric error code.",
-      "example" : 400
+      "example" : 401
     },
     "description" : {
       "type" : "string",
@@ -866,8 +866,14 @@
                     <li data-group="Contacts" data-name="contactIdGet" class="">
                       <a href="#api-Contacts-contactIdGet">contactIdGet</a>
                     </li>
+                    <li data-group="Contacts" data-name="contactIdPatch" class="">
+                      <a href="#api-Contacts-contactIdPatch">contactIdPatch</a>
+                    </li>
                     <li data-group="Contacts" data-name="contactListGet" class="">
                       <a href="#api-Contacts-contactListGet">contactListGet</a>
+                    </li>
+                    <li data-group="Contacts" data-name="contactSearchGet" class="">
+                      <a href="#api-Contacts-contactSearchGet">contactSearchGet</a>
                     </li>
           </ul>
         </nav>
@@ -925,7 +931,7 @@
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0/user"</code></pre>
+"https://contactmanager.xyz/api//user"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Account-userGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1169,18 +1175,18 @@ except ApiException as e:
                                 </div>
                             </div>
 
-                            <h3> Status: 400 - The user is not logged in. </h3>
+                            <h3> Status: 401 - The user is not logged in. </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-userGet-400-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-userGet-401-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-userGet-400-schema">
-                                  <div id='responses-userGet-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-userGet-401-schema">
+                                  <div id='responses-userGet-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1206,14 +1212,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-userGet-400-schema-data').val(stringify(schema));
-                                        var result = $('#responses-userGet-400-schema-400');
+                                        $('#responses-userGet-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-userGet-401-schema-401');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-userGet-400-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-userGet-401-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -1258,7 +1264,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0/contact/add/"</code></pre>
+"https://contactmanager.xyz/api//contact/add/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-contactAddPost-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1540,7 +1546,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0/contact/{id}/"</code></pre>
+"https://contactmanager.xyz/api//contact/{id}/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-contactIdDelete-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1822,18 +1828,18 @@ except ApiException as e:
                                 </div>
                             </div>
 
-                            <h3> Status: 400 - The user is not logged in. </h3>
+                            <h3> Status: 401 - The user is not logged in. </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-contactIdDelete-400-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-contactIdDelete-401-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-contactIdDelete-400-schema">
-                                  <div id='responses-contactIdDelete-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-contactIdDelete-401-schema">
+                                  <div id='responses-contactIdDelete-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1859,14 +1865,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-contactIdDelete-400-schema-data').val(stringify(schema));
-                                        var result = $('#responses-contactIdDelete-400-schema-400');
+                                        $('#responses-contactIdDelete-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-contactIdDelete-401-schema-401');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-contactIdDelete-400-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-contactIdDelete-401-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -2004,7 +2010,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0/contact/{id}/"</code></pre>
+"https://contactmanager.xyz/api//contact/{id}/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-contactIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2027,7 +2033,7 @@ public class ContactsApiExample {
         ContactsApi apiInstance = new ContactsApi();
         Integer id = 56; // Integer | Contact ID
         try {
-            CurrentUser result = apiInstance.contactIdGet(id);
+            Contact result = apiInstance.contactIdGet(id);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#contactIdGet");
@@ -2046,7 +2052,7 @@ public class ContactsApiExample {
         ContactsApi apiInstance = new ContactsApi();
         Integer id = 56; // Integer | Contact ID
         try {
-            CurrentUser result = apiInstance.contactIdGet(id);
+            Contact result = apiInstance.contactIdGet(id);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#contactIdGet");
@@ -2069,7 +2075,7 @@ Integer *id = 56; // Contact ID
 ContactsApi *apiInstance = [[ContactsApi alloc] init];
 
 [apiInstance contactIdGetWith:id
-              completionHandler: ^(CurrentUser output, NSError* error) {
+              completionHandler: ^(Contact output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2127,7 +2133,7 @@ namespace Example
 
             try
             {
-                CurrentUser result = apiInstance.contactIdGet(id);
+                Contact result = apiInstance.contactIdGet(id);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2257,7 +2263,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/CurrentUser"
+        "$ref" : "#/components/schemas/Contact"
       }
     }
   }
@@ -2286,18 +2292,18 @@ except ApiException as e:
                                 </div>
                             </div>
 
-                            <h3> Status: 400 - The user is not logged in. </h3>
+                            <h3> Status: 401 - The user is not logged in. </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-contactIdGet-400-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-contactIdGet-401-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-contactIdGet-400-schema">
-                                  <div id='responses-contactIdGet-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-contactIdGet-401-schema">
+                                  <div id='responses-contactIdGet-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -2323,14 +2329,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-contactIdGet-400-schema-data').val(stringify(schema));
-                                        var result = $('#responses-contactIdGet-400-schema-400');
+                                        $('#responses-contactIdGet-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-contactIdGet-401-schema-401');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-contactIdGet-400-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-contactIdGet-401-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -2433,6 +2439,470 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
+                    <div id="api-Contacts-contactIdPatch">
+                      <article id="api-Contacts-contactIdPatch-0" data-group="User" data-name="contactIdPatch" data-version="0">
+                        <div class="pull-left">
+                          <h1>contactIdPatch</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Updates a single contact.</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/contact/{id}/</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Contacts-contactIdPatch-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Contacts-contactIdPatch-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Contacts-contactIdPatch-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Contacts-contactIdPatch-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Contacts-contactIdPatch-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Contacts-contactIdPatch-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Contacts-contactIdPatch-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Contacts-contactIdPatch-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Contacts-contactIdPatch-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Contacts-contactIdPatch-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Contacts-contactIdPatch-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Contacts-contactIdPatch-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+ -H "Authorization: Basic [[basicHash]]"\
+-H "Accept: application/json"\
+"https://contactmanager.xyz/api//contact/{id}/"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Contacts-contactIdPatch-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.ContactsApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ContactsApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        // Configure HTTP basic authorization: BasicAuth
+        HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+        BasicAuth.setUsername("YOUR USERNAME");
+        BasicAuth.setPassword("YOUR PASSWORD");
+
+        ContactsApi apiInstance = new ContactsApi();
+        Integer id = 56; // Integer | Contact ID
+        try {
+            Contact result = apiInstance.contactIdPatch(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ContactsApi#contactIdPatch");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Contacts-contactIdPatch-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ContactsApi;
+
+public class ContactsApiExample {
+
+    public static void main(String[] args) {
+        ContactsApi apiInstance = new ContactsApi();
+        Integer id = 56; // Integer | Contact ID
+        try {
+            Contact result = apiInstance.contactIdPatch(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ContactsApi#contactIdPatch");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Contacts-contactIdPatch-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Contacts-contactIdPatch-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+// Configure HTTP basic authorization (authentication scheme: BasicAuth)
+[apiConfig setUsername:@"YOUR_USERNAME"];
+[apiConfig setPassword:@"YOUR_PASSWORD"];
+Integer *id = 56; // Contact ID
+
+ContactsApi *apiInstance = [[ContactsApi alloc] init];
+
+[apiInstance contactIdPatchWith:id
+              completionHandler: ^(Contact output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Contacts-contactIdPatch-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var ContactManagerApi = require('contact_manager_api');
+var defaultClient = ContactManagerApi.ApiClient.instance;
+// Configure HTTP basic authorization: BasicAuth
+var BasicAuth = defaultClient.authentications['BasicAuth'];
+BasicAuth.username = 'YOUR USERNAME'
+BasicAuth.password = 'YOUR PASSWORD'
+
+var api = new ContactManagerApi.ContactsApi()
+var id = 56; // {{Integer}} Contact ID
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.contactIdPatch(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Contacts-contactIdPatch-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Contacts-contactIdPatch-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class contactIdPatchExample
+    {
+        public void main()
+        {
+            // Configure HTTP basic authorization: BasicAuth
+            Configuration.Default.Username = "YOUR_USERNAME";
+            Configuration.Default.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new ContactsApi();
+            var id = 56;  // Integer | Contact ID
+
+            try
+            {
+                Contact result = apiInstance.contactIdPatch(id);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ContactsApi.contactIdPatch: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Contacts-contactIdPatch-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+// Configure HTTP basic authorization: BasicAuth
+Swagger\Client\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Swagger\Client\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
+$api_instance = new Swagger\Client\ApiContactsApi();
+$id = 56; // Integer | Contact ID
+
+try {
+    $result = $api_instance->contactIdPatch($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ContactsApi->contactIdPatch: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Contacts-contactIdPatch-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::ContactsApi;
+# Configure HTTP basic authorization: BasicAuth
+$WWW::SwaggerClient::Configuration::username = 'YOUR_USERNAME';
+$WWW::SwaggerClient::Configuration::password = 'YOUR_PASSWORD';
+
+my $api_instance = WWW::SwaggerClient::ContactsApi->new();
+my $id = 56; # Integer | Contact ID
+
+eval { 
+    my $result = $api_instance->contactIdPatch(id => $id);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling ContactsApi->contactIdPatch: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Contacts-contactIdPatch-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+# Configure HTTP basic authorization: BasicAuth
+swagger_client.configuration.username = 'YOUR_USERNAME'
+swagger_client.configuration.password = 'YOUR_PASSWORD'
+
+# create an instance of the API class
+api_instance = swagger_client.ContactsApi()
+id = 56 # Integer | Contact ID
+
+try: 
+    api_response = api_instance.contact_id_patch(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ContactsApi->contactIdPatch: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_contactIdPatch_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      Integer
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Contact ID
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return a signle contact entry by its ID. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-contactIdPatch-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-contactIdPatch-200-schema">
+                                  <div id='responses-contactIdPatch-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return a signle contact entry by its ID.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Contact"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-contactIdPatch-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-contactIdPatch-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-contactIdPatch-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 401 - The user is not logged in. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-contactIdPatch-401-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-contactIdPatch-401-schema">
+                                  <div id='responses-contactIdPatch-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The user is not logged in.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-contactIdPatch-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-contactIdPatch-401-schema-401');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-contactIdPatch-401-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 403 - A user accesses a contact they do not own. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-contactIdPatch-403-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-contactIdPatch-403-schema">
+                                  <div id='responses-contactIdPatch-403-schema-403' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "A user accesses a contact they do not own.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/inline_response_403"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-contactIdPatch-403-schema-data').val(stringify(schema));
+                                        var result = $('#responses-contactIdPatch-403-schema-403');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-contactIdPatch-403-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The contact is not found. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-contactIdPatch-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-contactIdPatch-404-schema">
+                                  <div id='responses-contactIdPatch-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The contact is not found.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/inline_response_404"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-contactIdPatch-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-contactIdPatch-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-contactIdPatch-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Contacts-contactListGet">
                       <article id="api-Contacts-contactListGet-0" data-group="User" data-name="contactListGet" data-version="0">
                         <div class="pull-left">
@@ -2468,7 +2938,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0/contact/list"</code></pre>
+"https://contactmanager.xyz/api//contact/list"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-contactListGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2716,18 +3186,18 @@ except ApiException as e:
                                 </div>
                             </div>
 
-                            <h3> Status: 400 - The user is not logged in. </h3>
+                            <h3> Status: 401 - The user is not logged in. </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-contactListGet-400-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-contactListGet-401-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-contactListGet-400-schema">
-                                  <div id='responses-contactListGet-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-contactListGet-401-schema">
+                                  <div id='responses-contactListGet-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -2753,14 +3223,386 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-contactListGet-400-schema-data').val(stringify(schema));
-                                        var result = $('#responses-contactListGet-400-schema-400');
+                                        $('#responses-contactListGet-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-contactListGet-401-schema-401');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-contactListGet-400-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-contactListGet-401-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Contacts-contactSearchGet">
+                      <article id="api-Contacts-contactSearchGet-0" data-group="User" data-name="contactSearchGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>contactSearchGet</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Find all contacts that match a given query.</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/contact/search</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Contacts-contactSearchGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Contacts-contactSearchGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Contacts-contactSearchGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Contacts-contactSearchGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Contacts-contactSearchGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Contacts-contactSearchGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Contacts-contactSearchGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Contacts-contactSearchGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Contacts-contactSearchGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Contacts-contactSearchGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Contacts-contactSearchGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Contacts-contactSearchGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+ -H "Authorization: Basic [[basicHash]]"\
+-H "Accept: application/json"\
+"https://contactmanager.xyz/api//contact/search?q="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Contacts-contactSearchGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.ContactsApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ContactsApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        // Configure HTTP basic authorization: BasicAuth
+        HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+        BasicAuth.setUsername("YOUR USERNAME");
+        BasicAuth.setPassword("YOUR PASSWORD");
+
+        ContactsApi apiInstance = new ContactsApi();
+        String q = q_example; // String | A search query throughout a user's contacts list.
+        try {
+            array[CurrentUser] result = apiInstance.contactSearchGet(q);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ContactsApi#contactSearchGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Contacts-contactSearchGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ContactsApi;
+
+public class ContactsApiExample {
+
+    public static void main(String[] args) {
+        ContactsApi apiInstance = new ContactsApi();
+        String q = q_example; // String | A search query throughout a user's contacts list.
+        try {
+            array[CurrentUser] result = apiInstance.contactSearchGet(q);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ContactsApi#contactSearchGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Contacts-contactSearchGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Contacts-contactSearchGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+// Configure HTTP basic authorization (authentication scheme: BasicAuth)
+[apiConfig setUsername:@"YOUR_USERNAME"];
+[apiConfig setPassword:@"YOUR_PASSWORD"];
+String *q = q_example; // A search query throughout a user's contacts list.
+
+ContactsApi *apiInstance = [[ContactsApi alloc] init];
+
+[apiInstance contactSearchGetWith:q
+              completionHandler: ^(array[CurrentUser] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Contacts-contactSearchGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var ContactManagerApi = require('contact_manager_api');
+var defaultClient = ContactManagerApi.ApiClient.instance;
+// Configure HTTP basic authorization: BasicAuth
+var BasicAuth = defaultClient.authentications['BasicAuth'];
+BasicAuth.username = 'YOUR USERNAME'
+BasicAuth.password = 'YOUR PASSWORD'
+
+var api = new ContactManagerApi.ContactsApi()
+var q = q_example; // {{String}} A search query throughout a user's contacts list.
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.contactSearchGet(q, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Contacts-contactSearchGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Contacts-contactSearchGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class contactSearchGetExample
+    {
+        public void main()
+        {
+            // Configure HTTP basic authorization: BasicAuth
+            Configuration.Default.Username = "YOUR_USERNAME";
+            Configuration.Default.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new ContactsApi();
+            var q = q_example;  // String | A search query throughout a user's contacts list.
+
+            try
+            {
+                array[CurrentUser] result = apiInstance.contactSearchGet(q);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ContactsApi.contactSearchGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Contacts-contactSearchGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+// Configure HTTP basic authorization: BasicAuth
+Swagger\Client\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Swagger\Client\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
+$api_instance = new Swagger\Client\ApiContactsApi();
+$q = q_example; // String | A search query throughout a user's contacts list.
+
+try {
+    $result = $api_instance->contactSearchGet($q);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ContactsApi->contactSearchGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Contacts-contactSearchGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::ContactsApi;
+# Configure HTTP basic authorization: BasicAuth
+$WWW::SwaggerClient::Configuration::username = 'YOUR_USERNAME';
+$WWW::SwaggerClient::Configuration::password = 'YOUR_PASSWORD';
+
+my $api_instance = WWW::SwaggerClient::ContactsApi->new();
+my $q = q_example; # String | A search query throughout a user's contacts list.
+
+eval { 
+    my $result = $api_instance->contactSearchGet(q => $q);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling ContactsApi->contactSearchGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Contacts-contactSearchGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+# Configure HTTP basic authorization: BasicAuth
+swagger_client.configuration.username = 'YOUR_USERNAME'
+swagger_client.configuration.password = 'YOUR_PASSWORD'
+
+# create an instance of the API class
+api_instance = swagger_client.ContactsApi()
+q = q_example # String | A search query throughout a user's contacts list.
+
+try: 
+    api_response = api_instance.contact_search_get(q)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ContactsApi->contactSearchGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">q*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_contactSearchGet_q">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        A search query throughout a user&#x27;s contacts list.
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Returns an array of all matching contacts </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-contactSearchGet-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-contactSearchGet-200-schema">
+                                  <div id='responses-contactSearchGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Returns an array of all matching contacts",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/CurrentUser"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-contactSearchGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-contactSearchGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-contactSearchGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 401 - The user is not logged in. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-contactSearchGet-401-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-contactSearchGet-401-schema">
+                                  <div id='responses-contactSearchGet-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The user is not logged in.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-contactSearchGet-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-contactSearchGet-401-schema-401');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-contactSearchGet-401-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 

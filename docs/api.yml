@@ -6,11 +6,11 @@ info:
     <br><br>Please note that all API documentation will be done with a local instance of Swagger, will use OpenAPI 3.0.0, and [can be found on our GitHub](https://github.com/jeffreydivi/ContactManager).
 
 servers:
+  - description: ContactManager Production
+    url: https://contactmanager.xyz/api/
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0
-  - description: ContactManager Production
-    url: https://contactmanager.xyz/api/
 
 tags:
   - name: Account
@@ -33,7 +33,7 @@ components:
         err_code:
           type: integer
           description: A numeric error code.
-          example: 400
+          example: 401
         description:
           type: string
           description: A human-readable explanation of the error.
@@ -131,7 +131,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CurrentUser'
-        '400':
+        '401':
           description: The user is not logged in.
           content:
             application/json:
@@ -151,7 +151,34 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CurrentUser'
-        '400':
+        '401':
+          description: The user is not logged in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /contact/search:
+    get:
+      tags:
+        - Contacts
+      description: Find all contacts that match a given query.
+      parameters:
+        - name: q
+          in: query
+          description: A search query throughout a user's contacts list.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns an array of all matching contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CurrentUser'
+        '401':
           description: The user is not logged in.
           content:
             application/json:
@@ -196,8 +223,61 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CurrentUser'
-        '400':
+                $ref: '#/components/schemas/Contact'
+        '401':
+          description: The user is not logged in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: A user accesses a contact they do not own.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+                  - properties:
+                      err_code:
+                        example: 403
+                      description:
+                        example: You do not have permission to view this contact.
+        '404':
+          description: The contact is not found.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+                  - properties:
+                      err_code:
+                        example: 404
+                      description:
+                        example: Contact not found.
+    patch:
+      tags:
+        - Contacts
+      description: Updates a single contact.
+      parameters:
+        - name: id
+          in: path
+          description: Contact ID
+          required: true
+          schema:
+            type: integer
+        - in: body
+          name: user
+          description: The new user data. Provided fields will override existing ones.
+          schema:
+            $ref: '#/components/schemas/EditContact'
+      responses:
+        '200':
+          description: Return a signle contact entry by its ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
           description: The user is not logged in.
           content:
             application/json:
@@ -250,7 +330,7 @@ paths:
                   description:
                     type: string
                     example: Contact successfully deleted.
-        '400':
+        '401':
           description: The user is not logged in.
           content:
             application/json:
