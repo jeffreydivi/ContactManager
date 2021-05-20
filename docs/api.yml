@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: ContactManager API
-  description: The API documentation for Contactmanager, a Web-based contact manager created for the small project for COP 4331.
+  description: The API documentation for ContactManager, a Web-based contact manager created for the small project for COP 4331.
     <br><br>Please note that all API documentation will be done with a local instance of Swagger, will use OpenAPI 3.0.0, and [can be found on our GitHub](https://github.com/jeffreydivi/ContactManager).
 
 servers:

@@ -21,3 +21,15 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+# IntelliJ
+.idea/.gitignore
+.idea/ContactManager.iml
+.idea/discord.xml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.swagger-codegen-ignore
+.swagger-codegen/
+swagger-codegen-cli.jar
