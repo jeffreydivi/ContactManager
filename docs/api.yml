@@ -81,10 +81,6 @@ components:
           type: integer
           description: A Unix timestamp of the account's creation date.
           example: 1621450014
-        last_login:
-          type: integer
-          description: A Unix timestamp of the account's last login time.
-          example: 1621454014
         first_name:
           type: string
           description: The user's first name.
