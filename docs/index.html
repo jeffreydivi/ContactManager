@@ -783,7 +783,7 @@
   },
   "description" : "A complete single contact entry."
 };
-            defs["Error"] = {
+            defs["Error401"] = {
   "required" : [ "description", "err_code" ],
   "type" : "object",
   "properties" : {
@@ -799,6 +799,38 @@
     }
   }
 };
+            defs["Error403"] = {
+  "required" : [ "description", "err_code" ],
+  "type" : "object",
+  "properties" : {
+    "err_code" : {
+      "type" : "integer",
+      "description" : "A numeric error code.",
+      "example" : 403
+    },
+    "description" : {
+      "type" : "string",
+      "description" : "A human-readable explanation of the error.",
+      "example" : "You do not have permission to view this contact."
+    }
+  }
+};
+            defs["Error404"] = {
+  "required" : [ "description", "err_code" ],
+  "type" : "object",
+  "properties" : {
+    "err_code" : {
+      "type" : "integer",
+      "description" : "A numeric error code.",
+      "example" : 404
+    },
+    "description" : {
+      "type" : "string",
+      "description" : "A human-readable explanation of the error.",
+      "example" : "Contact not found."
+    }
+  }
+};
             defs["inline_response_200"] = {
   "type" : "object",
   "properties" : {
@@ -810,7 +842,7 @@
 };
             defs["inline_response_403"] = {
   "allOf" : [ {
-    "$ref" : "#/components/schemas/Error"
+    "$ref" : "#/components/schemas/Error403"
   }, {
     "properties" : {
       "err_code" : {
@@ -824,7 +856,7 @@
 };
             defs["inline_response_404"] = {
   "allOf" : [ {
-    "$ref" : "#/components/schemas/Error"
+    "$ref" : "#/components/schemas/Error404"
   }, {
     "properties" : {
       "err_code" : {
@@ -1194,7 +1226,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/Error"
+        "$ref" : "#/components/schemas/Error401"
       }
     }
   }
@@ -1847,7 +1879,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/Error"
+        "$ref" : "#/components/schemas/Error401"
       }
     }
   }
@@ -2311,7 +2343,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/Error"
+        "$ref" : "#/components/schemas/Error401"
       }
     }
   }
@@ -2775,7 +2807,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/Error"
+        "$ref" : "#/components/schemas/Error401"
       }
     }
   }
@@ -3205,7 +3237,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/Error"
+        "$ref" : "#/components/schemas/Error401"
       }
     }
   }
@@ -3577,7 +3609,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/Error"
+        "$ref" : "#/components/schemas/Error401"
       }
     }
   }

@@ -24,7 +24,35 @@ components:
       type: http
       scheme: basic
   schemas:
-    Error:
+    Error404:
+      type: object
+      required:
+        - err_code
+        - description
+      properties:
+        err_code:
+          type: integer
+          description: A numeric error code.
+          example: 404
+        description:
+          type: string
+          description: A human-readable explanation of the error.
+          example: Contact not found.
+    Error403:
+      type: object
+      required:
+        - err_code
+        - description
+      properties:
+        err_code:
+          type: integer
+          description: A numeric error code.
+          example: 403
+        description:
+          type: string
+          description: A human-readable explanation of the error.
+          example: You do not have permission to view this contact.
+    Error401:
       type: object
       required:
         - err_code
@@ -136,7 +164,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error401'
   /contact/list:
     get:
       tags:
@@ -156,7 +184,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error401'
   /contact/search:
     get:
       tags:
@@ -183,7 +211,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error401'
 
   /contact/add/:
     post:
@@ -229,14 +257,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error401'
         '403':
           description: A user accesses a contact they do not own.
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/Error'
+                  - $ref: '#/components/schemas/Error403'
                   - properties:
                       err_code:
                         example: 403
@@ -248,7 +276,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/Error'
+                  - $ref: '#/components/schemas/Error404'
                   - properties:
                       err_code:
                         example: 404
@@ -282,14 +310,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error401'
         '403':
           description: A user accesses a contact they do not own.
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/Error'
+                  - $ref: '#/components/schemas/Error403'
                   - properties:
                       err_code:
                         example: 403
@@ -301,7 +329,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/Error'
+                  - $ref: '#/components/schemas/Error404'
                   - properties:
                       err_code:
                         example: 404
@@ -335,14 +363,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error401'
         '403':
           description: A user accesses a contact they do not own.
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/Error'
+                  - $ref: '#/components/schemas/Error403'
                   - properties:
                       err_code:
                         example: 403
@@ -354,7 +382,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/Error'
+                  - $ref: '#/components/schemas/Error404'
                   - properties:
                       err_code:
                         example: 404
