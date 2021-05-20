@@ -30,6 +30,11 @@ Homestead.json
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
+
+# Swagger
 .swagger-codegen-ignore
 .swagger-codegen/
 swagger-codegen-cli.jar
+
+# Virtual environment
+venv/
