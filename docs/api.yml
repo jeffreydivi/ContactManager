@@ -7,7 +7,7 @@ info:
 
 servers:
   - description: ContactManager Production
-    url: https://contactmanager.xyz/api/
+    url: https://contactmanager.xyz/api
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0
@@ -66,21 +66,11 @@ components:
           type: string
           description: A human-readable explanation of the error.
           example: You are not logged in.
-    CurrentUser:
+    EditUser:
       type: object
       required:
         - username
-        - id
-        - creation
       properties:
-        user_id:
-          type: integer
-          description: The user ID.
-          example: 7
-        creation:
-          type: integer
-          description: A Unix timestamp of the account's creation date.
-          example: 1621450014
         first_name:
           type: string
           description: The user's first name.
@@ -93,7 +83,24 @@ components:
           type: string
           description: The user's username.
           example: jsmith
-      description: Get information for the current user.
+      description: The user-editable sections of a user entry.
+    User:
+      allOf:
+        - type: object
+          required:
+            - user_id
+            - creation
+          properties:
+            user_id:
+              type: integer
+              description: The user ID.
+              example: 7
+            creation:
+              type: integer
+              description: A Unix timestamp of the account's creation date.
+              example: 1621450014
+        - $ref: '#/components/schemas/EditUser'
+      description: A complete single user entry.
     EditContact:
       type: object
       properties:
@@ -117,7 +124,7 @@ components:
           type: string
           description: The contact's address.
           example: 2000 Central Florida Avenue. Orlando, FL 32816
-      description: A complete single contact entry.
+      description: The user-editable sections of a contact entry.
     Contact:
       allOf:
         - type: object
@@ -138,31 +145,92 @@ components:
               description: A Unix timestamp of the contact's creation date.
               example: 1621450414
         - $ref: '#/components/schemas/EditContact'
-      description: The user-editable sections of a contact entry.
+      description: A complete single contact entry.
 security:
   - BasicAuth: []
 
 paths:
-  /user:
+  /user/:
     get:
       tags:
         - Account
-      description: Returns an authenticated user's profile
+      operationId: get_user
+      description: Returns the authenticated user's profile
       responses:
         '200':
           description: Return the currently logged-in user's account information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CurrentUser'
+                $ref: '#/components/schemas/User'
         '401':
           description: The user is not logged in.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error401'
-  /contact/list:
+    post:
+      operationId: create_user
+      tags:
+        - Account
+      security: []
+      description: Create a new account.
+      requestBody:
+        description: Data for the new account.
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/EditUser'
+                - properties:
+                    password:
+                      type: string
+                      description: The user's password.
+                      example: CorrectHorseBatteryStaple
+                  required:
+                    - password
+      responses:
+        '200':
+          description: Returns the newly create user's data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    patch:
+      tags:
+        - Account
+      operationId: edit_user
+      description: Update the authenticated user's profile
+      requestBody:
+        required: true
+        description: The new user data. Provided fields will override existing ones.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/EditUser'
+                - properties:
+                    password:
+                      type: string
+                      description: Set a new password.
+                      example: CorrectHorseBatteryStaple
+      responses:
+        '200':
+          description: Returns the updated user data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: The user is not logged in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+  /contact/list/:
     get:
+      operationId: get_contacts_list
       tags:
         - Contacts
       description: Get a list of all contacts
@@ -174,15 +242,16 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CurrentUser'
+                  $ref: '#/components/schemas/User'
         '401':
           description: The user is not logged in.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error401'
-  /contact/search:
+  /contact/search/:
     get:
+      operationId: search_contacts
       tags:
         - Contacts
       description: Find all contacts that match a given query.
@@ -201,7 +270,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CurrentUser'
+                  $ref: '#/components/schemas/User'
         '401':
           description: The user is not logged in.
           content:
@@ -211,6 +280,7 @@ paths:
 
   /contact/add/:
     post:
+      operationId: create_contact
       tags:
         - Contacts
       description: Add a new contact.
@@ -221,15 +291,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Contact'
-      parameters:
-        - in: body
-          name: user
-          description: The user to create.
-          schema:
-            $ref: '#/components/schemas/EditContact'
+      requestBody:
+        description: Data to add to the new contact.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditContact'
 
   /contact/{id}/:
     get:
+      operationId: get_contact
       tags:
         - Contacts
       description: Get a single contact.
@@ -243,7 +315,7 @@ paths:
 
       responses:
         '200':
-          description: Return a signle contact entry by its ID.
+          description: Return a single contact entry by its ID.
           content:
             application/json:
               schema:
@@ -281,6 +353,7 @@ paths:
     patch:
       tags:
         - Contacts
+      operationId: edit_contact
       description: Updates a single contact.
       parameters:
         - name: id
@@ -289,14 +362,16 @@ paths:
           required: true
           schema:
             type: integer
-        - in: body
-          name: user
-          description: The new user data. Provided fields will override existing ones.
-          schema:
-            $ref: '#/components/schemas/EditContact'
+      requestBody:
+        required: true
+        description: The new contact data. Provided fields will override existing ones.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditContact'
       responses:
         '200':
-          description: Return a signle contact entry by its ID.
+          description: Returns the updated contact data.
           content:
             application/json:
               schema:
@@ -312,28 +387,17 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Error403'
-                  - properties:
-                      err_code:
-                        example: 403
-                      description:
-                        example: You do not have permission to view this contact.
+                $ref: '#/components/schemas/Error403'
         '404':
           description: The contact is not found.
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Error404'
-                  - properties:
-                      err_code:
-                        example: 404
-                      description:
-                        example: Contact not found.
+                $ref: '#/components/schemas/Error404'
     delete:
       tags:
         - Contacts
+      operationId: delete_contact
       description: Delete a contact.
       parameters:
         - name: id
@@ -365,22 +429,10 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Error403'
-                  - properties:
-                      err_code:
-                        example: 403
-                      description:
-                        example: You do not have permission to view this contact.
+                $ref: '#/components/schemas/Error403'
         '404':
           description: The contact is not found.
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Error404'
-                  - properties:
-                      err_code:
-                        example: 404
-                      description:
-                        example: Contact not found.
+                $ref: '#/components/schemas/Error404'
