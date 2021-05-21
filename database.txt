@@ -1,0 +1,41 @@
+# Create Users Table
+
+CREATE TABLE `COP4331`.`Users` ( 
+	`UserID` INT NOT NULL AUTO_INCREMENT, 
+	`DateCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`FirstName` VARCHAR(50) NOT NULL DEFAULT '',
+	`LastName` VARCHAR(50) NOT NULL DEFAULT '',
+	`Username` VARCHAR(50) NOT NULL DEFAULT '' UNIQUE, 
+	`Password` VARCHAR(50) NOT NULL DEFAULT '',
+	PRIMARY KEY (`UserID`)
+) ENGINE = InnoDB;
+
+# Create Contacts Table
+
+CREATE TABLE `COP4331`.`Contacts` ( 
+	`ID` INT NOT NULL AUTO_INCREMENT,
+	`UserID` INT,
+	`DateCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`FirstName` VARCHAR(50) NOT NULL DEFAULT '', 
+	`LastName` VARCHAR(50) NOT NULL DEFAULT '',
+	`Phone` VARCHAR(50) NOT NULL DEFAULT '',
+	`Email` VARCHAR(150) NOT NULL DEFAULT '' UNIQUE,
+	`Address` VARCHAR(150) NOT NULL DEFAULT '',
+	PRIMARY KEY (`ID`),
+	FOREIGN KEY (`UserID`) REFERENCES Users(`UserID`)
+) ENGINE = InnoDB;
+
+insert into Users (FirstName, LastName, Username, Password) VALUES('Billy', 'Joe', 'bilJoe', 'POOSD');
+insert into Users (FirstName, LastName, Username, Password) VALUES('Peter', 'Piper', 'pickles', 'yaypickles');
+
+insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (1, 'John', 'Doe', '(123) 456-7890', 'johndoe@knights.ucf.edu', '123 Fake Address, LaLa, FL 12345');
+insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (1, 'Frank', 'Hill', '(789) 456-1256', 'frankhill@knights.ucf.edu', '865 Fake Address, LaLa, FL 56987');
+insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (2, 'Josh', 'Nap', '(564) 795-3035', 'joshnap@knights.ucf.edu', '567 Fake Address, LaLa, FL 36549');
+
+
+Billy Joe 1
+Peter Piper 2
+
+John Doe 1
+Frank Hill 1
+Josh Nap 2
