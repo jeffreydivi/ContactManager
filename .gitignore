@@ -38,3 +38,6 @@ swagger-codegen-cli.jar
 
 # Virtual environment
 venv/
+
+# Config
+config.json

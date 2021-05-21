@@ -1,0 +1,9 @@
+{
+  "secret": "SUPER_LONG_RANDOM_STRING",
+  "sql": {
+    "username": "USERNAME",
+    "password": "PASSWORD",
+    "location": "localhost",
+    "database": "DATABASE"
+  }
+}

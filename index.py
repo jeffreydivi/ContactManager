@@ -1,11 +1,22 @@
+# Web server-related
 from functools import wraps
 from flask import Flask, send_file, request, Response
+# Database communication
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey
+# Other
 import json
 import bcrypt
 import base64
 
-app = Flask(__name__, static_url_path="/static")
+# Load configuration file
+with open("config.json") as config_file:
+    config = json.load(config_file)
 
+# Initialize Flask, SQL connection.
+app = Flask(__name__, static_url_path="/static")
+db = create_engine(f"mysql://{config['sql']['username']}:{config['sql']['password']}@{config['sql']['location']}/{config['sql']['database']}")
 
 def errorSchema(err_code):
     description = "Unknown error"
