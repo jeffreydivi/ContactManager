@@ -31,11 +31,3 @@ insert into Users (FirstName, LastName, Username, Password) VALUES('Peter', 'Pip
 insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (1, 'John', 'Doe', '(123) 456-7890', 'johndoe@knights.ucf.edu', '123 Fake Address, LaLa, FL 12345');
 insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (1, 'Frank', 'Hill', '(789) 456-1256', 'frankhill@knights.ucf.edu', '865 Fake Address, LaLa, FL 56987');
 insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (2, 'Josh', 'Nap', '(564) 795-3035', 'joshnap@knights.ucf.edu', '567 Fake Address, LaLa, FL 36549');
-
-
-Billy Joe 1
-Peter Piper 2
-
-John Doe 1
-Frank Hill 1
-Josh Nap 2
