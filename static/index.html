@@ -1,14 +1,71 @@
+<!-- Resource for creating a login/registration system with database -->
+<!-- https://dzone.com/articles/ceate-a-login-system-using-html-php-and-mysql -->
+
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Hello, world!</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
-    <script async src="/static/js/index.js"></script>
-    <meta name="referrer" content="no-referrer">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, user-scalable=0">
-</head>
-<body>
-    <h1>We love COP 4331! 🐍</h1>
-</body>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Contact Manager</title>
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body background="/static/images/background.svg">
+        <div class="container">
+            <div class="login">
+                <form action="">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username">
+        
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
+    
+                    <input type="button" value="Sign In">
+    
+                    <a href="#" id="switchToRegister" class="new-user-redirect">New here? Sign up</a>
+                </form>
+            </div>
+    
+            <div class="new-user">
+                <form action="">
+                    <label for="new-username">Username</label>
+                    <input type="text" id="new-username" name="username" placeholder="Enter a username">
+        
+                    <label for="new-password">Password</label>
+                    <input type="password" id="new-password" name="password" placeholder="Enter a password">
+    
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Enter your password">
+    
+                    <input type="button" value="Create Account">
+    
+                    <a href="#" id="switchToLogin" class="login-redirect">Already have an account? Sign in</a>
+                </form>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- Switch forms -->
+        <script type="text/javascript">
+            $(function() {
+                $('#switchToRegister').on('click', function(e) {
+                    $('.login').css('display', 'none');
+                    $('.new-user').css('display', 'inline');
+                    e.preventDefault();
+                });
+            });
+            $(function() {
+                $('#switchToLogin').on('click', function(e) {
+                    $('.login').css('display', 'inline');
+                    $('.new-user').css('display', 'none');
+                    e.preventDefault();
+                });
+            });
+        </script>
+    </body>
 </html>

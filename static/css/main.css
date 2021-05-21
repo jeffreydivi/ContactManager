@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600;700&display=swap");
+body {
+  margin: 0;
+  background-repeat: repeat;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 70px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 3em;
+  font-family: 'Roboto Mono', arial;
+  color: #030B1E;
+}
+
+.container label {
+  display: block;
+  font-size: 1.5em;
+}
+
+.container input {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.container input[type="button"] {
+  margin: 0 auto;
+  margin-top: 1.25em;
+  padding: 0.5em;
+  border-radius: 20px;
+  background-color: #030B1E;
+  color: white;
+  border: 2px solid #304B79;
+  font-size: 1.25em;
+}
+
+.container input[type="button"]:hover {
+  background-color: #304B79;
+}
+
+.container .new-user {
+  display: none;
+}
+
+.container a {
+  display: block;
+  text-align: center;
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  color: #030B1E;
+}
+
+.container a:hover {
+  color: #304B79;
+  text-decoration: none;
+}
+/*# sourceMappingURL=main.css.map */

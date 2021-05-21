@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600;700&display=swap");
+body {
+  margin: 0;
+  background-repeat: repeat;
+  height: 100vh;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.75);
+  height: 100vh;
+  font-family: 'Roboto Mono', arial;
+  color: #030B1E;
+}
+
+.container .nav-bar {
+  padding: 1.5em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.container .nav-bar a {
+  color: #030B1E;
+  font-size: 1.25em;
+}
+
+.container .nav-bar a:hover {
+  color: #304B79;
+  text-decoration: none;
+}
+
+.container .nav-bar button {
+  border-radius: 12px;
+  background-color: #030B1E;
+  color: white;
+  border: none;
+  font-size: 1em;
+  padding: 0.5em;
+}
+
+.container .nav-bar button:hover {
+  background-color: #304B79;
+}
+
+.container .contact-space {
+  background-color: rgba(3, 10, 28, 0.9);
+  border-radius: 25px;
+  height: 85vh;
+  padding: 1em;
+  font-family: 'Roboto Mono', arial;
+  color: #030B1E;
+}
+
+.container .contact-space .contact-space-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.container .contact-space .contact-space-nav button {
+  border-radius: 12px;
+  background-color: rgba(3, 10, 28, 0);
+  color: white;
+  border: none;
+  font-size: 0.75m;
+  padding: 0.5em;
+}
+
+.container .contact-space .contact-space-nav button:hover {
+  background-color: #030a1c;
+}
+
+.container .contact-space .contact-space-nav .contact-image {
+  width: 16%;
+}
+
+.container .contact-space .contact-space-nav .search-image {
+  width: 20%;
+}
+/*# sourceMappingURL=app.css.map */
