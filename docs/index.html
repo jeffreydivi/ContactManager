@@ -1669,7 +1669,7 @@ except ApiException as e:
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">Returns the authenticated user&#x27;s profile</p>
+                        <p class="marked">Returns the authenticated user&#x27;s profile.</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/user/</span></code></pre>
@@ -1891,7 +1891,7 @@ except ApiException as e:
 
 
                           <h2>Responses</h2>
-                            <h3> Status: 200 - Return the currently logged-in user&#x27;s account information </h3>
+                            <h3> Status: 200 - Return the currently logged-in user&#x27;s account information. </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
@@ -1906,7 +1906,7 @@ except ApiException as e:
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Return the currently logged-in user's account information",
+  "description" : "Return the currently logged-in user's account information.",
   "content" : {
     "application/json" : {
       "schema" : {
@@ -3784,7 +3784,7 @@ except ApiException as e:
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">Get a list of all contacts</p>
+                        <p class="marked">Get a list of all contacts.</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/contact/list/</span></code></pre>
@@ -3832,7 +3832,7 @@ public class ContactsApiExample {
 
         ContactsApi apiInstance = new ContactsApi();
         try {
-            array[User] result = apiInstance.getContactsList();
+            array[Contact] result = apiInstance.getContactsList();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#getContactsList");
@@ -3850,7 +3850,7 @@ public class ContactsApiExample {
     public static void main(String[] args) {
         ContactsApi apiInstance = new ContactsApi();
         try {
-            array[User] result = apiInstance.getContactsList();
+            array[Contact] result = apiInstance.getContactsList();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#getContactsList");
@@ -3872,7 +3872,7 @@ public class ContactsApiExample {
 ContactsApi *apiInstance = [[ContactsApi alloc] init];
 
 [apiInstance getContactsListWithCompletionHandler: 
-              ^(array[User] output, NSError* error) {
+              ^(array[Contact] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3927,7 +3927,7 @@ namespace Example
 
             try
             {
-                array[User] result = apiInstance.getContactsList();
+                array[Contact] result = apiInstance.getContactsList();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4027,7 +4027,7 @@ except ApiException as e:
       "schema" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/User"
+          "$ref" : "#/components/schemas/Contact"
         },
         "x-content-type" : "application/json"
       }
@@ -4167,7 +4167,7 @@ public class ContactsApiExample {
         ContactsApi apiInstance = new ContactsApi();
         String q = q_example; // String | A search query throughout a user's contacts list.
         try {
-            array[User] result = apiInstance.searchContacts(q);
+            array[Contact] result = apiInstance.searchContacts(q);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#searchContacts");
@@ -4186,7 +4186,7 @@ public class ContactsApiExample {
         ContactsApi apiInstance = new ContactsApi();
         String q = q_example; // String | A search query throughout a user's contacts list.
         try {
-            array[User] result = apiInstance.searchContacts(q);
+            array[Contact] result = apiInstance.searchContacts(q);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#searchContacts");
@@ -4209,7 +4209,7 @@ String *q = q_example; // A search query throughout a user's contacts list.
 ContactsApi *apiInstance = [[ContactsApi alloc] init];
 
 [apiInstance searchContactsWith:q
-              completionHandler: ^(array[User] output, NSError* error) {
+              completionHandler: ^(array[Contact] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -4267,7 +4267,7 @@ namespace Example
 
             try
             {
-                array[User] result = apiInstance.searchContacts(q);
+                array[Contact] result = apiInstance.searchContacts(q);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4378,7 +4378,7 @@ except ApiException as e:
                             </table>
 
                           <h2>Responses</h2>
-                            <h3> Status: 200 - Returns an array of all matching contacts </h3>
+                            <h3> Status: 200 - Returns an array of all matching contacts. </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
@@ -4393,13 +4393,13 @@ except ApiException as e:
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Returns an array of all matching contacts",
+  "description" : "Returns an array of all matching contacts.",
   "content" : {
     "application/json" : {
       "schema" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/User"
+          "$ref" : "#/components/schemas/Contact"
         },
         "x-content-type" : "application/json"
       }

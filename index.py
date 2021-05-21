@@ -16,7 +16,14 @@ with open("config.json") as config_file:
 
 # Initialize Flask, SQL connection.
 app = Flask(__name__, static_url_path="/static")
-db = create_engine(f"mysql://{config['sql']['username']}:{config['sql']['password']}@{config['sql']['location']}/{config['sql']['database']}")
+if not config["local"]:
+    db = create_engine(
+        f"mysql://{config['sql']['username']}:{config['sql']['password']}@{config['sql']['location']}/{config['sql']['database']}"
+    )
+else:
+    print("WARNING: Loading SQLite database.")
+    db = create_engine("sqlite:///testing.db")
+
 
 def errorSchema(err_code):
     description = "Unknown error"
@@ -41,7 +48,6 @@ def errorSchema(err_code):
 def authenticate(d):
     @wraps(d)
     def wrapper(*args, **kwargs):
-        print(kwargs)
         try:
             auth = request.authorization
             if not auth:
@@ -56,7 +62,9 @@ def authenticate(d):
             return Response(json.dumps(errorSchema(500)), mimetype="application/json", status=500)
         # Everything worked. Carry on!
         return d(*args, **kwargs)
+
     return wrapper
+
 
 @app.route("/")
 def index():
@@ -67,13 +75,94 @@ def index():
     return send_file("static/index.html")
 
 
-@app.route("/user/")
+@app.route("/user/", methods=["GET"])
 @authenticate
 def getUser():
     """
     Return the currently logged-in user's account information
     :return: User
     """
+    return errorSchema(200)
+
+
+@app.route("/user/", methods=["POST"])
+def createUser():
+    """
+    Create a new account.
+    :return: User
+    """
+    return errorSchema(200)
+
+
+@app.route("/user/", methods=["PATCH"])
+@authenticate
+def editUser():
+    """
+    Update the authenticated user's profile
+    :return: User
+    """
+    return errorSchema(200)
+
+
+@app.route("/contact/list/", methods=["GET"])
+@authenticate
+def getContactsList():
+    """
+    Get a list of all contacts
+    :return: Contact[]
+    """
+    return errorSchema(200)
+
+
+@app.route("/contact/search/", methods=["GET"])
+@authenticate
+def searchContacts():
+    """
+    Find all contacts that match a given query.
+    :return: Contact[]
+    """
+    return errorSchema(200)
+
+
+@app.route("/contact/add/", methods=["POST"])
+@authenticate
+def createContact():
+    """
+    Add a new contact.
+    :return: Contact
+    """
+    return errorSchema(200)
+
+
+@app.route("/contact/<id>/", methods=["GET"])
+@authenticate
+def getContact(id):
+    """
+    Get a single contact.
+    :return: Contact
+    """
+    assert id == request.view_args["id"]
+    return errorSchema(200)
+
+@app.route("/contact/<id>/", methods=["PATCH"])
+@authenticate
+def editContact(id):
+    """
+    Updates a single contact.
+    :return: Contact
+    """
+    assert id == request.view_args["id"]
+    return errorSchema(200)
+
+
+@app.route("/contact/<id>/", methods=["DELETE"])
+@authenticate
+def deleteContact(id):
+    """
+    Delete a contact.
+    :return: Error200
+    """
+    assert id == request.view_args["id"]
     return errorSchema(200)
 
 

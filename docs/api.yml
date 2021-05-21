@@ -155,10 +155,10 @@ paths:
       tags:
         - Account
       operationId: get_user
-      description: Returns the authenticated user's profile
+      description: Returns the authenticated user's profile.
       responses:
         '200':
-          description: Return the currently logged-in user's account information
+          description: Return the currently logged-in user's account information.
           content:
             application/json:
               schema:
@@ -233,7 +233,7 @@ paths:
       operationId: get_contacts_list
       tags:
         - Contacts
-      description: Get a list of all contacts
+      description: Get a list of all contacts.
       responses:
         '200':
           description: Returns an array of all known contacts
@@ -242,7 +242,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/Contact'
         '401':
           description: The user is not logged in.
           content:
@@ -264,13 +264,13 @@ paths:
             type: string
       responses:
         '200':
-          description: Returns an array of all matching contacts
+          description: Returns an array of all matching contacts.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/Contact'
         '401':
           description: The user is not logged in.
           content:
