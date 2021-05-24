@@ -21,6 +21,7 @@ if not config["local"]:
         f"mysql://{config['sql']['username']}:{config['sql']['password']}@{config['sql']['location']}/{config['sql']['database']}"
     )
 else:
+    # This is 100% unconfirmed. Please just run MySQL locally.
     print("WARNING: Loading SQLite database.")
     db = create_engine("sqlite:///testing.db")
 
@@ -58,7 +59,7 @@ def authenticate(d):
                 # Return error 401.
                 return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
         except:
-            # 501 error.
+            # 500 error.
             return Response(json.dumps(errorSchema(500)), mimetype="application/json", status=500)
         # Everything worked. Carry on!
         return d(*args, **kwargs)
