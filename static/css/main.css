@@ -1,20 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap");
 body {
   margin: 0;
   background-repeat: repeat;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   height: 100vh;
 }
 
-.container {
+.login-register {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.login-register h1 {
+  font-family: 'Rubik', arial;
+  font-weight: bold;
+  color: white;
+  padding-bottom: 0.5em;
+  letter-spacing: 0.25em;
+  text-align: center;
+}
+
+.login-container {
   background-color: rgba(255, 255, 255, 0.75);
   border-radius: 70px;
   display: -webkit-box;
@@ -26,22 +36,35 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 3em;
   font-family: 'Roboto Mono', arial;
+  font-weight: bold;
   color: #030B1E;
 }
 
-.container label {
+.login-container .login {
+  padding: 4em;
+}
+
+.login-container .new-user {
+  padding: 2em 5em;
+  font-size: 1em;
+}
+
+.login-container form {
+  padding: 0.5em;
+}
+
+.login-container label {
   display: block;
   font-size: 1.5em;
 }
 
-.container input {
+.login-container input {
   display: block;
   margin-bottom: 1em;
 }
 
-.container input[type="button"] {
+.login-container input[type="button"] {
   margin: 0 auto;
   margin-top: 1.25em;
   padding: 0.5em;
@@ -52,15 +75,11 @@ body {
   font-size: 1.25em;
 }
 
-.container input[type="button"]:hover {
+.login-container input[type="button"]:hover {
   background-color: #304B79;
 }
 
-.container .new-user {
-  display: none;
-}
-
-.container a {
+.login-container a {
   display: block;
   text-align: center;
   margin-top: 0.5em;
@@ -68,8 +87,88 @@ body {
   color: #030B1E;
 }
 
-.container a:hover {
+.login-container a:hover {
   color: #304B79;
   text-decoration: none;
+}
+
+.contacts-container {
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 1em;
+  height: 100vh;
+  font-family: 'Roboto Mono', arial;
+  color: #030B1E;
+}
+
+.contacts-container .nav-bar {
+  padding: 1.5em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.contacts-container .nav-bar a {
+  color: #030B1E;
+  font-size: 1.25em;
+}
+
+.contacts-container .nav-bar a:hover {
+  color: #304B79;
+  text-decoration: none;
+}
+
+.contacts-container .nav-bar button {
+  border-radius: 12px;
+  background-color: #030B1E;
+  color: white;
+  border: none;
+  font-size: 1em;
+  padding: 0.5em;
+}
+
+.contacts-container .nav-bar button:hover {
+  background-color: #304B79;
+}
+
+.contacts-container .contact-space {
+  background-color: rgba(3, 10, 28, 0.9);
+  border-radius: 25px;
+  height: 80vh;
+  padding: 1em;
+  font-family: 'Roboto Mono', arial;
+  color: #030B1E;
+}
+
+.contacts-container .contact-space .contact-space-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.contacts-container .contact-space .contact-space-nav button {
+  border-radius: 12px;
+  background-color: rgba(3, 10, 28, 0);
+  color: white;
+  border: none;
+  font-size: 0.75m;
+  padding: 0.5em;
+}
+
+.contacts-container .contact-space .contact-space-nav button:hover {
+  background-color: #030a1c;
+}
+
+.contacts-container .contact-space .contact-space-nav .contact-image {
+  width: 16%;
+}
+
+.contacts-container .contact-space .contact-space-nav .search-image {
+  width: 20%;
 }
 /*# sourceMappingURL=main.css.map */

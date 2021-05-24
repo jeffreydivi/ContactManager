@@ -1,28 +1,57 @@
-// Imported Fonts: Roboto Mono
+// Imported Fonts: Roboto Mono, Crimson
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
 
 
 body {
     // Background image formatting
     margin: 0;
     background-repeat: repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
 }
 
-.container {
+// Login/Register Styles
+.login-register {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h1 {
+        font-family: 'Rubik', arial;
+        font-weight: bold;
+        color: white;
+        padding-bottom: 0.5em;
+        letter-spacing: 0.25em;
+        text-align: center;
+    }
+}
+.login-container {
     background-color: rgba(255, 255, 255, 0.75);
     border-radius: 70px;
 
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 3em;
+    // padding: 3.5em;
 
     font-family: 'Roboto Mono', arial;
+    font-weight: bold;
     color: #030B1E;
+
+    .login {
+        padding: 4em;
+    }
+
+    .new-user {
+        padding: 2em 5em;
+        font-size: 1em;
+    }
+
+    form {
+        padding: 0.5em;
+    }
 
     label {
         display: block;
@@ -49,10 +78,6 @@ body {
         background-color: #304B79;
     }
 
-    .new-user {
-        display: none;
-    }
-    
     a {
         display: block;
         text-align: center;
@@ -65,5 +90,81 @@ body {
         color: #304B79;
         text-decoration: none;
     }
-    
 }
+
+// User Contacts Styles
+.contacts-container {
+    background-color: rgba(255, 255, 255, 0.75);
+    padding: 1em;
+    height: 100vh;
+
+    font-family: 'Roboto Mono', arial;
+    color: #030B1E;
+
+    .nav-bar {
+        padding: 1.5em;
+        display: flex;
+        justify-content: space-between;
+
+        a {
+            color: #030B1E;
+            font-size: 1.25em;
+        }
+
+        a:hover {
+            color: #304B79;
+            text-decoration: none;
+        }
+
+        button {
+            border-radius: 12px;
+            background-color: #030B1E;
+            color: white;
+            // border: 2px solid #304B79;
+            border: none;
+            font-size: 1em;
+            padding: 0.5em;
+        }
+    
+        button:hover {
+            background-color: #304B79;
+        }
+    }
+
+    .contact-space {
+        background-color: rgba(3, 10, 28, .9);
+        border-radius: 25px;
+        height: 80vh;
+        padding: 1em;
+
+        font-family: 'Roboto Mono', arial;
+        color: #030B1E;
+
+        .contact-space-nav {
+            display: flex;
+            justify-content: space-between;
+            button {
+                border-radius: 12px;
+                background-color: rgba(3, 10, 28, 0);
+                color: white;
+                border: none;
+                font-size: 0.75m;
+                padding: 0.5em;
+            }
+        
+            button:hover {
+                background-color: rgba(3, 10, 28, 1);
+            }
+            
+            .contact-image {
+                width: 16%;
+            }
+
+            .search-image {
+                width: 20%;
+            }
+        }
+
+    }
+}
+
