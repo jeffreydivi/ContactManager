@@ -6,5 +6,6 @@
     "location": "localhost",
     "database": "DATABASE"
   },
-  "local": false
+  "local": false,
+  "host": "https://contactmanager.xyz"
 }

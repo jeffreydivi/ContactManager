@@ -1,6 +1,7 @@
 # Web server-related
 from functools import wraps
 from flask import Flask, send_file, request, Response
+from flask_cors import CORS, cross_origin
 # Database communication
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -14,8 +15,13 @@ import base64
 with open("config.json") as config_file:
     config = json.load(config_file)
 
-# Initialize Flask, SQL connection.
+# Initialize Flask, CORS, SQL connection.
 app = Flask(__name__, static_url_path="/static")
+
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
+app.config["CORS_ORIGINS"] = config["host"]
+
 if not config["local"]:
     db = create_engine(
         f"mysql://{config['sql']['username']}:{config['sql']['password']}@{config['sql']['location']}/{config['sql']['database']}"
@@ -58,11 +64,20 @@ def authenticate(d):
             if False:
                 # Return error 401.
                 return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
+
+            # Pass user data to the endpoint.
+            userData = {
+                "user_id": -1,
+                "creation": 0,
+                "username": auth["username"],
+                "first_name": auth['username'],
+                "last_name": "ExampleUser"
+            }
         except:
             # 500 error.
             return Response(json.dumps(errorSchema(500)), mimetype="application/json", status=500)
         # Everything worked. Carry on!
-        return d(*args, **kwargs)
+        return d(userData, *args, **kwargs)
 
     return wrapper
 
@@ -78,12 +93,13 @@ def index():
 
 @app.route("/user/", methods=["GET"])
 @authenticate
-def getUser():
+def getUser(userData):
     """
     Return the currently logged-in user's account information
     :return: User
     """
-    return errorSchema(200)
+    # Just a sample response.
+    return userData
 
 
 @app.route("/user/", methods=["POST"])
@@ -97,7 +113,7 @@ def createUser():
 
 @app.route("/user/", methods=["PATCH"])
 @authenticate
-def editUser():
+def editUser(userData):
     """
     Update the authenticated user's profile
     :return: User
@@ -107,7 +123,7 @@ def editUser():
 
 @app.route("/contact/list/", methods=["GET"])
 @authenticate
-def getContactsList():
+def getContactsList(userData):
     """
     Get a list of all contacts
     :return: Contact[]
@@ -117,7 +133,7 @@ def getContactsList():
 
 @app.route("/contact/search/", methods=["GET"])
 @authenticate
-def searchContacts():
+def searchContacts(userData):
     """
     Find all contacts that match a given query.
     :return: Contact[]
@@ -127,7 +143,7 @@ def searchContacts():
 
 @app.route("/contact/add/", methods=["POST"])
 @authenticate
-def createContact():
+def createContact(userData):
     """
     Add a new contact.
     :return: Contact
@@ -137,7 +153,7 @@ def createContact():
 
 @app.route("/contact/<id>/", methods=["GET"])
 @authenticate
-def getContact(id):
+def getContact(userData, id):
     """
     Get a single contact.
     :return: Contact
@@ -147,7 +163,7 @@ def getContact(id):
 
 @app.route("/contact/<id>/", methods=["PATCH"])
 @authenticate
-def editContact(id):
+def editContact(userData, id):
     """
     Updates a single contact.
     :return: Contact
@@ -158,7 +174,7 @@ def editContact(id):
 
 @app.route("/contact/<id>/", methods=["DELETE"])
 @authenticate
-def deleteContact(id):
+def deleteContact(userData, id):
     """
     Delete a contact.
     :return: Error200
