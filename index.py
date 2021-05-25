@@ -10,9 +10,14 @@ from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, 
 import json
 import bcrypt
 import base64
+import socket
 
 # Load configuration file
-with open("config.json") as config_file:
+config_name = "config.json"
+if socket.gethostname() == "contact-manager":
+    config = "/var/www/flask/config.json"
+
+with open(config_name) as config_file:
     config = json.load(config_file)
 
 # Initialize Flask, CORS, SQL connection.
