@@ -15,7 +15,7 @@ import socket
 # Load configuration file
 config_name = "config.json"
 if socket.gethostname() == "contact-manager":
-    config = "/var/www/flask/config.json"
+    config_name = "/var/www/flask/config.json"
 
 with open(config_name) as config_file:
     config = json.load(config_file)
