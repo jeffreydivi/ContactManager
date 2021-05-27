@@ -7,7 +7,6 @@ body {
     // Background image formatting
     margin: 0;
     background-repeat: repeat;
-    height: 100vh;
 }
 
 // Login/Register Styles
@@ -34,7 +33,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    // padding: 3.5em;
 
     font-family: 'Roboto Mono', arial;
     font-weight: bold;
@@ -61,6 +59,12 @@ body {
     input {
         display: block;
         margin-bottom: 1em;
+    }
+
+    .new-user {
+        input {
+            margin-bottom: 0.25em;
+        }
     }
 
     input[type="button"] {
@@ -93,10 +97,11 @@ body {
 }
 
 // User Contacts Styles
-.contacts-container {
+.contacts-container, .contacts-page {
     background-color: rgba(255, 255, 255, 0.75);
     padding: 1em;
     height: 100vh;
+    position: relative;
 
     font-family: 'Roboto Mono', arial;
     color: #030B1E;
@@ -120,7 +125,6 @@ body {
             border-radius: 12px;
             background-color: #030B1E;
             color: white;
-            // border: 2px solid #304B79;
             border: none;
             font-size: 1em;
             padding: 0.5em;
@@ -135,7 +139,7 @@ body {
         background-color: rgba(3, 10, 28, .9);
         border-radius: 25px;
         height: 80vh;
-        padding: 1em;
+        overflow-y: scroll;
 
         font-family: 'Roboto Mono', arial;
         color: #030B1E;
@@ -143,17 +147,35 @@ body {
         .contact-space-nav {
             display: flex;
             justify-content: space-between;
+
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            height: 4em;
+            background-color: #030B1E;
+
+            .search-bar {
+                margin-top: 0.75em;
+                height: 67%;
+            }
+            .search-btn {
+                margin-left: 0.25em;
+            }
+
             button {
                 border-radius: 12px;
-                background-color: rgba(3, 10, 28, 0);
+                background-color: rgba(3, 10, 28, 1);
                 color: white;
                 border: none;
                 font-size: 0.75m;
-                padding: 0.5em;
+                margin-top: 0.7em;
+                margin-left: 1.25em;
+                margin-right: 1.25em;
+                height: 70%;
             }
         
             button:hover {
-                background-color: rgba(3, 10, 28, 1);
+                background-color: #304B79;
             }
             
             .contact-image {
@@ -161,10 +183,79 @@ body {
             }
 
             .search-image {
-                width: 20%;
+                width: 55%;
             }
         }
 
+        .contacts {
+            margin: 0.75em;
+            
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 1em;
+            
+            justify-items: center;
+
+            .edit-button {
+                background-color: #304B79;
+            }
+
+            .edit-button:hover {
+                background-color: #273e66;
+            }
+        }
     }
 }
 
+.popup-opened :not(#popup) {
+    filter: blur(2px) grayscale(5%);
+}
+
+// Add Contact PopUp
+.add-contact-popup-container {
+    background-color: white;
+    // Center
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-family: 'Roboto Mono', arial;
+    font-weight: bold;
+    color: #030B1E;
+
+    padding: 3em 7em;
+    border-radius: 25px;
+    z-index: 2;
+
+    -webkit-box-shadow: 0px 0px 13px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 13px 2px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 13px 2px rgba(0,0,0,0.75);
+
+    form {
+        padding: 0.5em;
+    }
+
+    label {
+        display: block;
+        font-size: 1em;
+    }
+
+    input {
+        padding-right: 3px;
+        display: block;
+        margin-bottom: 1em;
+    }
+
+    .save-button {
+        background-color: #304B79;
+    }
+    .save-button:hover {
+        background-color: #273e66;
+    }
+}
+
+// .popup-opened #contacts-page {
+//     filter: blur(2px) grayscale(50%);
+// }

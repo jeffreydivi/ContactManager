@@ -102,6 +102,37 @@ function doLogOut()
     simulatePageChange();
 }
 
+// Function to open the new contact popup
+function openPopup()
+{
+    let popup = document.getElementById("popup");
+    let contactPage = document.getElementById("contacts-page");
+
+    
+    if (popup.style.display === "none")
+    {
+        contactPage.className = "contacts-page popup-opened";
+        popup.style.display = "block";
+
+        console.log(contactPage.className);
+    }
+}
+
+// Function to close the new contact popup
+function closePopup()
+{
+    let popup = document.getElementById("popup");
+    let contactPage = document.getElementById("contacts-page");
+
+    if (popup.style.display === "block")
+    {
+        popup.style.display = "none";
+        // Eliminate blurred background and close popup
+        contactPage.classList.remove("popup-opened");
+        contactPage.style.filter = "none";
+    }
+}
+
 // Function to simulate login page change
 function simulatePageChange()
 {
