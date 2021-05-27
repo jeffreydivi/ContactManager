@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 # Database communication
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, text
 # Other
 import json
 import bcrypt
@@ -27,14 +27,9 @@ cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
 app.config["CORS_ORIGINS"] = config["host"]
 
-if not config["local"]:
-    db = create_engine(
-        f"mysql://{config['sql']['username']}:{config['sql']['password']}@{config['sql']['location']}/{config['sql']['database']}"
-    )
-else:
-    # This is 100% unconfirmed. Please just run MySQL locally.
-    print("WARNING: Loading SQLite database.")
-    db = create_engine("sqlite:///testing.db")
+db = create_engine(
+    f"mysql://{config['sql']['username']}:{config['sql']['password']}@{config['sql']['location']}/{config['sql']['database']}"
+)
 
 
 def errorSchema(err_code):
@@ -66,17 +61,23 @@ def authenticate(d):
                 return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
             # (do database checking code here)
             # Access username/password via auth["username"] and auth["password"].
-            if False:
+
+            username = auth['username']
+            password = auth['password']
+            # create connection for mysql. Rewritten to be more hack-resistent.
+            output = db.execute(text("SELECT * FROM Users where Username=:username and Password=:password"), username=username, password=password)
+            data = output.fetchone()
+            if data is None:
                 # Return error 401.
                 return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
-
             # Pass user data to the endpoint.
             userData = {
-                "user_id": -1,
-                "creation": 0,
-                "username": auth["username"],
-                "first_name": auth['username'],
-                "last_name": "ExampleUser"
+                "user_id": data['UserID'],
+                "creation": data['DateCreated'],
+                "username": data['Username'],
+                # "Password": data['Password'],
+                "first_name": data['FirstName'],
+                "last_name": data['LastName']
             }
         except:
             # 500 error.
