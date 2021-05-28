@@ -67,7 +67,7 @@ def authenticate(d):
             username = auth['username']
             password = auth['password']
             # create connection for mysql. Rewritten to be more hack-resistant.
-            output = db.execute(text("SELECT * FROM Users where Username=:username"), username=username, password=password)
+            output = db.execute(text("SELECT * FROM Users where Username=:username"), username=username)
             data = output.fetchone()
             if data is None:
                 # Return error 401.
@@ -124,10 +124,10 @@ def createUser():
     first_name = data["first_name"]
     last_name = data["last_name"]
     username = data["username"]
-    password = bcrypt.hashpw(data["password"].encode(encoding="ascii"), bcrypt.gensalt())
+    password = bcrypt.hashpw(data["password"].encode(encoding="ascii"), bcrypt.gensalt()).decode("ascii")
     try:
         db.execute(text("insert into Users (FirstName, LastName, Username, Password) VALUES(:first, :last, :user, :passwd);"), first=first_name, last=last_name, user=username, passwd=password)
-        db_insert_data = db.execute(text("SELECT * FROM Users where Username=:username and Password=:password"), username=username, password=password).fetchone()
+        db_insert_data = db.execute(text("SELECT * FROM Users where Username=:username and Password=:password;"), username=username, password=password).fetchone()
         return {
             "user_id": db_insert_data['UserID'],
             "creation": db_insert_data['DateCreated'],
