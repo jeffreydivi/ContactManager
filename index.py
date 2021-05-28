@@ -44,6 +44,8 @@ def errorSchema(err_code):
         description = "Internal server error."
     elif err_code == 200:
         description = "Success!"
+    elif err_code == 400:
+        description = "Entity already exists."
 
     return {
         "err_code": err_code,
@@ -64,18 +66,22 @@ def authenticate(d):
 
             username = auth['username']
             password = auth['password']
-            # create connection for mysql. Rewritten to be more hack-resistent.
-            output = db.execute(text("SELECT * FROM Users where Username=:username and Password=:password"), username=username, password=password)
+            # create connection for mysql. Rewritten to be more hack-resistant.
+            output = db.execute(text("SELECT * FROM Users where Username=:username"), username=username, password=password)
             data = output.fetchone()
             if data is None:
                 # Return error 401.
                 return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
+
+            if not bcrypt.checkpw(password.encode(encoding="ascii"), data['Password'].encode(encoding="ascii")):
+                return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
+
             # Pass user data to the endpoint.
             userData = {
                 "user_id": data['UserID'],
                 "creation": data['DateCreated'],
                 "username": data['Username'],
-                # "Password": data['Password'],
+                # "password": data['Password'],
                 "first_name": data['FirstName'],
                 "last_name": data['LastName']
             }
@@ -114,7 +120,23 @@ def createUser():
     Create a new account.
     :return: User
     """
-    return errorSchema(200)
+    data = request.get_json()
+    first_name = data["first_name"]
+    last_name = data["last_name"]
+    username = data["username"]
+    password = bcrypt.hashpw(data["password"].encode(encoding="ascii"), bcrypt.gensalt())
+    try:
+        db.execute(text("insert into Users (FirstName, LastName, Username, Password) VALUES(:first, :last, :user, :passwd);"), first=first_name, last=last_name, user=username, passwd=password)
+        db_insert_data = db.execute(text("SELECT * FROM Users where Username=:username and Password=:password"), username=username, password=password).fetchone()
+        return {
+            "user_id": db_insert_data['UserID'],
+            "creation": db_insert_data['DateCreated'],
+            "username": db_insert_data['Username'],
+            "first_name": db_insert_data['FirstName'],
+            "last_name": db_insert_data['LastName']
+        }
+    except:
+        return errorSchema(400)
 
 
 @app.route("/user/", methods=["PATCH"])

@@ -7,7 +7,7 @@ info:
 
 servers:
   - description: ContactManager Production
-    url: https://contactmanager.xyz/api
+    url: https://contactmanager.xyz/
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0
@@ -66,6 +66,20 @@ components:
           type: string
           description: A human-readable explanation of the error.
           example: You are not logged in.
+    Error400:
+      type: object
+      required:
+        - err_code
+        - description
+      properties:
+        err_code:
+          type: integer
+          description: A numeric error code.
+          example: 400
+        description:
+          type: string
+          description: A human-readable explanation of the error.
+          example: Entity already exists.
     EditUser:
       type: object
       required:
@@ -197,6 +211,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '400':
+          description: Errs if the user already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
     patch:
       tags:
         - Account

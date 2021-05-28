@@ -795,6 +795,22 @@
   },
   "description" : "The user-editable sections of a user entry."
 };
+            defs["Error400"] = {
+  "required" : [ "description", "err_code" ],
+  "type" : "object",
+  "properties" : {
+    "err_code" : {
+      "type" : "integer",
+      "description" : "A numeric error code.",
+      "example" : 400
+    },
+    "description" : {
+      "type" : "string",
+      "description" : "A human-readable explanation of the error.",
+      "example" : "Entity already exists."
+    }
+  }
+};
             defs["Error401"] = {
   "required" : [ "description", "err_code" ],
   "type" : "object",
@@ -1002,7 +1018,7 @@
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://contactmanager.xyz/api/user/"</code></pre>
+"https://contactmanager.xyz//user/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Account-createUser-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1273,6 +1289,54 @@ except ApiException as e:
                                 </div>
                             </div>
 
+                            <h3> Status: 400 - Errs if the user already exists. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-createUser-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-createUser-400-schema">
+                                  <div id='responses-createUser-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Errs if the user already exists.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error400"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-createUser-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-createUser-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-createUser-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
                         </article>
                       </div>
                       <hr>
@@ -1312,7 +1376,7 @@ except ApiException as e:
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://contactmanager.xyz/api/user/"</code></pre>
+"https://contactmanager.xyz//user/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Account-editUser-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1695,7 +1759,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://contactmanager.xyz/api/user/"</code></pre>
+"https://contactmanager.xyz//user/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Account-getUser-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2029,7 +2093,7 @@ except ApiException as e:
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://contactmanager.xyz/api/contact/add/"</code></pre>
+"https://contactmanager.xyz//contact/add/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-createContact-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2364,7 +2428,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://contactmanager.xyz/api/contact/{id}/"</code></pre>
+"https://contactmanager.xyz//contact/{id}/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-deleteContact-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2829,7 +2893,7 @@ except ApiException as e:
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://contactmanager.xyz/api/contact/{id}/"</code></pre>
+"https://contactmanager.xyz//contact/{id}/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-editContact-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3346,7 +3410,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://contactmanager.xyz/api/contact/{id}/"</code></pre>
+"https://contactmanager.xyz//contact/{id}/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-getContact-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3810,7 +3874,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://contactmanager.xyz/api/contact/list/"</code></pre>
+"https://contactmanager.xyz//contact/list/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-getContactsList-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4144,7 +4208,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://contactmanager.xyz/api/contact/search/?q="</code></pre>
+"https://contactmanager.xyz//contact/search/?q="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-searchContacts-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
