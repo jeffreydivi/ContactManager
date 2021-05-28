@@ -11,7 +11,7 @@ function doLogin()
 
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
-    let hash = md5(password);
+    // let hash = md5(password);
 
     // Set the success or faliure of the login
     document.getElementById("loginResult").innerHTML = "";
@@ -26,7 +26,7 @@ function doLogin()
 
     let request = new XMLHttpRequest();
     request.open("GET", ENDPOINT + "/user/");
-    request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + hash));
+    request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
 
     try {
         request.onreadystatechange = function ()
@@ -102,36 +102,6 @@ function doLogOut()
     simulatePageChange();
 }
 
-// Function to open the new contact popup
-function openPopup()
-{
-    let popup = document.getElementById("popup");
-    let contactPage = document.getElementById("contacts-page");
-
-    
-    if (popup.style.display === "none")
-    {
-        contactPage.className = "contacts-page popup-opened";
-        popup.style.display = "block";
-
-        console.log(contactPage.className);
-    }
-}
-
-// Function to close the new contact popup
-function closePopup()
-{
-    let popup = document.getElementById("popup");
-    let contactPage = document.getElementById("contacts-page");
-
-    if (popup.style.display === "block")
-    {
-        popup.style.display = "none";
-        // Eliminate blurred background and close popup
-        contactPage.classList.remove("popup-opened");
-        contactPage.style.filter = "none";
-    }
-}
 
 // Function to simulate login page change
 function simulatePageChange()
