@@ -46,6 +46,8 @@ def errorSchema(err_code):
         description = "Success!"
     elif err_code == 400:
         description = "Entity already exists."
+    else:
+        description = "Unknown error."
 
     return {
         "err_code": err_code,
