@@ -170,12 +170,29 @@ body {
   margin-left: 0.25em;
 }
 
+.contacts-container .contact-space .contact-space-nav .contact-image, .contacts-page .contact-space .contact-space-nav .contact-image {
+  width: 16%;
+}
+
+.contacts-container .contact-space .contact-space-nav .search-image, .contacts-page .contact-space .contact-space-nav .search-image {
+  width: 55%;
+}
+
+@media only screen and (max-width: 550px) {
+  .contacts-container .contact-space .contact-space-nav .new-contact-label, .contacts-page .contact-space .contact-space-nav .new-contact-label {
+    display: none;
+  }
+  .contacts-container .contact-space .contact-space-nav .contact-image, .contacts-page .contact-space .contact-space-nav .contact-image {
+    width: 100%;
+  }
+}
+
 .contacts-container .contact-space .contact-space-nav button, .contacts-page .contact-space .contact-space-nav button {
   border-radius: 12px;
   background-color: #030a1c;
   color: white;
   border: none;
-  font-size: 0.75m;
+  font-size: 1em;
   margin-top: 0.7em;
   margin-left: 1.25em;
   margin-right: 1.25em;
@@ -186,22 +203,54 @@ body {
   background-color: #304B79;
 }
 
-.contacts-container .contact-space .contact-space-nav .contact-image, .contacts-page .contact-space .contact-space-nav .contact-image {
-  width: 16%;
-}
-
-.contacts-container .contact-space .contact-space-nav .search-image, .contacts-page .contact-space .contact-space-nav .search-image {
-  width: 55%;
-}
-
 .contacts-container .contact-space .contacts, .contacts-page .contact-space .contacts {
   margin: 0.75em;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[4];
-      grid-template-columns: repeat(4, 1fr);
   grid-gap: 1em;
   justify-items: center;
+}
+
+@media only screen and (max-width: 550px) {
+  .contacts-container .contact-space .contacts, .contacts-page .contact-space .contacts {
+    -ms-grid-columns: (1fr)[1];
+        grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media only screen and (max-width: 850px) and (min-width: 551px) {
+  .contacts-container .contact-space .contacts, .contacts-page .contact-space .contacts {
+    -ms-grid-columns: (1fr)[2];
+        grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 1100px) and (min-width: 851px) {
+  .contacts-container .contact-space .contacts, .contacts-page .contact-space .contacts {
+    -ms-grid-columns: (1fr)[3];
+        grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (max-width: 1400px) and (min-width: 1101px) {
+  .contacts-container .contact-space .contacts, .contacts-page .contact-space .contacts {
+    -ms-grid-columns: (1fr)[4];
+        grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media only screen and (max-width: 1800px) and (min-width: 1401px) {
+  .contacts-container .contact-space .contacts, .contacts-page .contact-space .contacts {
+    -ms-grid-columns: (1fr)[5];
+        grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media only screen and (min-width: 1801px) {
+  .contacts-container .contact-space .contacts, .contacts-page .contact-space .contacts {
+    -ms-grid-columns: (1fr)[6];
+        grid-template-columns: repeat(6, 1fr);
+  }
 }
 
 .contacts-container .contact-space .contacts .edit-btn, .contacts-page .contact-space .contacts .edit-btn {
@@ -276,16 +325,16 @@ body {
   background-color: #273e66;
 }
 
+.popup-title {
+  font-family: 'Roboto Mono', arial;
+  color: #030B1E;
+}
+
 .delete-buttons .keep-delete {
   background-color: #304B79;
 }
 
 .delete-buttons .keep-delete:hover {
   background-color: #273e66;
-}
-
-.popup-title {
-  font-family: 'Roboto Mono', arial;
-  color: #030B1E;
 }
 /*# sourceMappingURL=main.css.map */

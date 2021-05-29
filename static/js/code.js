@@ -1,5 +1,5 @@
 // Use endpoint associated with current server.
-let ENDPOINT = "";
+let ENDPOINT = "https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0";
 let userID = 0;
 let firstName = "";
 let lastName = "";
@@ -17,14 +17,6 @@ function doLogin()
     // Set the success or failure of the login
     document.getElementById("loginResult").innerHTML = "";
 
-
-    // let jsonPayLoad = '{"login" : "' + username + '", "password" : "' + hash + '"}';
-    // let url = urlBase + '/Login.' + extension;
-
-    // let xhr = new XMLHttpRequest();
-    // xhr.open("POST", url, true);
-    // xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
     let request = new XMLHttpRequest();
     request.open("GET", ENDPOINT + "/user/");
     request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
@@ -38,14 +30,6 @@ function doLogin()
                 // Parse the result and capture the id
                 let jsonObject = JSON.parse(request.responseText);
                 userID = jsonObject.user_id;
-
-                // If the user isn't found, username/password combo is incorrect
-                // if (userID < 1)
-                // {
-                //     console.log("Incorrect username or password");
-                //     document.getElementById("loginResult").innerHTML = "Username and password combination incorrect";
-                //     return;
-                // }
 
                 firstName = jsonObject.first_name;
                 lastName = jsonObject.last_name;
