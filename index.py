@@ -203,27 +203,27 @@ def createContact(userData):
     userId = userData['user_id']
     # retrieving info from the form to create a new contact.
     try:
-        first_name = request.form['first_name']
+        first_name = data['first_name']
     except:
         first_name = ""
 
     try:
-        last_name = request.form['last_name']
+        last_name = data['last_name']
     except:
         last_name = ""
 
     try:
-        phone = request.form['phone']
+        phone = data['phone']
     except:
         phone = ""
 
     try:
-        email = request.form['email']
+        email = data['email']
     except:
         email = ""
 
     try:
-        address = request.form['address']
+        address = data['address']
     except:
         address = ""
 
@@ -282,27 +282,27 @@ def editContact(userData, id):
     UserId = userData['user_id']
     # retrieving info from the form to edit a contact
     try:
-        first_name = request.form['first_name']
+        first_name = data['first_name']
     except:
         first_name = db_org_data["FirstName"]
 
     try:
-        last_name = request.form['last_name']
+        last_name = data['last_name']
     except:
         last_name = db_org_data["LastName"]
 
     try:
-        phone = request.form['phone']
+        phone = data['phone']
     except:
         phone = db_org_data["Phone"]
 
     try:
-        email = request.form['email']
+        email = data['email']
     except:
         email = db_org_data["Email"]
 
     try:
-        address = request.form['address']
+        address = data['address']
     except:
         address = db_org_data["Address"]
 
@@ -342,16 +342,15 @@ def deleteContact(userData, id):
     Delete a contact.
     :return: Error200
     """
+    assert id == request.view_args["id"]
     # method i saw on stack overflow, not sure if applicable here.
     # db.session.delete(id)
     # db.session.commit()
 
     # method i tried to delete contact by id from database. iffy on sql syntax.
-    db.execute(text("DELETE FROM Contacts WHERE id = %s ", (id)))  # sqlalchemy.
+    db.execute(text("DELETE FROM Contacts WHERE id = :id ", id=id))
     # return message saying contact deleted?
     # return to the home screen after deleting contact?
-
-    assert id == request.view_args["id"]
     return errorSchema(200)
 
 
