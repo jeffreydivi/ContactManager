@@ -1,4 +1,5 @@
-let ENDPOINT = "http://localhost:5000";
+// Use endpoint associated with current server.
+let ENDPOINT = "";
 let userID = 0;
 let firstName = "";
 let lastName = "";
@@ -13,7 +14,7 @@ function doLogin()
     let password = document.getElementById("password").value;
     // let hash = md5(password);
 
-    // Set the success or faliure of the login
+    // Set the success or failure of the login
     document.getElementById("loginResult").innerHTML = "";
 
 
