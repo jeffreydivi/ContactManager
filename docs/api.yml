@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 1.0.0
+  version: 1.1.0
   title: ContactManager API
   description: The API documentation for ContactManager, a Web-based contact manager created for the small project for COP 4331.
     <br><br>Please note that all API documentation will be done with a local instance of Swagger, will use OpenAPI 3.0.0, and [can be found on our GitHub](https://github.com/jeffreydivi/ContactManager).
@@ -218,6 +218,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error400'
     patch:
+      deprecated: true
       tags:
         - Account
       operationId: edit_user
@@ -311,11 +312,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Contact'
+
       requestBody:
         description: Data to add to the new contact.
         required: true
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/EditContact'
 
@@ -386,7 +388,7 @@ paths:
         required: true
         description: The new contact data. Provided fields will override existing ones.
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/EditContact'
       responses:

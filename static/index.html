@@ -25,13 +25,13 @@
                             <input type="text" id="username" class="username form-control rounded" placeholder="Enter your username" style="width: 300px"/>
                         <label for="password">Password</label>
                             <input type="password" id="password" class="password form-control rounded" placeholder="Enter your password" style="width: 300px"/>
-        
+
                         <input type="button" value="Sign In" onclick="doLogin()">
                         <a href="#" id="switchToRegister" class="new-user-redirect" onclick="switchForms()">New here? Sign up</a>
                         <span id="loginResult"></span>
                     </form>
                 </div>
-        
+
                 <div class="new-user" id="new-user" style="display: none">
                     <form action="">
                         <label for="first-name">First Name</label>
@@ -42,12 +42,12 @@
 
                         <label for="new-username">Username</label>
                             <input type="text" id="new-username" class="new-username form-control rounded" placeholder="Username" aria-label="new-username" style="width: 300px"/>
-            
+
                         <label for="new-password">Password</label>
                             <input type="password" id="new-pass" class="new-password form-control rounded" placeholder="Password" aria-label="new-password" style="width: 300px"/>
-        
+
                         <input type="button" value="Create Account" onclick="createAccount()">
-        
+
                         <a href="#" id="switchToLogin" class="login-redirect" onclick="switchForms()">Already have an account? Sign in</a>
                         <span id="newContactResult"></span>
                     </form>
@@ -176,16 +176,16 @@
                         <form action="" class="add-contact">
                             <label for="first-name">First Name</label>
                             <input type="text" id="contact-first-name" class="contact-first-name form-control rounded" placeholder="First name" style="width: 300px"/>
-    
+
                             <label for="last-name">Last Name</label>
                             <input type="text" id="contact-last-name" class="contact-last-name form-control rounded" placeholder="Last name" style="width: 300px"/>
-    
+
                             <label for="phone">Phone</label>
                             <input type="text" id="contact-phone" class="contact-phone form-control rounded" placeholder="Phone number" style="width: 300px"/>
-                
+
                             <label for="email">Email</label>
                             <input type="text" id="contact-email" class="contact-email form-control rounded" placeholder="Email" style="width: 300px"/>
-    
+
                             <label for="address">Address</label>
                             <input type="text" id="contact-address" class="contact-address form-control rounded" placeholder="Address" style="width: 300px"/>
                         </form>
@@ -197,7 +197,7 @@
                   </div>
                 </div>
             </div>
-            <!--Edit Contact Button-->  
+            <!--Edit Contact Button-->
               <!-- Modal -->
               <div class="modal fade" id="edit-contact-popup" tabindex="-1" role="dialog" aria-labelledby="edit-contact-popupTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -214,13 +214,13 @@
                           <input type="text" id="contact-first-name" class="contact-first-name form-control rounded" style="width: 300px"/>
                           <label for="last-name">Last Name</label>
                           <input type="text" id="contact-last-name" class="contact-last-name form-control rounded" style="width: 300px"/>
-    
+
                           <label for="phone">Phone</label>
                           <input type="text" id="contact-phone" class="contact-phone form-control rounded" style="width: 300px"/>
-                
+
                           <label for="email">Email</label>
                           <input type="text" id="contact-email" class="contact-email form-control rounded" style="width: 300px"/>
-    
+
                           <label for="address">Address</label>
                           <input type="text" id="contact-address" class="contact-address form-control rounded" style="width: 300px"/>
                       </form>
@@ -229,12 +229,12 @@
                       <button type="button" class="btn btn-danger close-edit" data-dismiss="modal" id="close-edit-btn">Close</button>
                       <button type="button" class="save-edit btn btn-primary" id="save-edit-btn">Save changes</button>
 
-                      
+
                     </div>
                   </div>
                 </div>
               </div>
-            <!--Delete Contact Button--> 
+            <!--Delete Contact Button-->
               <div class="modal fade" id="delete-contact-popup" tabindex="-1" role="dialog" aria-labelledby="delete-contact-popupTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
@@ -256,7 +256,7 @@
                   </div>
                 </div>
               </div>
-              
+
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -264,4 +264,3 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
 </html>
-© 2021 GitHub, Inc.
