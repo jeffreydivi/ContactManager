@@ -110,9 +110,10 @@ components:
               description: The user ID.
               example: 7
             creation:
-              type: integer
-              description: A Unix timestamp of the account's creation date.
-              example: 1621450014
+              type: string
+              format: date-time
+              description: The account's creation date and time.
+              example: Thu, 27 May 2021 19:56:01 GMT
         - $ref: '#/components/schemas/EditUser'
       description: A complete single user entry.
     EditContact:
@@ -155,9 +156,10 @@ components:
               description: The contact entry ID.
               example: 42
             creation:
-              type: integer
-              description: A Unix timestamp of the contact's creation date.
-              example: 1621450414
+              type: string
+              format: date-time
+              description: The account's creation date and time.
+              example: Thu, 27 May 2021 19:56:01 GMT
         - $ref: '#/components/schemas/EditContact'
       description: A complete single contact entry.
 security:

@@ -1,6 +1,6 @@
 # Web server-related
 from functools import wraps
-from flask import Flask, send_file, request, Response
+from flask import Flask, send_file, request, Response, make_response
 from flask_cors import CORS, cross_origin
 # Database communication
 from sqlalchemy.ext.declarative import declarative_base
@@ -77,15 +77,22 @@ def authenticate(d):
                 # Return error 401.
                 return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
 
-            if not bcrypt.checkpw(password.encode(encoding="ascii"), data['Password'].encode(encoding="ascii")):
-                return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
+            # Did we get a hashed string (auth-via-cookie)?
+            if len(password) == 69 and password.index("$256$") == 0:
+                # It's a hashed bcrypt string. Use alternate auth check.
+                matchWith = "$256$" + hashlib.sha256(data["Password"].encode("ascii")).hexdigest()
+                if not (data["Username"] == username and password == matchWith):
+                    return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
+            else:
+                if not bcrypt.checkpw(password.encode(encoding="ascii"), data['Password'].encode(encoding="ascii")):
+                    return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
 
             # Pass user data to the endpoint.
             userData = {
                 "user_id": data['UserID'],
                 "creation": data['DateCreated'],
                 "username": data['Username'],
-                # "password": data['Password'],
+                "password": data['Password'],
                 "first_name": data['FirstName'],
                 "last_name": data['LastName']
             }
@@ -115,7 +122,12 @@ def getUser(userData):
     :return: User
     """
     # Just a sample response.
-    return userData
+    passwd = "$256$" + hashlib.sha256(userData["password"].encode("ascii")).hexdigest()
+    del userData["password"]
+    resp = make_response(userData)
+    resp.set_cookie("username", userData["username"])
+    resp.set_cookie("password", passwd)
+    return resp
 
 # Test status: WORKING
 @app.route("/user/", methods=["POST"])
@@ -135,13 +147,16 @@ def createUser():
             first=first_name, last=last_name, user=username, passwd=password)
         db_insert_data = db.execute(text("SELECT * FROM Users where Username=:username and Password=:password;"),
                                     username=username, password=password).fetchone()
-        return {
+        resp = make_response({
             "user_id": db_insert_data['UserID'],
             "creation": db_insert_data['DateCreated'],
             "username": db_insert_data['Username'],
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName']
-        }
+        })
+        resp.set_cookie("username", db_insert_data["Username"])
+        resp.set_cookie("password", "$256$" + hashlib.sha256(db_insert_data["Password"].encode("ascii")).hexdigest())
+        return resp
     except exc.IntegrityError:
         return errorSchema(400)
     except Exception as e:
