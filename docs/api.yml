@@ -10,7 +10,7 @@ servers:
     url: https://contactmanager.xyz/
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0
+    url: https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.1.0
 
 tags:
   - name: Account
