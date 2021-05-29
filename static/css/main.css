@@ -204,11 +204,11 @@ body {
   justify-items: center;
 }
 
-.contacts-container .contact-space .contacts .edit-button, .contacts-page .contact-space .contacts .edit-button {
+.contacts-container .contact-space .contacts .edit-btn, .contacts-page .contact-space .contacts .edit-btn {
   background-color: #304B79;
 }
 
-.contacts-container .contact-space .contacts .edit-button:hover, .contacts-page .contact-space .contacts .edit-button:hover {
+.contacts-container .contact-space .contacts .edit-btn:hover, .contacts-page .contact-space .contacts .edit-btn:hover {
   background-color: #273e66;
 }
 
@@ -241,6 +241,46 @@ body {
 }
 
 .new-contact-buttons .save-new-contact:hover {
+  background-color: #273e66;
+}
+
+.popup-title {
+  font-family: 'Roboto Mono', arial;
+  color: #030B1E;
+}
+
+.edit-contact form {
+  padding: 0.5em;
+}
+
+.edit-contact label {
+  font-family: 'Roboto Mono', arial;
+  color: #030B1E;
+  display: block;
+  font-size: 1em;
+}
+
+.edit-contact input {
+  font-family: 'Roboto Mono', arial;
+  color: #030B1E;
+  padding-right: 3px;
+  display: block;
+  margin-bottom: 1em;
+}
+
+.edit-buttons .save-edit {
+  background-color: #304B79;
+}
+
+.edit-buttons .save-edit:hover {
+  background-color: #273e66;
+}
+
+.delete-buttons .keep-delete {
+  background-color: #304B79;
+}
+
+.delete-buttons .keep-delete:hover {
   background-color: #273e66;
 }
 

@@ -196,11 +196,11 @@ body {
             
             justify-items: center;
 
-            .edit-button {
+            .edit-buttons {
                 background-color: #304B79;
             }
 
-            .edit-button:hover {
+            .edit-buttons:hover {
                 background-color: #273e66;
             }
         }
@@ -245,4 +245,49 @@ body {
 .popup-title {
     font-family: 'Roboto Mono', arial;
     color: #030B1E;
+}
+// Edit Popup
+.edit-contact{
+    form{
+        padding: 0.5em;
+    }
+
+    label {
+        font-family: 'Roboto Mono', arial;
+        color: #030B1E;
+        display: block;
+        font-size: 1em;
+    }
+
+    input {
+        font-family: 'Roboto Mono', arial;
+        color: #030B1E;
+        padding-right: 3px;
+        display: block;
+        margin-bottom: 1em;
+    }
+    
+}
+
+.edit-buttons{
+    .save-edit {
+        background-color: #304B79;
+    }
+    .save-edit:hover {
+        background-color: #273e66;
+    }
+}
+
+.popup-title {
+    font-family: 'Roboto Mono', arial;
+    color: #030B1E;
+}
+
+.delete-buttons{
+    .keep-delete{
+        background-color: #304B79;
+    }
+    .keep-delete:hover {
+        background-color: #273e66;
+    }
 }
