@@ -319,7 +319,7 @@ paths:
         description: Data to add to the new contact.
         required: true
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               $ref: '#/components/schemas/EditContact'
 
@@ -390,7 +390,7 @@ paths:
         required: true
         description: The new contact data. Provided fields will override existing ones.
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               $ref: '#/components/schemas/EditContact'
       responses:
