@@ -108,6 +108,7 @@ body {
 
     .nav-bar {
         padding: 1.5em;
+
         display: flex;
         justify-content: space-between;
 
@@ -162,12 +163,29 @@ body {
                 margin-left: 0.25em;
             }
 
+            .contact-image {
+                width: 16%;
+            }
+
+            .search-image {
+                width: 55%;
+            }
+
+            @media only screen and (max-width: 550px) {
+                .new-contact-label {
+                    display: none;
+                }
+                .contact-image {
+                    width: 100%;
+                }
+            }
+
             button {
                 border-radius: 12px;
                 background-color: rgba(3, 10, 28, 1);
                 color: white;
                 border: none;
-                font-size: 0.75m;
+                font-size: 1em;
                 margin-top: 0.7em;
                 margin-left: 1.25em;
                 margin-right: 1.25em;
@@ -178,29 +196,40 @@ body {
                 background-color: #304B79;
             }
             
-            .contact-image {
-                width: 16%;
-            }
-
-            .search-image {
-                width: 55%;
-            }
         }
 
         .contacts {
             margin: 0.75em;
             
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            @media only screen and (max-width: 550px) {
+                grid-template-columns: repeat(1, 1fr);
+            }
+            @media only screen and (max-width: 850px) and (min-width: 551px) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            @media only screen and (max-width: 1100px) and (min-width: 851px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            @media only screen and (max-width: 1400px) and (min-width: 1101px) {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            @media only screen and (max-width: 1800px) and (min-width: 1401px) {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            @media only screen and (min-width: 1801px) {
+                grid-template-columns: repeat(6, 1fr);
+            }
             grid-gap: 1em;
             
             justify-items: center;
 
-            .edit-buttons {
+            .edit-btn {
                 background-color: #304B79;
             }
 
-            .edit-buttons:hover {
+            .edit-btn:hover {
                 background-color: #273e66;
             }
         }
@@ -246,6 +275,7 @@ body {
     font-family: 'Roboto Mono', arial;
     color: #030B1E;
 }
+
 // Edit Popup
 .edit-contact{
     form{
