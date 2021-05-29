@@ -158,9 +158,9 @@ def createUser():
         resp.set_cookie("password", "$256$" + hashlib.sha256(db_insert_data["Password"].encode("ascii")).hexdigest())
         return resp
     except exc.IntegrityError:
-        return errorSchema(400)
+        return Response(json.dumps(errorSchema(400)), mimetype="application/json", status=400)
     except Exception as e:
-        return errorSchema(500, description=e)
+        return Response(json.dumps(errorSchema(500, description=e)), mimetype="application/json", status=500)
 
 # Test status: DEPRECATED
 @app.route("/user/", methods=["PATCH"])
@@ -170,7 +170,7 @@ def editUser(userData):
     Update the authenticated user's profile
     :return: User
     """
-    return errorSchema(501)
+    return Response(json.dumps(errorSchema(501)), mimetype="application/json", status=501)
 
 # Test status: Not Tested
 @app.route("/contact/list/", methods=["GET"])
@@ -250,9 +250,9 @@ def createContact(userData):
             "address": db_insert_data['Address']
         }
     except exc.IntegrityError:
-        return errorSchema(400)
+        return Response(json.dumps(errorSchema(400)), mimetype="application/json", status=400)
     except Exception as e:
-        return errorSchema(500, description=e)
+        return Response(json.dumps(errorSchema(500, description=e)), mimetype="application/json", status=500)
 
 
 # Test status: Not Tested
@@ -264,6 +264,9 @@ def getContact(userData, id):
     :return: Contact
     """
     assert id == request.view_args["id"]
+
+    # Reminder: make sure the contact you request exists!
+
     return errorSchema(200)
 
 
@@ -278,6 +281,10 @@ def editContact(userData, id):
     data = request.get_json()
     db_org_data = db.execute(text("SELECT * FROM Contacts where ID=:id;"),
                                 id=id).fetchone()
+
+    if not db_org_data:
+        return Response(json.dumps(errorSchema(404)), mimetype="application/json", status=404)
+
     # grabbing user id to link this contact to the user.
     UserId = userData['user_id']
     # retrieving info from the form to edit a contact
@@ -332,9 +339,9 @@ def editContact(userData, id):
         }
 
     except Exception as e:
-        return errorSchema(500, description=e)
+        return Response(json.dumps(errorSchema(500, description=e)), mimetype="application/json", status=500)
 
-
+# Test status: WORKING
 @app.route("/contact/<id>/", methods=["DELETE"])
 @authenticate
 def deleteContact(userData, id):
@@ -343,12 +350,9 @@ def deleteContact(userData, id):
     :return: Error200
     """
     assert id == request.view_args["id"]
-    # method i saw on stack overflow, not sure if applicable here.
-    # db.session.delete(id)
-    # db.session.commit()
 
     # method i tried to delete contact by id from database. iffy on sql syntax.
-    db.execute(text("DELETE FROM Contacts WHERE id = :id ", id=id))
+    db.execute(text("DELETE FROM Contacts WHERE id = :id "), id=id)
     # return message saying contact deleted?
     # return to the home screen after deleting contact?
     return errorSchema(200)
