@@ -327,7 +327,7 @@ def editContact(userData, id):
         # i think we return the updated contact, not sure.
         return {
             # id of contact itself.
-            "id: ": db_insert_data['ID'],
+            "id": db_insert_data['ID'],
             # user that is linked to this contact.
             "user_id": db_insert_data['UserID'],
             "first_name": db_insert_data['FirstName'],
