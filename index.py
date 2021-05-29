@@ -140,7 +140,7 @@ def createUser():
     except:
         return errorSchema(400)
 
-
+# not needed. 
 @app.route("/user/", methods=["PATCH"])
 @authenticate
 def editUser(userData):
@@ -174,11 +174,39 @@ def searchContacts(userData):
 @app.route("/contact/add/", methods=["POST"])
 @authenticate
 def createContact(userData):
-    """
-    Add a new contact.
-    :return: Contact
-    """
-    return errorSchema(200)
+
+    data = request.get_json()
+    # grabbing user id to link this contact to the user. 
+    userId = data['userid'] 
+     # retrivering info from the form to create a new contact. 
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    phone = request.form['phone']
+    email = request.form['email']
+    address = request.form['address']
+    # not sure about the id
+    id = request.form['id']
+    
+    try:
+        # insert new contact info into database. 
+        db.execute(text("insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (:user_id, :first, :last, :phone, :email, :address);"), user_id= userId,  first=first_name, last=last_name, phone = phone, email = email, address = address)
+        # create db_insert_data to return the new contact. 
+        db_insert_data = db.execute(text("SELECT * FROM Contacts where FirstName=:firstname and LastName=:lastname;"), firstname=first_name, lastname=last_name).fetchone()
+        # i think we return the newly created contact? Not sure. 
+        return {
+            # id of contact itself. 
+            "id: ": db_insert_data['ID'],
+            # user that is linked to this contact. 
+            "user_id": db_insert_data['UserID'],
+            "first_name": db_insert_data['FirstName'],
+            "last_name": db_insert_data['LastName'],
+            #"creation": db_insert_data['DateCreated'],
+            "phone": db_insert_data['Phone'],
+            "email": db_insert_data['Email'],
+            "address": db_insert_data['Adress']
+        }
+    except:
+        return errorSchema(400)
 
 
 @app.route("/contact/<id>/", methods=["GET"])
@@ -198,10 +226,40 @@ def editContact(userData, id):
     Updates a single contact.
     :return: Contact
     """
-    assert id == request.view_args["id"]
-    return errorSchema(200)
+    data = request.get_json()
+    # grabbing user id to link this contact to the user. 
+    UserId = data['userid'] 
+     # retrivering info from the form to edit a contact
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    phone = request.form['phone']
+    email = request.form['email']
+    address = request.form['address']
+    
+    try:
+        # update contact info in database. # not 100% on this, if it will update the contact we want. Should we select a contact first and then update? 
+        # "UPDATE Contacts SET FirstName='first_name', LastName='last_name', Phone='phone', Email='email', Address='address' where ID=id"
+        db.execute(text("UPDATE Contacts SET FirstName='first_name', LastName='last_name', Phone='phone', Email='email', Address='address' where ID=id")), 
+        # create db_insert_data to return the edited contact. 
+        db_insert_data = db.execute(text("SELECT * FROM Contacts where FirstName=:firstname and LastName=:lastname;"), firstname=first_name, lastname=last_name).fetchone()
+        # i think we return the updated contact, not sure. 
+        return {
+            # id of contact itself. 
+            "id: ": db_insert_data['ID'],
+            # user that is linked to this contact. 
+            "user_id": db_insert_data['UserID'],
+            "first_name": db_insert_data['FirstName'],
+            "last_name": db_insert_data['LastName'],
+            #"creation": db_insert_data['DateCreated'],
+            "phone": db_insert_data['Phone'],
+            "email": db_insert_data['Email'],
+            "address": db_insert_data['Adress']
+        }
 
-
+    except:
+        return errorSchema(500)
+        
+   
 @app.route("/contact/<id>/", methods=["DELETE"])
 @authenticate
 def deleteContact(userData, id):
@@ -209,6 +267,15 @@ def deleteContact(userData, id):
     Delete a contact.
     :return: Error200
     """
+    # method i saw on stack overflow, not sure if applicable here. 
+    #db.session.delete(id)
+    #db.session.commit()
+
+    # method i tried to delete contact by id from database. iffy on sql syntax.  
+    db.execute(text("DELETE FROM Contacts WHERE id = %s ", (id))) # sqlalchemy. 
+    # return message saying contact deleted? 
+    # return to the home screen after deleting contact? 
+
     assert id == request.view_args["id"]
     return errorSchema(200)
 
