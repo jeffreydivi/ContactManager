@@ -5,12 +5,9 @@ from flask_cors import CORS, cross_origin
 # Database communication
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, text
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, text, exc
 # Other
-import json
-import bcrypt
-import base64
-import socket
+import json, bcrypt, base64, socket, hashlib
 
 # Load configuration file
 config_name = "config.json"
@@ -32,22 +29,27 @@ db = create_engine(
 )
 
 
-def errorSchema(err_code):
-    description = "Unknown error"
-    if err_code == 401:
-        description = "You are not logged in."
-    elif err_code == 403:
-        description = "You do not have permission to view this contact."
-    elif err_code == 404:
-        description = "Contact not found."
-    elif err_code == 500:
-        description = "Internal server error."
-    elif err_code == 200:
-        description = "Success!"
-    elif err_code == 400:
-        description = "Entity already exists."
+def errorSchema(err_code, description=None):
+    if not description:
+        description = "Unknown error"
+        if err_code == 401:
+            description = "You are not logged in."
+        elif err_code == 403:
+            description = "You do not have permission to view this contact."
+        elif err_code == 404:
+            description = "Contact not found."
+        elif err_code == 500:
+            description = "Internal server error."
+        elif err_code == 200:
+            description = "Success!"
+        elif err_code == 400:
+            description = "Entity already exists."
+        elif err_code == 501:
+            description = "Endpoint not implemented."
+        else:
+            description = "Unknown error."
     else:
-        description = "Unknown error."
+        description = str(description)
 
     return {
         "err_code": err_code,
@@ -104,7 +106,7 @@ def index():
     """
     return send_file("static/index.html")
 
-
+# Test status: WORKING
 @app.route("/user/", methods=["GET"])
 @authenticate
 def getUser(userData):
@@ -115,7 +117,7 @@ def getUser(userData):
     # Just a sample response.
     return userData
 
-
+# Test status: WORKING
 @app.route("/user/", methods=["POST"])
 def createUser():
     """
@@ -128,8 +130,11 @@ def createUser():
     username = data["username"]
     password = bcrypt.hashpw(data["password"].encode(encoding="ascii"), bcrypt.gensalt()).decode("ascii")
     try:
-        db.execute(text("insert into Users (FirstName, LastName, Username, Password) VALUES(:first, :last, :user, :passwd);"), first=first_name, last=last_name, user=username, passwd=password)
-        db_insert_data = db.execute(text("SELECT * FROM Users where Username=:username and Password=:password;"), username=username, password=password).fetchone()
+        db.execute(
+            text("insert into Users (FirstName, LastName, Username, Password) VALUES(:first, :last, :user, :passwd);"),
+            first=first_name, last=last_name, user=username, passwd=password)
+        db_insert_data = db.execute(text("SELECT * FROM Users where Username=:username and Password=:password;"),
+                                    username=username, password=password).fetchone()
         return {
             "user_id": db_insert_data['UserID'],
             "creation": db_insert_data['DateCreated'],
@@ -137,10 +142,12 @@ def createUser():
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName']
         }
-    except:
+    except exc.IntegrityError:
         return errorSchema(400)
+    except Exception as e:
+        return errorSchema(500, description=e)
 
-# not needed. 
+# Test status: DEPRECATED
 @app.route("/user/", methods=["PATCH"])
 @authenticate
 def editUser(userData):
@@ -148,9 +155,9 @@ def editUser(userData):
     Update the authenticated user's profile
     :return: User
     """
-    return errorSchema(200)
+    return errorSchema(501)
 
-
+# Test status: Not Tested
 @app.route("/contact/list/", methods=["GET"])
 @authenticate
 def getContactsList(userData):
@@ -161,6 +168,7 @@ def getContactsList(userData):
     return errorSchema(200)
 
 
+# Test status: Not Tested
 @app.route("/contact/search/", methods=["GET"])
 @authenticate
 def searchContacts(userData):
@@ -171,44 +179,68 @@ def searchContacts(userData):
     return errorSchema(200)
 
 
+# Test status: WORKING
 @app.route("/contact/add/", methods=["POST"])
 @authenticate
 def createContact(userData):
-
     data = request.get_json()
-    # grabbing user id to link this contact to the user. 
-    userId = data['userid'] 
-     # retrivering info from the form to create a new contact. 
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
-    phone = request.form['phone']
-    email = request.form['email']
-    address = request.form['address']
-    # not sure about the id
-    id = request.form['id']
-    
+    # grabbing user id to link this contact to the user.
+    userId = userData['user_id']
+    # retrieving info from the form to create a new contact.
     try:
-        # insert new contact info into database. 
-        db.execute(text("insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (:user_id, :first, :last, :phone, :email, :address);"), user_id= userId,  first=first_name, last=last_name, phone = phone, email = email, address = address)
-        # create db_insert_data to return the new contact. 
-        db_insert_data = db.execute(text("SELECT * FROM Contacts where FirstName=:firstname and LastName=:lastname;"), firstname=first_name, lastname=last_name).fetchone()
-        # i think we return the newly created contact? Not sure. 
+        first_name = request.form['first_name']
+    except:
+        first_name = ""
+
+    try:
+        last_name = request.form['last_name']
+    except:
+        last_name = ""
+
+    try:
+        phone = request.form['phone']
+    except:
+        phone = ""
+
+    try:
+        email = request.form['email']
+    except:
+        email = ""
+
+    try:
+        address = request.form['address']
+    except:
+        address = ""
+
+    try:
+        # insert new contact info into database.
+        db.execute(text(
+            "insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (:user_id, :first_name, :last_name, :phone, :email, :address);"),
+                   user_id=userId, first_name=first_name, last_name=last_name, phone=phone, email=email, address=address)
+        # create db_insert_data to return the new contact.
+        db_insert_data = db.execute(text("SELECT * FROM Contacts where Email=:email"),
+                                    email=email).fetchone()
+
+        # i think we return the newly created contact? Not sure. [we do.]
         return {
-            # id of contact itself. 
+            # id of contact itself.
             "id: ": db_insert_data['ID'],
-            # user that is linked to this contact. 
+            # user that is linked to this contact.
             "user_id": db_insert_data['UserID'],
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName'],
-            #"creation": db_insert_data['DateCreated'],
+            # "creation": db_insert_data['DateCreated'],
             "phone": db_insert_data['Phone'],
             "email": db_insert_data['Email'],
-            "address": db_insert_data['Adress']
+            "address": db_insert_data['Address']
         }
-    except:
+    except exc.IntegrityError:
         return errorSchema(400)
+    except Exception as e:
+        return errorSchema(500, description=e)
 
 
+# Test status: Not Tested
 @app.route("/contact/<id>/", methods=["GET"])
 @authenticate
 def getContact(userData, id):
@@ -219,6 +251,8 @@ def getContact(userData, id):
     assert id == request.view_args["id"]
     return errorSchema(200)
 
+
+# Test status: WORKING
 @app.route("/contact/<id>/", methods=["PATCH"])
 @authenticate
 def editContact(userData, id):
@@ -227,39 +261,65 @@ def editContact(userData, id):
     :return: Contact
     """
     data = request.get_json()
-    # grabbing user id to link this contact to the user. 
-    UserId = data['userid'] 
-     # retrivering info from the form to edit a contact
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
-    phone = request.form['phone']
-    email = request.form['email']
-    address = request.form['address']
-    
+    db_org_data = db.execute(text("SELECT * FROM Contacts where ID=:id;"),
+                                id=id).fetchone()
+    # grabbing user id to link this contact to the user.
+    UserId = userData['user_id']
+    # retrieving info from the form to edit a contact
     try:
-        # update contact info in database. # not 100% on this, if it will update the contact we want. Should we select a contact first and then update? 
+        first_name = request.form['first_name']
+    except:
+        first_name = db_org_data["FirstName"]
+
+    try:
+        last_name = request.form['last_name']
+    except:
+        last_name = db_org_data["LastName"]
+
+    try:
+        phone = request.form['phone']
+    except:
+        phone = db_org_data["Phone"]
+
+    try:
+        email = request.form['email']
+    except:
+        email = db_org_data["Email"]
+
+    try:
+        address = request.form['address']
+    except:
+        address = db_org_data["Address"]
+
+    id = db_org_data["ID"]
+
+    try:
+        # update contact info in database. # not 100% on this, if it will update the contact we want. Should we select a contact first and then update?
         # "UPDATE Contacts SET FirstName='first_name', LastName='last_name', Phone='phone', Email='email', Address='address' where ID=id"
-        db.execute(text("UPDATE Contacts SET FirstName='first_name', LastName='last_name', Phone='phone', Email='email', Address='address' where ID=id")), 
-        # create db_insert_data to return the edited contact. 
-        db_insert_data = db.execute(text("SELECT * FROM Contacts where FirstName=:firstname and LastName=:lastname;"), firstname=first_name, lastname=last_name).fetchone()
-        # i think we return the updated contact, not sure. 
+        db.execute(text(
+            "UPDATE Contacts SET FirstName=:first_name, LastName=:last_name, Phone=:phone, Email=:email, Address=:address where ID=:id"),
+                                    first_name=first_name, last_name=last_name, phone=phone, email=email, address=address, id=id),
+        # create db_insert_data to return the edited contact.
+        db_insert_data = db.execute(text("SELECT * FROM Contacts where ID=:id"),
+                                    id=id).fetchone()
+        # i think we return the updated contact, not sure.
         return {
-            # id of contact itself. 
+            # id of contact itself.
             "id: ": db_insert_data['ID'],
-            # user that is linked to this contact. 
+            # user that is linked to this contact.
             "user_id": db_insert_data['UserID'],
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName'],
-            #"creation": db_insert_data['DateCreated'],
+            # "creation": db_insert_data['DateCreated'],
             "phone": db_insert_data['Phone'],
             "email": db_insert_data['Email'],
-            "address": db_insert_data['Adress']
+            "address": db_insert_data['Address']
         }
 
-    except:
-        return errorSchema(500)
-        
-   
+    except Exception as e:
+        return errorSchema(500, description=e)
+
+
 @app.route("/contact/<id>/", methods=["DELETE"])
 @authenticate
 def deleteContact(userData, id):
@@ -267,14 +327,14 @@ def deleteContact(userData, id):
     Delete a contact.
     :return: Error200
     """
-    # method i saw on stack overflow, not sure if applicable here. 
-    #db.session.delete(id)
-    #db.session.commit()
+    # method i saw on stack overflow, not sure if applicable here.
+    # db.session.delete(id)
+    # db.session.commit()
 
-    # method i tried to delete contact by id from database. iffy on sql syntax.  
-    db.execute(text("DELETE FROM Contacts WHERE id = %s ", (id))) # sqlalchemy. 
-    # return message saying contact deleted? 
-    # return to the home screen after deleting contact? 
+    # method i tried to delete contact by id from database. iffy on sql syntax.
+    db.execute(text("DELETE FROM Contacts WHERE id = %s ", (id)))  # sqlalchemy.
+    # return message saying contact deleted?
+    # return to the home screen after deleting contact?
 
     assert id == request.view_args["id"]
     return errorSchema(200)

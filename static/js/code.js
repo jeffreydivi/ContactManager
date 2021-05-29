@@ -1,4 +1,4 @@
-let ENDPOINT = "https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0";
+let ENDPOINT = "http://localhost:5000";
 let userID = 0;
 let firstName = "";
 let lastName = "";
