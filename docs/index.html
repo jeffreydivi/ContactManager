@@ -723,7 +723,7 @@
     "search" : {
       "type" : "string",
       "description" : "A search query throughout a user's contacts list.",
-      "example" : "400"
+      "example" : "Rose Tyler"
     }
   }
 };
@@ -3862,7 +3862,7 @@ except ApiException as e:
                         <p class="marked">Get a list of all contacts.</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/contact/list/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/contact/list/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -3882,7 +3882,7 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Contacts-getContactsList-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
 "https://contactmanager.xyz//contact/list/"</code></pre>
@@ -4196,7 +4196,7 @@ except ApiException as e:
                         <p class="marked">Find all contacts that match a given query.</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/contact/search/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/contact/search/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -4216,7 +4216,7 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Contacts-searchContacts-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\

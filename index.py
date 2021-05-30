@@ -403,7 +403,7 @@ def editContact(userData, id):
         }
 
     except Exception as e:
-        return Response(json.dumps(errorSchema(403)), mimetype="application/json", status=500)
+        return Response(json.dumps(errorSchema(500)), mimetype="application/json", status=500)
 
 # Test status: WORKING
 @app.route("/contact/<id>/", methods=["DELETE"])
