@@ -35,7 +35,9 @@ db = create_engine(
 def errorSchema(err_code, description=None):
     if not description:
         description = "Unknown error"
-        if err_code == 401:
+        if err_code == 400:
+            description = "Bad request. Please read the docs at http://docs.contactmanager.xyz."
+        elif err_code == 401:
             description = "You are not logged in."
         elif err_code == 403:
             description = "You do not have permission to view this contact."
