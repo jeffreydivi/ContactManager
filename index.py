@@ -10,6 +10,8 @@ from flask_cors import CORS
 # Database communication
 from sqlalchemy import create_engine, text, exc
 
+from sqlalchemy.sql.functions import user
+
 # Load configuration file
 config_name = "config.json"
 if socket.gethostname() == "contact-manager":
@@ -181,7 +183,14 @@ def getContactsList(userData):
     Get a list of all contacts
     :return: Contact[]
     """
-    return errorSchema(200)
+    try:
+        # try to fetch contacts from database, for the given user. 
+        contacts = db.execute(text("SELECT * FROM Contacts where UserID=:uid;"), uid=userData['UserID']).fetchall()
+        return(contacts)
+    except:
+        # return error that we cannot access these contacts. 
+        errorSchema(403)
+    
 
 
 # Test status: Not Tested
@@ -192,8 +201,19 @@ def searchContacts(userData):
     Find all contacts that match a given query.
     :return: Contact[]
     """
-    return errorSchema(200)
+    # grabbing the json info that the user wants to search. 
+    data = request.get_json()
+    try:
+        # grab the text typed by the user and store in search. 
+        search = data["search"]
+        # try to search the database for a contact that matches the search query. 
+        search_result = db.execute(text("SELECT * FROM Contacts WHERE FirstName LIKE '%search%' OR LastName LIKE '%search%'")).fetchall()
 
+        return(search_result)
+    except:
+        # contact not found. 
+        return errorSchema(404)
+    
 
 # Test status: WORKING
 @app.route("/contact/add/", methods=["POST"])
@@ -264,11 +284,18 @@ def getContact(userData, id):
     Get a single contact.
     :return: Contact
     """
-    assert id == request.view_args["id"]
+    try:
+        # try to fetch contact from database, where the id matches and the userID matches, therefore the contact is owned by the user. 
+        contact = db.execute(text("SELECT * FROM Contacts where ID=:id AND UserID=:uid;"), id=id, uid=userData['UserID']).fetchone()
+        return(contact)
+    except:
+        # return error that we cannot access this contact. 
+        errorSchema(403)
 
     # Reminder: make sure the contact you request exists!
+    #assert id == request.view_args["id"]
+    
 
-    return errorSchema(200)
 
 
 # Test status: WORKING
