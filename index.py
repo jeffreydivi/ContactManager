@@ -1,13 +1,14 @@
-# Web server-related
-from functools import wraps
-from flask import Flask, send_file, request, Response, make_response
-from flask_cors import CORS, cross_origin
-# Database communication
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, text, exc
 # Other
-import json, bcrypt, base64, socket, hashlib
+import bcrypt
+import hashlib
+import json
+import socket
+from functools import wraps
+# Web server-related
+from flask import Flask, send_file, request, Response, make_response
+from flask_cors import CORS
+# Database communication
+from sqlalchemy import create_engine, text, exc
 
 # Load configuration file
 config_name = "config.json"
@@ -239,7 +240,7 @@ def createContact(userData):
         # i think we return the newly created contact? Not sure. [we do.]
         return {
             # id of contact itself.
-            "id: ": db_insert_data['ID'],
+            "id": db_insert_data['ID'],
             # user that is linked to this contact.
             "user_id": db_insert_data['UserID'],
             "first_name": db_insert_data['FirstName'],
