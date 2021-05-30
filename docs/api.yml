@@ -273,18 +273,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error401'
   /contact/search/:
-    get:
+    post:
       operationId: search_contacts
       tags:
         - Contacts
       description: Find all contacts that match a given query.
-      parameters:
-        - name: q
-          in: query
-          description: A search query throughout a user's contacts list.
-          required: true
-          schema:
-            type: string
+      requestBody:
+        description: Create the search request.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - search
+              properties:
+                search:
+                  type: string
+                  description: A search query throughout a user's contacts list.
+                  example: Rose Tyler
       responses:
         '200':
           description: Returns an array of all matching contacts.

@@ -1,4 +1,5 @@
 # Other
+import datetime
 import bcrypt
 import hashlib
 import json
@@ -9,7 +10,6 @@ from flask import Flask, send_file, request, Response, make_response
 from flask_cors import CORS
 # Database communication
 from sqlalchemy import create_engine, text, exc
-
 from sqlalchemy.sql.functions import user
 
 # Load configuration file
@@ -93,15 +93,15 @@ def authenticate(d):
             # Pass user data to the endpoint.
             userData = {
                 "user_id": data['UserID'],
-                "creation": data['DateCreated'],
+                "creation": data['DateCreated'].strftime("%a, %d %b %Y %H:%M:%S GMT"),
                 "username": data['Username'],
                 "password": data['Password'],
                 "first_name": data['FirstName'],
                 "last_name": data['LastName']
             }
-        except:
+        except Exception as e:
             # 500 error.
-            return Response(json.dumps(errorSchema(500)), mimetype="application/json", status=500)
+            return Response(json.dumps(errorSchema(500, description=e)), mimetype="application/json", status=500)
         # Everything worked. Carry on!
         return d(userData, *args, **kwargs)
 
@@ -139,7 +139,7 @@ def createUser():
     Create a new account.
     :return: User
     """
-    data = request.get_json()
+    data = request.get_json(force=True)
     first_name = data["first_name"]
     last_name = data["last_name"]
     username = data["username"]
@@ -152,7 +152,7 @@ def createUser():
                                     username=username, password=password).fetchone()
         resp = make_response({
             "user_id": db_insert_data['UserID'],
-            "creation": db_insert_data['DateCreated'],
+            "creation": db_insert_data['DateCreated'].strftime("%a, %d %b %Y %H:%M:%S GMT"),
             "username": db_insert_data['Username'],
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName']
@@ -175,7 +175,7 @@ def editUser(userData):
     """
     return Response(json.dumps(errorSchema(501)), mimetype="application/json", status=501)
 
-# Test status: Not Tested
+# Test status: WORKING
 @app.route("/contact/list/", methods=["GET"])
 @authenticate
 def getContactsList(userData):
@@ -184,42 +184,69 @@ def getContactsList(userData):
     :return: Contact[]
     """
     try:
-        # try to fetch contacts from database, for the given user. 
-        contacts = db.execute(text("SELECT * FROM Contacts where UserID=:uid;"), uid=userData['UserID']).fetchall()
-        return(contacts)
-    except:
-        # return error that we cannot access these contacts. 
-        errorSchema(403)
-    
+        # try to fetch contacts from database, for the given user.
+        contacts = db.execute(text("SELECT * FROM Contacts where UserID=:uid;"), uid=userData['user_id']).fetchall()
+        # Sadly, we can't just serve it as-is. We have to do it like this.
+        fin = []
+        for row in contacts:
+            fin.append({
+                "user_id": row["UserID"],
+                "id": row["ID"],
+                "creation": row["DateCreated"].strftime("%a, %d %b %Y %H:%M:%S GMT"),
+                "first_name": row["FirstName"],
+                "last_name": row["LastName"],
+                "phone": row["Phone"],
+                "email": row["Email"],
+                "address": row["Address"]
+            })
+        return Response(json.dumps(fin), mimetype="application/json")
+    except Exception as e:
+        # return error that a server error (5xx) resulted in an access error.
+        return errorSchema(500, description=e)
 
 
-# Test status: Not Tested
-@app.route("/contact/search/", methods=["GET"])
+
+# Test status: Work Needed
+# Just a note: GET requests can't support a JSON body. So we'll use a POST instead.
+@app.route("/contact/search/", methods=["POST"])
 @authenticate
 def searchContacts(userData):
     """
     Find all contacts that match a given query.
     :return: Contact[]
     """
-    # grabbing the json info that the user wants to search. 
-    data = request.get_json()
+    # grabbing the json info that the user wants to search.
+    data = request.get_json(force=True)
     try:
-        # grab the text typed by the user and store in search. 
-        search = data["search"]
-        # try to search the database for a contact that matches the search query. 
-        search_result = db.execute(text("SELECT * FROM Contacts WHERE FirstName LIKE '%search%' OR LastName LIKE '%search%'")).fetchall()
+        # grab the text typed by the user and store in search. (most certainly vulnerable code!)
+        search = data["search"].replace(";", "").replace("--", "")
+        # try to search the database for a contact that matches the search query.
+        # TODO: fix the search query. What if we search for "Rose T"? This will yield issues. Or is this what the professor wants?
+        search_result = db.execute(text("SELECT * FROM Contacts WHERE FirstName LIKE '%" + search + "%' OR LastName LIKE '%" + search + "%'"), search=search).fetchall()
+        # Sadly, we can't just serve it as-is. We have to do it like this.
+        fin = []
+        for row in search_result:
+            fin.append({
+                "user_id": row["UserID"],
+                "id": row["ID"],
+                "creation": row["DateCreated"].strftime("%a, %d %b %Y %H:%M:%S GMT"),
+                "first_name": row["FirstName"],
+                "last_name": row["LastName"],
+                "phone": row["Phone"],
+                "email": row["Email"],
+                "address": row["Address"]
+            })
+        return Response(json.dumps(fin), mimetype="application/json")
+    except Exception as e:
+        # contact not found.
+        return errorSchema(500, description=e)
 
-        return(search_result)
-    except:
-        # contact not found. 
-        return errorSchema(404)
-    
 
 # Test status: WORKING
 @app.route("/contact/add/", methods=["POST"])
 @authenticate
 def createContact(userData):
-    data = request.get_json()
+    data = request.get_json(force=True)
     # grabbing user id to link this contact to the user.
     userId = userData['user_id']
     # retrieving info from the form to create a new contact.
@@ -265,7 +292,7 @@ def createContact(userData):
             "user_id": db_insert_data['UserID'],
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName'],
-            # "creation": db_insert_data['DateCreated'],
+            "creation": db_insert_data['DateCreated'].strftime("%a, %d %b %Y %H:%M:%S GMT"),
             "phone": db_insert_data['Phone'],
             "email": db_insert_data['Email'],
             "address": db_insert_data['Address']
@@ -284,21 +311,30 @@ def getContact(userData, id):
     Get a single contact.
     :return: Contact
     """
-    try:
-        # try to fetch contact from database, where the id matches and the userID matches, therefore the contact is owned by the user. 
-        contact = db.execute(text("SELECT * FROM Contacts where ID=:id AND UserID=:uid;"), id=id, uid=userData['UserID']).fetchone()
-        return(contact)
-    except:
-        # return error that we cannot access this contact. 
-        errorSchema(403)
-
     # Reminder: make sure the contact you request exists!
-    #assert id == request.view_args["id"]
-    
+    assert id == request.view_args["id"]
+
+    try:
+        # try to fetch contact from database, where the id matches and the userID matches, therefore the contact is owned by the user.
+        contact = db.execute(text("SELECT * FROM Contacts where ID=:id AND UserID=:uid;"), id=id, uid=userData['user_id']).fetchone()
+        return {
+            "user_id": contact["UserID"],
+            "id": contact["ID"],
+            "creation": contact["DateCreated"].strftime("%a, %d %b %Y %H:%M:%S GMT"),
+            "first_name": contact["FirstName"],
+            "last_name": contact["LastName"],
+            "phone": contact["Phone"],
+            "email": contact["Email"],
+            "address": contact["Address"]
+        }
+    except:
+        # return error that we cannot access this contact.
+        return errorSchema(403)
 
 
 
-# Test status: WORKING
+
+# Test status: WORKING (but please also have it check if you own the contact!)
 @app.route("/contact/<id>/", methods=["PATCH"])
 @authenticate
 def editContact(userData, id):
@@ -306,7 +342,7 @@ def editContact(userData, id):
     Updates a single contact.
     :return: Contact
     """
-    data = request.get_json()
+    data = request.get_json(force=True)
     db_org_data = db.execute(text("SELECT * FROM Contacts where ID=:id;"),
                                 id=id).fetchone()
 
@@ -360,14 +396,14 @@ def editContact(userData, id):
             "user_id": db_insert_data['UserID'],
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName'],
-            # "creation": db_insert_data['DateCreated'],
+            "creation": db_insert_data['DateCreated'].strftime("%a, %d %b %Y %H:%M:%S GMT"),
             "phone": db_insert_data['Phone'],
             "email": db_insert_data['Email'],
             "address": db_insert_data['Address']
         }
 
     except Exception as e:
-        return Response(json.dumps(errorSchema(500, description=e)), mimetype="application/json", status=500)
+        return Response(json.dumps(errorSchema(403)), mimetype="application/json", status=500)
 
 # Test status: WORKING
 @app.route("/contact/<id>/", methods=["DELETE"])

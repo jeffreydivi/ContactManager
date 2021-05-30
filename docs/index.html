@@ -716,6 +716,17 @@
     }
   } ]
 };
+            defs["body_2"] = {
+  "required" : [ "search" ],
+  "type" : "object",
+  "properties" : {
+    "search" : {
+      "type" : "string",
+      "description" : "A search query throughout a user's contacts list.",
+      "example" : "400"
+    }
+  }
+};
             defs["Contact"] = {
   "description" : "A complete single contact entry.",
   "allOf" : [ {
@@ -2092,7 +2103,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
--H "Content-Type: application/x-www-form-urlencoded"\
+-H "Content-Type: application/json"\
 "https://contactmanager.xyz//contact/add/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-createContact-0-java">
@@ -2114,13 +2125,9 @@ public class ContactsApiExample {
         BasicAuth.setPassword("YOUR PASSWORD");
 
         ContactsApi apiInstance = new ContactsApi();
-        String firstName = firstName_example; // String | 
-        String lastName = lastName_example; // String | 
-        String phone = phone_example; // String | 
-        String email = email_example; // String | 
-        String address = address_example; // String | 
+        EditContact body = ; // EditContact | Data to add to the new contact.
         try {
-            Contact result = apiInstance.createContact(firstName, lastName, phone, email, address);
+            Contact result = apiInstance.createContact(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#createContact");
@@ -2137,13 +2144,9 @@ public class ContactsApiExample {
 
     public static void main(String[] args) {
         ContactsApi apiInstance = new ContactsApi();
-        String firstName = firstName_example; // String | 
-        String lastName = lastName_example; // String | 
-        String phone = phone_example; // String | 
-        String email = email_example; // String | 
-        String address = address_example; // String | 
+        EditContact body = ; // EditContact | Data to add to the new contact.
         try {
-            Contact result = apiInstance.createContact(firstName, lastName, phone, email, address);
+            Contact result = apiInstance.createContact(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#createContact");
@@ -2161,19 +2164,11 @@ public class ContactsApiExample {
 // Configure HTTP basic authorization (authentication scheme: BasicAuth)
 [apiConfig setUsername:@"YOUR_USERNAME"];
 [apiConfig setPassword:@"YOUR_PASSWORD"];
-String *firstName = firstName_example; // 
-String *lastName = lastName_example; // 
-String *phone = phone_example; // 
-String *email = email_example; // 
-String *address = address_example; // 
+EditContact *body = ; // Data to add to the new contact.
 
 ContactsApi *apiInstance = [[ContactsApi alloc] init];
 
-[apiInstance createContactWith:firstName
-    lastName:lastName
-    phone:phone
-    email:email
-    address:address
+[apiInstance createContactWith:body
               completionHandler: ^(Contact output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -2194,11 +2189,7 @@ BasicAuth.username = 'YOUR USERNAME'
 BasicAuth.password = 'YOUR PASSWORD'
 
 var api = new ContactManagerApi.ContactsApi()
-var firstName = firstName_example; // {{String}} 
-var lastName = lastName_example; // {{String}} 
-var phone = phone_example; // {{String}} 
-var email = email_example; // {{String}} 
-var address = address_example; // {{String}} 
+var body = ; // {{EditContact}} Data to add to the new contact.
 
 var callback = function(error, data, response) {
   if (error) {
@@ -2207,7 +2198,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.createContact(firstNamelastNamephoneemailaddress, callback);
+api.createContact(body, callback);
 </code></pre>
                             </div>
 
@@ -2232,15 +2223,11 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new ContactsApi();
-            var firstName = firstName_example;  // String | 
-            var lastName = lastName_example;  // String | 
-            var phone = phone_example;  // String | 
-            var email = email_example;  // String | 
-            var address = address_example;  // String | 
+            var body = new EditContact(); // EditContact | Data to add to the new contact.
 
             try
             {
-                Contact result = apiInstance.createContact(firstName, lastName, phone, email, address);
+                Contact result = apiInstance.createContact(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2261,14 +2248,10 @@ Swagger\Client\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERN
 Swagger\Client\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Swagger\Client\ApiContactsApi();
-$firstName = firstName_example; // String | 
-$lastName = lastName_example; // String | 
-$phone = phone_example; // String | 
-$email = email_example; // String | 
-$address = address_example; // String | 
+$body = ; // EditContact | Data to add to the new contact.
 
 try {
-    $result = $api_instance->createContact($firstName, $lastName, $phone, $email, $address);
+    $result = $api_instance->createContact($body);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ContactsApi->createContact: ', $e->getMessage(), PHP_EOL;
@@ -2285,14 +2268,10 @@ $WWW::SwaggerClient::Configuration::username = 'YOUR_USERNAME';
 $WWW::SwaggerClient::Configuration::password = 'YOUR_PASSWORD';
 
 my $api_instance = WWW::SwaggerClient::ContactsApi->new();
-my $firstName = firstName_example; # String | 
-my $lastName = lastName_example; # String | 
-my $phone = phone_example; # String | 
-my $email = email_example; # String | 
-my $address = address_example; # String | 
+my $body = WWW::SwaggerClient::Object::EditContact->new(); # EditContact | Data to add to the new contact.
 
 eval { 
-    my $result = $api_instance->createContact(firstName => $firstName, lastName => $lastName, phone => $phone, email => $email, address => $address);
+    my $result = $api_instance->createContact(body => $body);
     print Dumper($result);
 };
 if ($@) {
@@ -2312,14 +2291,10 @@ swagger_client.configuration.password = 'YOUR_PASSWORD'
 
 # create an instance of the API class
 api_instance = swagger_client.ContactsApi()
-firstName = firstName_example # String | 
-lastName = lastName_example # String | 
-phone = phone_example # String | 
-email = email_example # String | 
-address = address_example # String | 
+body =  # EditContact | Data to add to the new contact.
 
 try: 
-    api_response = api_instance.create_contact(firstName, lastName, phone, email, address)
+    api_response = api_instance.create_contact(body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ContactsApi->createContact: %s\n" % e)</code></pre>
@@ -2330,109 +2305,51 @@ except ApiException as e:
 
 
 
-
-                            <div class="methodsubtabletitle">Form parameters</div>
+                            <div class="methodsubtabletitle">Body parameters</div>
                             <table id="methodsubtable">
                               <tr>
                                 <th width="150px">Name</th>
                                 <th>Description</th>
                               </tr>
-                                  <tr><td style="width:150px;">first_name*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_createContact_firstName">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                                  <tr><td style="width:150px;">last_name*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_createContact_lastName">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                                  <tr><td style="width:150px;">phone*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_createContact_phone">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                                  <tr><td style="width:150px;">email*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_createContact_email">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                                  <tr><td style="width:150px;">address*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_createContact_address">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "Data to add to the new contact.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/EditContact"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_createContact_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_createContact_body"></div>
+                                </td>
+                                </tr>
                             </table>
+
 
 
                           <h2>Responses</h2>
@@ -2986,7 +2903,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
--H "Content-Type: application/x-www-form-urlencoded"\
+-H "Content-Type: application/json"\
 "https://contactmanager.xyz//contact/{id}/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-editContact-0-java">
@@ -3008,14 +2925,10 @@ public class ContactsApiExample {
         BasicAuth.setPassword("YOUR PASSWORD");
 
         ContactsApi apiInstance = new ContactsApi();
-        String firstName = firstName_example; // String | 
-        String lastName = lastName_example; // String | 
-        String phone = phone_example; // String | 
-        String email = email_example; // String | 
-        String address = address_example; // String | 
+        EditContact body = ; // EditContact | The new contact data. Provided fields will override existing ones.
         Integer id = 56; // Integer | Contact ID
         try {
-            Contact result = apiInstance.editContact(firstName, lastName, phone, email, address, id);
+            Contact result = apiInstance.editContact(body, id);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#editContact");
@@ -3032,14 +2945,10 @@ public class ContactsApiExample {
 
     public static void main(String[] args) {
         ContactsApi apiInstance = new ContactsApi();
-        String firstName = firstName_example; // String | 
-        String lastName = lastName_example; // String | 
-        String phone = phone_example; // String | 
-        String email = email_example; // String | 
-        String address = address_example; // String | 
+        EditContact body = ; // EditContact | The new contact data. Provided fields will override existing ones.
         Integer id = 56; // Integer | Contact ID
         try {
-            Contact result = apiInstance.editContact(firstName, lastName, phone, email, address, id);
+            Contact result = apiInstance.editContact(body, id);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#editContact");
@@ -3057,20 +2966,12 @@ public class ContactsApiExample {
 // Configure HTTP basic authorization (authentication scheme: BasicAuth)
 [apiConfig setUsername:@"YOUR_USERNAME"];
 [apiConfig setPassword:@"YOUR_PASSWORD"];
-String *firstName = firstName_example; // 
-String *lastName = lastName_example; // 
-String *phone = phone_example; // 
-String *email = email_example; // 
-String *address = address_example; // 
+EditContact *body = ; // The new contact data. Provided fields will override existing ones.
 Integer *id = 56; // Contact ID
 
 ContactsApi *apiInstance = [[ContactsApi alloc] init];
 
-[apiInstance editContactWith:firstName
-    lastName:lastName
-    phone:phone
-    email:email
-    address:address
+[apiInstance editContactWith:body
     id:id
               completionHandler: ^(Contact output, NSError* error) {
                             if (output) {
@@ -3092,11 +2993,7 @@ BasicAuth.username = 'YOUR USERNAME'
 BasicAuth.password = 'YOUR PASSWORD'
 
 var api = new ContactManagerApi.ContactsApi()
-var firstName = firstName_example; // {{String}} 
-var lastName = lastName_example; // {{String}} 
-var phone = phone_example; // {{String}} 
-var email = email_example; // {{String}} 
-var address = address_example; // {{String}} 
+var body = ; // {{EditContact}} The new contact data. Provided fields will override existing ones.
 var id = 56; // {{Integer}} Contact ID
 
 var callback = function(error, data, response) {
@@ -3106,7 +3003,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.editContact(firstNamelastNamephoneemailaddressid, callback);
+api.editContact(bodyid, callback);
 </code></pre>
                             </div>
 
@@ -3131,16 +3028,12 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new ContactsApi();
-            var firstName = firstName_example;  // String | 
-            var lastName = lastName_example;  // String | 
-            var phone = phone_example;  // String | 
-            var email = email_example;  // String | 
-            var address = address_example;  // String | 
+            var body = new EditContact(); // EditContact | The new contact data. Provided fields will override existing ones.
             var id = 56;  // Integer | Contact ID
 
             try
             {
-                Contact result = apiInstance.editContact(firstName, lastName, phone, email, address, id);
+                Contact result = apiInstance.editContact(body, id);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3161,15 +3054,11 @@ Swagger\Client\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERN
 Swagger\Client\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Swagger\Client\ApiContactsApi();
-$firstName = firstName_example; // String | 
-$lastName = lastName_example; // String | 
-$phone = phone_example; // String | 
-$email = email_example; // String | 
-$address = address_example; // String | 
+$body = ; // EditContact | The new contact data. Provided fields will override existing ones.
 $id = 56; // Integer | Contact ID
 
 try {
-    $result = $api_instance->editContact($firstName, $lastName, $phone, $email, $address, $id);
+    $result = $api_instance->editContact($body, $id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ContactsApi->editContact: ', $e->getMessage(), PHP_EOL;
@@ -3186,15 +3075,11 @@ $WWW::SwaggerClient::Configuration::username = 'YOUR_USERNAME';
 $WWW::SwaggerClient::Configuration::password = 'YOUR_PASSWORD';
 
 my $api_instance = WWW::SwaggerClient::ContactsApi->new();
-my $firstName = firstName_example; # String | 
-my $lastName = lastName_example; # String | 
-my $phone = phone_example; # String | 
-my $email = email_example; # String | 
-my $address = address_example; # String | 
+my $body = WWW::SwaggerClient::Object::EditContact->new(); # EditContact | The new contact data. Provided fields will override existing ones.
 my $id = 56; # Integer | Contact ID
 
 eval { 
-    my $result = $api_instance->editContact(firstName => $firstName, lastName => $lastName, phone => $phone, email => $email, address => $address, id => $id);
+    my $result = $api_instance->editContact(body => $body, id => $id);
     print Dumper($result);
 };
 if ($@) {
@@ -3214,15 +3099,11 @@ swagger_client.configuration.password = 'YOUR_PASSWORD'
 
 # create an instance of the API class
 api_instance = swagger_client.ContactsApi()
-firstName = firstName_example # String | 
-lastName = lastName_example # String | 
-phone = phone_example # String | 
-email = email_example # String | 
-address = address_example # String | 
+body =  # EditContact | The new contact data. Provided fields will override existing ones.
 id = 56 # Integer | Contact ID
 
 try: 
-    api_response = api_instance.edit_contact(firstName, lastName, phone, email, address, id)
+    api_response = api_instance.edit_contact(body, id)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ContactsApi->editContact: %s\n" % e)</code></pre>
@@ -3262,109 +3143,51 @@ except ApiException as e:
                             </table>
 
 
-
-                            <div class="methodsubtabletitle">Form parameters</div>
+                            <div class="methodsubtabletitle">Body parameters</div>
                             <table id="methodsubtable">
                               <tr>
                                 <th width="150px">Name</th>
                                 <th>Description</th>
                               </tr>
-                                  <tr><td style="width:150px;">first_name*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_editContact_firstName">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                                  <tr><td style="width:150px;">last_name*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_editContact_lastName">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                                  <tr><td style="width:150px;">phone*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_editContact_phone">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                                  <tr><td style="width:150px;">email*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_editContact_email">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                                  <tr><td style="width:150px;">address*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_editContact_address">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "The new contact data. Provided fields will override existing ones.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/EditContact"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_editContact_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_editContact_body"></div>
+                                </td>
+                                </tr>
                             </table>
+
 
 
                           <h2>Responses</h2>
@@ -4039,7 +3862,7 @@ except ApiException as e:
                         <p class="marked">Get a list of all contacts.</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/contact/list/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/contact/list/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -4059,7 +3882,7 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Contacts-getContactsList-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
 "https://contactmanager.xyz//contact/list/"</code></pre>
@@ -4396,7 +4219,8 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
  -H "Authorization: Basic [[basicHash]]"\
 -H "Accept: application/json"\
-"https://contactmanager.xyz//contact/search/?q="</code></pre>
+-H "Content-Type: application/json"\
+"https://contactmanager.xyz//contact/search/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Contacts-searchContacts-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4417,9 +4241,9 @@ public class ContactsApiExample {
         BasicAuth.setPassword("YOUR PASSWORD");
 
         ContactsApi apiInstance = new ContactsApi();
-        String q = q_example; // String | A search query throughout a user's contacts list.
+        Body_2 body = ; // Body_2 | Create the search request.
         try {
-            array[Contact] result = apiInstance.searchContacts(q);
+            array[Contact] result = apiInstance.searchContacts(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#searchContacts");
@@ -4436,9 +4260,9 @@ public class ContactsApiExample {
 
     public static void main(String[] args) {
         ContactsApi apiInstance = new ContactsApi();
-        String q = q_example; // String | A search query throughout a user's contacts list.
+        Body_2 body = ; // Body_2 | Create the search request.
         try {
-            array[Contact] result = apiInstance.searchContacts(q);
+            array[Contact] result = apiInstance.searchContacts(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ContactsApi#searchContacts");
@@ -4456,11 +4280,11 @@ public class ContactsApiExample {
 // Configure HTTP basic authorization (authentication scheme: BasicAuth)
 [apiConfig setUsername:@"YOUR_USERNAME"];
 [apiConfig setPassword:@"YOUR_PASSWORD"];
-String *q = q_example; // A search query throughout a user's contacts list.
+Body_2 *body = ; // Create the search request.
 
 ContactsApi *apiInstance = [[ContactsApi alloc] init];
 
-[apiInstance searchContactsWith:q
+[apiInstance searchContactsWith:body
               completionHandler: ^(array[Contact] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -4481,7 +4305,7 @@ BasicAuth.username = 'YOUR USERNAME'
 BasicAuth.password = 'YOUR PASSWORD'
 
 var api = new ContactManagerApi.ContactsApi()
-var q = q_example; // {{String}} A search query throughout a user's contacts list.
+var body = ; // {{Body_2}} Create the search request.
 
 var callback = function(error, data, response) {
   if (error) {
@@ -4490,7 +4314,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.searchContacts(q, callback);
+api.searchContacts(body, callback);
 </code></pre>
                             </div>
 
@@ -4515,11 +4339,11 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new ContactsApi();
-            var q = q_example;  // String | A search query throughout a user's contacts list.
+            var body = new Body_2(); // Body_2 | Create the search request.
 
             try
             {
-                array[Contact] result = apiInstance.searchContacts(q);
+                array[Contact] result = apiInstance.searchContacts(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4540,10 +4364,10 @@ Swagger\Client\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERN
 Swagger\Client\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Swagger\Client\ApiContactsApi();
-$q = q_example; // String | A search query throughout a user's contacts list.
+$body = ; // Body_2 | Create the search request.
 
 try {
-    $result = $api_instance->searchContacts($q);
+    $result = $api_instance->searchContacts($body);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ContactsApi->searchContacts: ', $e->getMessage(), PHP_EOL;
@@ -4560,10 +4384,10 @@ $WWW::SwaggerClient::Configuration::username = 'YOUR_USERNAME';
 $WWW::SwaggerClient::Configuration::password = 'YOUR_PASSWORD';
 
 my $api_instance = WWW::SwaggerClient::ContactsApi->new();
-my $q = q_example; # String | A search query throughout a user's contacts list.
+my $body = WWW::SwaggerClient::Object::Body_2->new(); # Body_2 | Create the search request.
 
 eval { 
-    my $result = $api_instance->searchContacts(q => $q);
+    my $result = $api_instance->searchContacts(body => $body);
     print Dumper($result);
 };
 if ($@) {
@@ -4583,10 +4407,10 @@ swagger_client.configuration.password = 'YOUR_PASSWORD'
 
 # create an instance of the API class
 api_instance = swagger_client.ContactsApi()
-q = q_example # String | A search query throughout a user's contacts list.
+body =  # Body_2 | Create the search request.
 
 try: 
-    api_response = api_instance.search_contacts(q)
+    api_response = api_instance.search_contacts(body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ContactsApi->searchContacts: %s\n" % e)</code></pre>
@@ -4597,37 +4421,52 @@ except ApiException as e:
 
 
 
-
-
-                            <div class="methodsubtabletitle">Query parameters</div>
+                            <div class="methodsubtabletitle">Body parameters</div>
                             <table id="methodsubtable">
                               <tr>
                                 <th width="150px">Name</th>
                                 <th>Description</th>
                               </tr>
-                                <tr><td style="width:150px;">q*</td>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
                                 <td>
                                 
                                 
-                                    <div id="d2e199_searchContacts_q">
-                                        <div class="json-schema-view">
-                                            <div class="primitive">
-                                                <span class="type">
-                                                    String
-                                                </span>
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "Create the search request.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/body_2"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
                                 
-                                                    <div class="inner description">
-                                                        A search query throughout a user&#x27;s contacts list.
-                                                    </div>
-                                            </div>
-                                                <div class="inner required">
-                                                    Required
-                                                </div>
-                                        </div>
-                                    </div>
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_searchContacts_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_searchContacts_body"></div>
                                 </td>
                                 </tr>
                             </table>
+
+
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - Returns an array of all matching contacts. </h3>
