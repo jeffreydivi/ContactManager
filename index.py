@@ -223,7 +223,7 @@ def searchContacts(userData):
         # grab the text typed by the user and store in search. (most certainly vulnerable code!)
         search = data["search"].replace(";", "").replace("--", "")
         # try to search the database for a contact that matches the search query.
-        # TODO: fix the search query. What if we search for "Rose T"? This will yield issues. Or is this what the professor wants? 
+        # TODO: fix the search query. What if we search for "Rose T"? This will yield issues. Or is this what the professor wants?
         search_result = db.execute(text("SELECT * FROM Contacts WHERE FullName LIKE '%" + search + "%'"), search=search).fetchall()
         # Sadly, we can't just serve it as-is. We have to do it like this.
         fin = []
@@ -305,7 +305,7 @@ def createContact(userData):
         return Response(json.dumps(errorSchema(500, description=e)), mimetype="application/json", status=500)
 
 
-# Test status: Not Tested
+# Test status: WORKING
 @app.route("/contact/<id>/", methods=["GET"])
 @authenticate
 def getContact(userData, id):
@@ -331,12 +331,12 @@ def getContact(userData, id):
         }
     except:
         # return error that we cannot access this contact.
-        return errorSchema(403)
+        return Response(json.dumps(errorSchema(404)), mimetype="application/json", status=404)
 
 
 
 
-# Test status: WORKING (but please also have it check if you own the contact!)
+# Test status: WORKING
 @app.route("/contact/<id>/", methods=["PATCH"])
 @authenticate
 def editContact(userData, id):
