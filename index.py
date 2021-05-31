@@ -223,8 +223,8 @@ def searchContacts(userData):
         # grab the text typed by the user and store in search. (most certainly vulnerable code!)
         search = data["search"].replace(";", "").replace("--", "")
         # try to search the database for a contact that matches the search query.
-        # TODO: fix the search query. What if we search for "Rose T"? This will yield issues. Or is this what the professor wants?
-        search_result = db.execute(text("SELECT * FROM Contacts WHERE FirstName LIKE '%" + search + "%' OR LastName LIKE '%" + search + "%'"), search=search).fetchall()
+        # TODO: fix the search query. What if we search for "Rose T"? This will yield issues. Or is this what the professor wants? 
+        search_result = db.execute(text("SELECT * FROM Contacts WHERE FullName LIKE '%" + search + "%'"), search=search).fetchall()
         # Sadly, we can't just serve it as-is. We have to do it like this.
         fin = []
         for row in search_result:
@@ -345,8 +345,8 @@ def editContact(userData, id):
     :return: Contact
     """
     data = request.get_json(force=True)
-    db_org_data = db.execute(text("SELECT * FROM Contacts where ID=:id;"),
-                                id=id).fetchone()
+    db_org_data = db.execute(text("SELECT * FROM Contacts where ID=:id AND UserID=:uid;"),
+                                id=id, uid=userData['user_id']).fetchone()
 
     if not db_org_data:
         return Response(json.dumps(errorSchema(404)), mimetype="application/json", status=404)
@@ -419,8 +419,6 @@ def deleteContact(userData, id):
 
     # method i tried to delete contact by id from database. iffy on sql syntax.
     db.execute(text("DELETE FROM Contacts WHERE id = :id "), id=id)
-    # return message saying contact deleted?
-    # return to the home screen after deleting contact?
     return errorSchema(200)
 
 
