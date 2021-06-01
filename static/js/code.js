@@ -1,22 +1,24 @@
 // Use endpoint associated with current server.
 let ENDPOINT = "https://contactmanager.xyz";
-// let ENDPOINT = "https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0";
-let userID = 0;
+
 let firstName = "";
 let lastName = "";
+let username = "";
+let password = "";
 
 function doLogin()
 {
-    userID = 0;
     firstName = "";
     lastName = "";
+    username = "";
+    password = "";
 
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-    // let hash = md5(password);
+    username = document.getElementById("username").value;
+    password = document.getElementById("password").value;
+
 
     // Set the success or failure of the login
-    document.getElementById("loginResult").innerHTML = "";
+    document.getElementById("loginResult").innerText = "";
 
     let request = new XMLHttpRequest();
     request.open("GET", ENDPOINT + "/user/");
@@ -31,7 +33,6 @@ function doLogin()
                 // Parse the result and capture the id
                 let jsonObject = JSON.parse(request.responseText);
                 console.log(jsonObject)
-                userID = jsonObject.user_id;
 
                 firstName = jsonObject.first_name;
                 lastName = jsonObject.last_name;
@@ -77,18 +78,113 @@ function doLogin()
 
 function doLogOut()
 {
-    userID = 0;
     firstName = "";
     lastName = "";
+    username = "";
+    password = "";
     document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 
     // Reset the form
     document.getElementById("login-form").reset();
+    document.getElementById("registration-form").reset();
+    document.getElementById("loginResult").innerText = "";
+    document.getElementById("newUserResult").innerText = "";
+    
+    console.log("Logout successful");
 
     // Go back to login page
     simulatePageChange();
 }
 
+function createAccount() {
+    firstName = "";
+    lastName = "";
+    username = "";
+    password = "";
+
+    let api_url = ENDPOINT + "/user/"
+    
+    firstName = document.getElementById("new-first").value;
+    lastName = document.getElementById("new-last").value;
+    username = document.getElementById("new-username").value;
+    password = document.getElementById("new-pass").value;
+    
+    let jsonPayload = '{"first_name" : "' + firstName + '", "last_name" : "' + lastName + '", "username" : "' + username + '", "password" : "' + password + '"}';
+    
+    console.log(jsonPayload);
+    
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", api_url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    
+    try{
+        xhr.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                document.getElementById("newUserResult").innerText = "Registration successful";
+                console.log("Registration successful");
+            }
+            else if (this.readyState == 4 && this.status == 400)
+            {
+                document.getElementById("newUserResult").innerText = "User with this username already exits";
+                console.error("User with this username already exits");
+                return;
+            }
+        };
+        xhr.send(jsonPayload);
+        saveCookie();
+        doLoginAfterCreate();
+    }
+    catch(err){
+        document.getElementById("newUserResult").innerHTML = err.message;
+    }
+    
+}
+
+function doLoginAfterCreate() 
+{
+    readCookie();
+    console.log(username + " " + password);
+    document.getElementById("current-user").innerText = firstName;
+    console.log("Login successful");
+    simulatePageChange();
+}
+
+function readCookie()
+{
+	var data = document.cookie;
+	var splits = data.split(",");
+	for(var i = 0; i < splits.length; i++) 
+	{
+        var thisOne = splits[i].trim();
+		var tokens = thisOne.split("=");
+		if( tokens[0] == "firstName" )
+		{
+			firstName = tokens[1];
+		}
+		else if( tokens[0] == "lastName" )
+		{
+            lastName = tokens[1];
+		}
+        else if( tokens[0] == "username" )
+		{
+            username = tokens[1];
+		}
+        else if( tokens[0] == "password" )
+		{
+            password = tokens[1];
+		}
+	}
+}
+
+function saveCookie()
+{
+    let minutes = 20;
+	let date = new Date();
+	date.setTime(date.getTime()+(minutes*60*1000));
+	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",username=" + username + ",password=" + password + ";expires=" + date.toGMTString();
+}
 
 // Function to simulate login page change
 function simulatePageChange()
@@ -103,7 +199,14 @@ function simulatePageChange()
     }
     else
     {
+        // Go back to login form
+        let registerForm = document.getElementById("new-user");
+        if (registerForm.style.display === "block")
+        {
+            switchForms();
+        }
         loginPage.style.display = "block";
+
         contactPage.style.display = "none";
     }
 }
@@ -133,55 +236,4 @@ function switchForms()
         registerForm.style.display = "none";
         register.style.display = "none";
     }
-}
-
-function createAccount() {
-    let api_url = ENDPOINT + "/user/"
-
-    let minutes = 20;
-	let date = new Date();
-	date.setTime(date.getTime()+(minutes*60*1000));
-
-    firstName = document.getElementById("new-first").value;
-    lastName = document.getElementById("new-last").value;
-    let username = document.getElementById("new-username").value;
-    let password = document.getElementById("new-pass").value;
-
-    let jsonPayload = '{"first_name" : "' + firstName + '", "last_name" : "' + lastName + '", "username" : "' + username + '", "password" : "' + password + '"}';
-
-    console.log(jsonPayload);
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", api_url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-    try{
-        xhr.onreadystatechange = function ()
-        {
-            if (this.readyState == 4 && this.status == 200)
-            {
-                document.getElementById("newUserResult").innerText = "Registration successful";
-                console.log("Registration successful");
-            }
-            else if (this.readyState == 4 && this.status == 400)
-            {
-                document.getElementById("newUserResult").innerText = "User with this username already exits";
-                console.error("User with this username already exits");
-                return;
-            }
-        };
-        xhr.send(jsonPayload);
-    }
-    catch(err){
-        document.getElementById("newUserResult").innerHTML = err.message;
-    }
-
-}
-
-function saveCookie()
-{
-	let minutes = 20;
-	let date = new Date();
-	date.setTime(date.getTime()+(minutes*60*1000));
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userID=" + userID + ";expires=" + date.toGMTString();
 }
