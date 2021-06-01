@@ -1,6 +1,6 @@
 // Use endpoint associated with current server.
-// let ENDPOINT = "https://ContactManager.xyz";
-let ENDPOINT = "https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0";
+let ENDPOINT = "https://contactmanager.xyz";
+// let ENDPOINT = "https://virtserver.swaggerhub.com/jeffreydivi/ContactManager/1.0.0";
 let userID = 0;
 let firstName = "";
 let lastName = "";
@@ -138,27 +138,23 @@ function switchForms()
 function createAccount() {
     let api_url = ENDPOINT + "/user/"
 
-    let minutes = 20;
-	let date = new Date();
-	date.setTime(date.getTime()+(minutes*60*1000));
-
     firstName = document.getElementById("new-first").value;
     lastName = document.getElementById("new-last").value;
     let username = document.getElementById("new-username").value;
     let password = document.getElementById("new-pass").value;
 
     let jsonPayload = {
-        user_id: userID,
-        creation: date,
-        username: username,
         first_name: firstName,
-        last_name: lastName
+        last_name: firstName,
+        username: username,
+        password: password
     };
+    JSON.stringify(jsonPayload);
 
-    console.log(jsonPayload)
+    console.log(jsonPayload);
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", api_url, false);
+    xhr.open("POST", api_url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
     try{
@@ -167,10 +163,6 @@ function createAccount() {
     catch(err){
         // error msg
     }
-    
-
-    // let jsonObject = JSON.parse( xhr.responseText );
-    // console.log(jsonObject)
 }
 
 function saveCookie()

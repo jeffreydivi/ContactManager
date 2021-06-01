@@ -197,6 +197,7 @@ def getContactsList(userData):
                 "creation": row["DateCreated"].strftime("%a, %d %b %Y %H:%M:%S GMT"),
                 "first_name": row["FirstName"],
                 "last_name": row["LastName"],
+                "full_name": row["FullName"],
                 "phone": row["Phone"],
                 "email": row["Email"],
                 "address": row["Address"]
@@ -234,6 +235,7 @@ def searchContacts(userData):
                 "creation": row["DateCreated"].strftime("%a, %d %b %Y %H:%M:%S GMT"),
                 "first_name": row["FirstName"],
                 "last_name": row["LastName"],
+                "full_name": row["FullName"],
                 "phone": row["Phone"],
                 "email": row["Email"],
                 "address": row["Address"]
@@ -278,10 +280,15 @@ def createContact(userData):
         address = ""
 
     try:
+        # concatenate the first and last name
+        full_name = first_name + " " + last_name
+        
         # insert new contact info into database.
         db.execute(text(
-            "insert into Contacts (UserID, FirstName, LastName, Phone, Email, Address) VALUES (:user_id, :first_name, :last_name, :phone, :email, :address);"),
-                   user_id=userId, first_name=first_name, last_name=last_name, phone=phone, email=email, address=address)
+            "insert into Contacts (UserID, FirstName, LastName, FullName, Phone, Email, Address) VALUES (:user_id, :first_name, :last_name, :full_name, :phone, :email, :address);"),
+                   user_id=userId, first_name=first_name, last_name=last_name, full_name=full_name, phone=phone, email=email, address=address)
+
+
         # create db_insert_data to return the new contact.
         db_insert_data = db.execute(text("SELECT * FROM Contacts where Email=:email"),
                                     email=email).fetchone()
@@ -294,6 +301,7 @@ def createContact(userData):
             "user_id": db_insert_data['UserID'],
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName'],
+            "full_name": db_insert_data['FullName'],
             "creation": db_insert_data['DateCreated'].strftime("%a, %d %b %Y %H:%M:%S GMT"),
             "phone": db_insert_data['Phone'],
             "email": db_insert_data['Email'],
@@ -325,6 +333,7 @@ def getContact(userData, id):
             "creation": contact["DateCreated"].strftime("%a, %d %b %Y %H:%M:%S GMT"),
             "first_name": contact["FirstName"],
             "last_name": contact["LastName"],
+            "full_name": contact['FullName'],
             "phone": contact["Phone"],
             "email": contact["Email"],
             "address": contact["Address"]
@@ -382,11 +391,14 @@ def editContact(userData, id):
     id = db_org_data["ID"]
 
     try:
+        # concatenate the first and last name
+        full_name = first_name + " " + last_name
+
         # update contact info in database. # not 100% on this, if it will update the contact we want. Should we select a contact first and then update?
         # "UPDATE Contacts SET FirstName='first_name', LastName='last_name', Phone='phone', Email='email', Address='address' where ID=id"
         db.execute(text(
-            "UPDATE Contacts SET FirstName=:first_name, LastName=:last_name, Phone=:phone, Email=:email, Address=:address where ID=:id"),
-                                    first_name=first_name, last_name=last_name, phone=phone, email=email, address=address, id=id),
+            "UPDATE Contacts SET FirstName=:first_name, LastName=:last_name, FullName=:full_name, Phone=:phone, Email=:email, Address=:address where ID=:id"),
+                                    first_name=first_name, last_name=last_name, full_name=full_name, phone=phone, email=email, address=address, id=id),
         # create db_insert_data to return the edited contact.
         db_insert_data = db.execute(text("SELECT * FROM Contacts where ID=:id"),
                                     id=id).fetchone()
@@ -398,6 +410,7 @@ def editContact(userData, id):
             "user_id": db_insert_data['UserID'],
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName'],
+            "full_name": db_insert_data['FullName'],
             "creation": db_insert_data['DateCreated'].strftime("%a, %d %b %Y %H:%M:%S GMT"),
             "phone": db_insert_data['Phone'],
             "email": db_insert_data['Email'],
