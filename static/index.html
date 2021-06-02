@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="contacts">
+            <div class="contacts" id="contacts-pane">
                 <div class="card" style="width: 15em;">
                     <div class="card-body">
                         <h5 class="card-title"><span id="contact-first-name">First </span><span id="contact-last-name">Last</span></h5>
@@ -187,7 +187,7 @@
                 </div>
                 <div class="modal-footer new-contact-buttons">
                     <button type="button" class="btn btn-danger cancel-new-contact" data-dismiss="modal" id="cancel-new-contact-btn">Cancel</button>
-                    <button type="button" class="save-new-contact btn btn-primary" id="save-new-contact-btn">Save</button>
+                    <button type="button" class="save-new-contact btn btn-primary" id="save-new-contact-btn" onclick="createContact()">Save</button>
                 </div>
             </div>
         </div>

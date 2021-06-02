@@ -96,13 +96,65 @@ function doLogOut()
     simulatePageChange();
 }
 
+function createContact() {
+    let contactFirstName = "";
+    let contactlastName = "";
+    let phone = "";
+    let email = "";
+    let address = "";
+
+    contactFirstName = document.getElementById("new-contact-first-name").value;
+    contactlastName = document.getElementById("new-contact-last-name").value;
+    phone = document.getElementById("new-contact-phone").value;
+    email = document.getElementById("new-contact-email").value;
+    address = document.getElementById("new-contact-address").value;
+
+    let jsonPayload = '{"first_name" : "' + firstName + '", "last_name" : "' + lastName + '", "phone" : "' + phone + '", "email" : "' + email + '", "address" : "' + address + '"}';
+    let api_url = ENDPOINT + "/contact/add/";
+
+    console.log(jsonPayload);
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", api_url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    
+    try{
+        xhr.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                // add pop up contact added
+                console.log("Contact added");
+            }
+        };
+        xhr.send(jsonPayload);
+        createContactCard();
+
+    }
+    catch(err){
+        console.log("error in createContact: " + err.message);
+    }
+}
+
+function createContactCard() {
+    
+    document.getElementById("contacts-pane").innerHTML += 
+
+        "<div class='card' style='width: 15em;'>" +
+            "<div class='card-body'>" +
+                "<h5 class='card-title'><span id='contact-first-name'>First </span><span id='contact-last-name'>Last</span></h5>" +
+                "<p class='card-text'><span id='contact-phone'>Phone: </span><br/><span id='contact-email'> Email: </span><br/><span id='contact-add'> Address: </span></p>" +
+                "<button type='button' class='edit-btn btn btn-primary' id='edit-btn' data-toggle='modal' data-target='#edit-contact-popup'>Edit</button>" +
+                "<button type='button' class='btn btn-danger delete-btn' id='delete-btn' data-toggle='modal' data-target='#delete-contact-popup'>Delete</button>" +
+            "</div>" +
+        "</div>";
+}
+
 function createAccount() {
     firstName = "";
     lastName = "";
     username = "";
     password = "";
-
-    let api_url = ENDPOINT + "/user/"
     
     firstName = document.getElementById("new-first").value;
     lastName = document.getElementById("new-last").value;
@@ -110,6 +162,7 @@ function createAccount() {
     password = document.getElementById("new-pass").value;
     
     let jsonPayload = '{"first_name" : "' + firstName + '", "last_name" : "' + lastName + '", "username" : "' + username + '", "password" : "' + password + '"}';
+    let api_url = ENDPOINT + "/user/";
     
     console.log(jsonPayload);
     

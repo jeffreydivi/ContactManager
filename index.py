@@ -4,6 +4,7 @@ import bcrypt
 import hashlib
 import json
 import socket
+import logging
 from functools import wraps
 # Web server-related
 from flask import Flask, send_file, request, Response, make_response
@@ -28,7 +29,7 @@ app.config["CORS_HEADERS"] = "Content-Type"
 app.config["CORS_ORIGINS"] = config["host"]
 
 db = create_engine(
-    f"mysql://{config['sql']['username']}:{config['sql']['password']}@{config['sql']['location']}/{config['sql']['database']}"
+    f"mysql+mysqlconnector://{config['sql']['username']}:{config['sql']['password']}@{config['sql']['location']}/{config['sql']['database']}"
 )
 
 
@@ -284,6 +285,9 @@ def createContact(userData):
         full_name = first_name + " " + last_name
         
         # insert new contact info into database.
+        # db.execute(text(
+        #     "insert into Contacts (UserID, FirstName, LastName, FullName, Phone, Email, Address) VALUES (:user_id, :first_name, :last_name, :full_name, :phone, :email, :address);"),
+        #            user_id=userId, first_name=first_name, last_name=last_name, full_name=full_name, phone=phone, email=email, address=address)
         db.execute(text(
             "insert into Contacts (UserID, FirstName, LastName, FullName, Phone, Email, Address) VALUES (:user_id, :first_name, :last_name, :full_name, :phone, :email, :address);"),
                    user_id=userId, first_name=first_name, last_name=last_name, full_name=full_name, phone=phone, email=email, address=address)
