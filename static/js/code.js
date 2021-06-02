@@ -145,7 +145,7 @@ function createContactCard() {
             "<div class='card-body'>" +
                 "<h5 class='card-title'><span id='contact-first-name'>First </span><span id='contact-last-name'>Last</span></h5>" +
                 "<p class='card-text'><span id='contact-phone'>Phone: </span><br/><span id='contact-email'> Email: </span><br/><span id='contact-add'> Address: </span></p>" +
-                "<button type='button' class='edit-btn btn btn-primary' id='edit-btn' data-toggle='modal' data-target='#edit-contact-popup'>Edit</button>" +
+                "<button type='button' class='edit-btn btn btn-primary mr-2' id='edit-btn' data-toggle='modal' data-target='#edit-contact-popup'>Edit</button>" +
                 "<button type='button' class='btn btn-danger delete-btn' id='delete-btn' data-toggle='modal' data-target='#delete-contact-popup'>Delete</button>" +
             "</div>" +
         "</div>";
