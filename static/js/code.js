@@ -109,7 +109,7 @@ function createContact() {
     email = document.getElementById("new-contact-email").value;
     address = document.getElementById("new-contact-address").value;
 
-    let jsonPayload = '{"first_name" : "' + firstName + '", "last_name" : "' + lastName + '", "phone" : "' + phone + '", "email" : "' + email + '", "address" : "' + address + '"}';
+    let jsonPayload = '{"first_name" : "' + contactFirstName + '", "last_name" : "' + contactLastName + '", "phone" : "' + phone + '", "email" : "' + email + '", "address" : "' + address + '"}';
     let api_url = ENDPOINT + "/contact/add/";
 
     console.log(jsonPayload);
