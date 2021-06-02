@@ -104,7 +104,7 @@ function createContact() {
     let address = "";
 
     contactFirstName = document.getElementById("new-contact-first-name").value;
-    contactlastName = document.getElementById("new-contact-last-name").value;
+    contactLastName = document.getElementById("new-contact-last-name").value;
     phone = document.getElementById("new-contact-phone").value;
     email = document.getElementById("new-contact-email").value;
     address = document.getElementById("new-contact-address").value;
