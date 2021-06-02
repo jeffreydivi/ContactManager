@@ -112,7 +112,7 @@ function createContact() {
     let jsonPayload = '{"first_name" : "' + contactFirstName + '", "last_name" : "' + contactLastName + '", "phone" : "' + phone + '", "email" : "' + email + '", "address" : "' + address + '"}';
     let api_url = ENDPOINT + "/contact/add/";
 
-    console.log(jsonPayload);
+    
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", api_url, true);
@@ -129,7 +129,7 @@ function createContact() {
             }
         };
         xhr.send(jsonPayload);
-        createContactCard();
+        createContactCard(contactFirstName, contactLastName, phone, email, address);
 
     }
     catch(err){
@@ -137,14 +137,14 @@ function createContact() {
     }
 }
 
-function createContactCard() {
+function createContactCard(firstName, lastName, phone, email, address) {
     
     document.getElementById("contacts-pane").innerHTML += 
 
-        "<div class='card' style='width: 15em;'>" +
+        "<div class='card' style='width: 25em;'>" +
             "<div class='card-body'>" +
-                "<h5 class='card-title'><span id='contact-first-name'>First </span><span id='contact-last-name'>Last</span></h5>" +
-                "<p class='card-text'><span id='contact-phone'>Phone: </span><br/><span id='contact-email'> Email: </span><br/><span id='contact-add'> Address: </span></p>" +
+                "<h5 class='card-title'><span id='contact-first-name'>" + firstName + " " + "</span><span id='contact-last-name'>" + lastName + "</span></h5>" +
+                "<p class='card-text'><span id='contact-phone'>Phone: " + phone + "</span><br/><span id='contact-email'> Email: <br>" + email + "</span><br/><span id='contact-add'> Address: <br>" + address + "</span></p>" +
                 "<button type='button' class='edit-btn btn btn-primary mr-2' id='edit-btn' data-toggle='modal' data-target='#edit-contact-popup'>Edit</button>" +
                 "<button type='button' class='btn btn-danger delete-btn' id='delete-btn' data-toggle='modal' data-target='#delete-contact-popup'>Delete</button>" +
             "</div>" +
