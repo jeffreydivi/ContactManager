@@ -98,7 +98,7 @@ function doLogOut()
 
 function createContact() {
     let contactFirstName = "";
-    let contactlastName = "";
+    let contactLastName = "";
     let phone = "";
     let email = "";
     let address = "";
@@ -117,6 +117,7 @@ function createContact() {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", api_url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
     
     try{
         xhr.onreadystatechange = function ()
@@ -155,6 +156,9 @@ function createAccount() {
     lastName = "";
     username = "";
     password = "";
+
+    console.log(username)
+    console.log(password)
     
     firstName = document.getElementById("new-first").value;
     lastName = document.getElementById("new-last").value;
