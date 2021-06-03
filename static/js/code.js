@@ -96,6 +96,203 @@ function doLogOut()
     simulatePageChange();
 }
 
+// STATUS: logic working, needs connection to user interface
+function deleteContact() {
+    // contactID needs to be set to the contact the user is trying to access
+    // **8 is a placeholder for testing**
+    let contactID = 8;
+    let api_url = ENDPOINT + "/contact/" + contactID + "/";
+    let contact;
+
+    // send xhr request using xhr.send() and make sure contactID is correct
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("DELETE", api_url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+
+    try{
+        xhr.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                console.log("Contact deleted");
+                contact = xhr.response
+                console.log(contact);
+            }
+            else if (this.readyState == 4 && this.status == 401)
+            {
+                console.error("You are not logged in.");
+            }
+            else if (this.readyState == 4 && this.status == 403)
+            {
+                console.error("You do not have permission to view this contact.");
+            }
+            else if (this.readyState == 4 && this.status == 404)
+            {
+                console.error("Contact not found.");
+            }
+        };
+        xhr.send();
+    }
+    catch(err){
+        console.error("error in getSingleContact: " + err.message);
+    }
+}
+
+// STATUS: WIP
+function editContact() {
+    // contactID needs to be set to the contact the user is trying to access
+    // **8 is a placeholder for testing**
+    let contactID = 8;
+    let api_url = ENDPOINT + "/contact/" + contactID + "/";
+    let contact;
+
+    // pull data using getElementByID.value in edit screen
+    // set that equal to the body of the xhr request
+    // send body to index.py with xhr.send();
+    // contact updated
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("PATCH", api_url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+
+    try{
+        xhr.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                console.log("Single contact request returned");
+                contact = xhr.response
+                console.log(contact);
+            }
+            else if (this.readyState == 4 && this.status == 401)
+            {
+                console.error("You are not logged in.");
+            }
+            else if (this.readyState == 4 && this.status == 403)
+            {
+                console.error("You do not have permission to view this contact.");
+            }
+            else if (this.readyState == 4 && this.status == 404)
+            {
+                console.error("Contact not found.");
+            }
+        };
+        xhr.send();
+    }
+    catch(err){
+        console.error("error in getSingleContact: " + err.message);
+    }
+}
+
+// STATUS: logic working, needs connection to user interface
+function getSingleContact() {
+    // contactID needs to be set to the contact the user is trying to access
+    // **8 is a placeholder for testing**
+    let contactID = 8;
+    let api_url = ENDPOINT + "/contact/" + contactID + "/";
+    let contact;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", api_url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+
+    try{
+        xhr.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                console.log("Single contact request returned");
+                contact = xhr.response
+                console.log(contact);
+            }
+            else if (this.readyState == 4 && this.status == 401)
+            {
+                console.error("You are not logged in.");
+            }
+            else if (this.readyState == 4 && this.status == 403)
+            {
+                console.error("You do not have permission to view this contact.");
+            }
+            else if (this.readyState == 4 && this.status == 404)
+            {
+                console.error("Contact not found.");
+            }
+        };
+        xhr.send();
+    }
+    catch(err){
+        console.error("error in getSingleContact: " + err.message);
+    }
+}
+
+// STATUS: JS partially finished
+// Waiting on API python function for search to be finished before full js implementation
+function searchContactList() {
+    let api_url = ENDPOINT + "/contact/search/";
+    let contactList;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", api_url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+
+    try{
+        xhr.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                console.log("Search query returned");
+                contactList = xhr.response
+                console.log(contactList);
+            }
+            else if (this.readyState == 4 && this.status == 401)
+            {
+                console.error("You are not logged in.");
+            }
+        };
+        xhr.send();
+    }
+    catch(err){
+        console.error("error in getContactsList: " + err.message);
+    }
+}
+
+// STATUS: working
+function getContactsList() {
+    let api_url = ENDPOINT + "/contact/list/";
+    let contactList;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", api_url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+
+    try{
+        xhr.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                console.log("Contact list recieved");
+                contactList = xhr.response
+                console.log(contactList);
+            }
+            else if (this.readyState == 4 && this.status == 401)
+            {
+                console.error("You are not logged in.");
+            }
+        };
+        xhr.send();
+    }
+    catch(err){
+        console.error("error in getContactsList: " + err.message);
+    }
+}
+
+// STATUS: working
 function createContact() {
     let contactFirstName = "";
     let contactLastName = "";
@@ -112,8 +309,6 @@ function createContact() {
     let jsonPayload = '{"first_name" : "' + contactFirstName + '", "last_name" : "' + contactLastName + '", "phone" : "' + phone + '", "email" : "' + email + '", "address" : "' + address + '"}';
     let api_url = ENDPOINT + "/contact/add/";
 
-    
-
     let xhr = new XMLHttpRequest();
     xhr.open("POST", api_url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -124,16 +319,15 @@ function createContact() {
         {
             if (this.readyState == 4 && this.status == 200)
             {
-                // add pop up contact added
                 console.log("Contact added");
             }
         };
         xhr.send(jsonPayload);
+        // not final contact card
         createContactCard(contactFirstName, contactLastName, phone, email, address);
-
     }
     catch(err){
-        console.log("error in createContact: " + err.message);
+        console.error("error in createContact: " + err.message);
     }
 }
 
@@ -151,6 +345,7 @@ function createContactCard(firstName, lastName, phone, email, address) {
         "</div>";
 }
 
+// STATUS: working
 function createAccount() {
     firstName = "";
     lastName = "";
@@ -199,6 +394,7 @@ function createAccount() {
     
 }
 
+// STATUS: working
 function doLoginAfterCreate() 
 {
     readCookie();
