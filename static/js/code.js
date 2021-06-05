@@ -341,14 +341,24 @@ function createContactCard(firstName, lastName, phone, email, address) {
 
     document.getElementById("contacts-pane").innerHTML +=
 
-        "<div class='card' style='width: 25em;'>" +
-            "<div class='card-body'>" +
-                "<h5 class='card-title'><span id='contact-first-name'>" + firstName + " " + "</span><span id='contact-last-name'>" + lastName + "</span></h5>" +
-                "<p class='card-text'><span id='contact-phone'>Phone: " + phone + "</span><br/><span id='contact-email'> Email: <br>" + email + "</span><br/><span id='contact-add'> Address: <br>" + address + "</span></p>" +
-                "<button type='button' class='edit-btn btn btn-primary mr-2' id='edit-btn' data-toggle='modal' data-target='#edit-contact-popup'>Edit</button>" +
-                "<button type='button' class='btn btn-danger delete-btn' id='delete-btn' data-toggle='modal' data-target='#delete-contact-popup'>Delete</button>" +
-            "</div>" +
-        "</div>";
+        `<div class='card' style='width: 25em;'>
+    <div class='card-body'>
+        <img class="pfp" src="https://www.gravatar.com/avatar/${md5(email.trim().toLowerCase())}?d=retro">
+        <h5 class='card-title'>
+            <span id='contact-first-name'>${firstName}</span>
+            <span id='contact-last-name'>${lastName}</span>
+        </h5>
+        <p class='card-text'>
+            <span id='contact-phone'>Phone: ${phone}</span>
+            <br>
+            <span id='contact-email'>Email: ${email}</span>
+            <br>
+            <span id='contact-add'>Address: ${address}</span>
+        </p>
+        <button type='button' class='edit-btn btn btn-primary mr-2' id='edit-btn' data-toggle='modal' data-target='#edit-contact-popup'>Edit</button>
+        <button type='button' class='btn btn-danger delete-btn' id='delete-btn' data-toggle='modal' data-target='#delete-contact-popup'>Delete</button>
+    </div>
+</div>`;
 }
 
 // STATUS: working
