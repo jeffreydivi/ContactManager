@@ -326,3 +326,14 @@ body {
     border-radius: 50%;
     float: right;
 }
+
+#contacts-pane {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25em, 1fr));
+    max-width: 100%;
+}
+
+.contact-card {
+    max-width: 100%;
+    position: relative;
+}

@@ -341,7 +341,7 @@ function createContactCard(firstName, lastName, phone, email, address) {
 
     document.getElementById("contacts-pane").innerHTML +=
 
-        `<div class='card' style='width: 25em;'>
+        `<div class='card contact-card'>
     <div class='card-body'>
         <img class="pfp" src="https://www.gravatar.com/avatar/${md5(email.trim().toLowerCase())}?d=retro">
         <h5 class='card-title'>
