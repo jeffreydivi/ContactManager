@@ -230,7 +230,8 @@ def searchContacts(userData):
     data = request.get_json(force=True)
     try:
         # grab the text typed by the user and store in search. (most certainly vulnerable code!)
-        search = data["search"].replace(";", "").replace("--", "")
+        # search = data["search"].replace(";", "").replace("--", "")
+        search = data["search"]
         # try to search the database for a contact that matches the search query.
         # TODO: fix the search query. What if we search for "Rose T"? This will yield issues. Or is this what the professor wants?
         search_result = db.execute(text("SELECT * FROM Contacts WHERE FullName LIKE '%" + search + "%' and UserID=:uid"), search=search, uid=userData['user_id']).fetchall()

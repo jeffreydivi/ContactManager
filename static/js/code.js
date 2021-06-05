@@ -90,6 +90,9 @@ function doLogOut()
         document.cookie += `${currentCookie[1]}=; expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
     }
 
+    // clear contacts pane
+    document.getElementById("contacts-pane").innerHTML = "";
+
     // Reset the form
     document.getElementById("login-form").reset();
     document.getElementById("registration-form").reset();
@@ -238,11 +241,18 @@ function getSingleContact() {
 // STATUS: JS partially finished
 // Waiting on API python function for search to be finished before full js implementation
 function searchContactList() {
+    // clear old search results
+    document.getElementById("contacts-pane").innerHTML = "";
+
     let api_url = ENDPOINT + "/contact/search/";
-    let contactList;
+
+    // get search value
+    console.log("Searching for " + document.getElementById("searchVal").value);
+    let search = document.getElementById("searchVal").value;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", api_url, true);
+    let jsonPayload = JSON.stringify({"search":search});
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
 
@@ -252,15 +262,23 @@ function searchContactList() {
             if (this.readyState == 4 && this.status == 200)
             {
                 console.log("Search query returned");
-                contactList = xhr.response
-                console.log(contactList);
+                // contactList = xhr.response;
+                let jsonObject = JSON.parse(xhr.responseText);
+
+                for (var i = 0; i < jsonObject.length; i++)
+                {
+                    console.log("Contact found: " + jsonObject[i].first_name);
+
+                    createContactCard(jsonObject[i].first_name, jsonObject[i].last_name, jsonObject[i].phone, jsonObject[i].email, jsonObject[i].address);
+                }
+
             }
             else if (this.readyState == 4 && this.status == 401)
             {
                 console.error("You are not logged in.");
             }
         };
-        xhr.send();
+        xhr.send(jsonPayload);
     }
     catch(err){
         console.error("error in getContactsList: " + err.message);
