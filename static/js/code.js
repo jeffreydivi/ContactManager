@@ -81,7 +81,14 @@ function doLogOut()
     lastName = "";
     username = "";
     password = "";
-    document.cookie = "firstName= ; lastName= ; username= ; password= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+
+    let cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++)
+    {
+        let currentCookie = cookies[i].trim();
+        currentCookie = currentCookie.split("=");
+        document.cookie += `${currentCookie[1]}=; expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
+    }
 
     // Reset the form
     document.getElementById("login-form").reset();
