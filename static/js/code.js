@@ -367,7 +367,7 @@ function createContactCard(firstName, lastName, phone, email, address) {
             <span id='contact-last-name'>${lastName}</span>
         </h5>
         <p class='card-text'>
-            <span id='contact-phone'>Phone: ${phone}</span>
+            <span id='contact-phone'>Phone: ${phoneNumberIfy(phone)}</span>
             <br>
             <span id='contact-email'>Email: ${email}</span>
             <br>
@@ -515,6 +515,15 @@ function switchForms()
         registerForm.style.display = "none";
         register.style.display = "none";
     }
+}
+
+// Turn phone number string into a general format.
+function phoneNumberIfy(str) {
+    let num = str.replaceAll(/\D/g, "");
+    if (num.length === 10)
+        return `(${num.substring(0,3)}) ${num.substring(3,6)}-${num.substring(6)}`;
+    else
+        return str;
 }
 
 window.onload = (evt) => {
