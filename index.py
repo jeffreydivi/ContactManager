@@ -1,9 +1,10 @@
 # Other
-import datetime
+from datetime import datetime, timedelta, tzinfo
 import bcrypt
 import hashlib
 import json
 import socket
+import logging
 import logging
 from functools import wraps
 # Web server-related
@@ -130,9 +131,12 @@ def getUser(userData):
     # Just a sample response.
     passwd = "$256$" + hashlib.sha256(userData["password"].encode("ascii")).hexdigest()
     del userData["password"]
+    expiry = datetime.now() + timedelta(minutes=20, hours=5)
     resp = make_response(userData)
-    resp.set_cookie("username", userData["username"])
-    resp.set_cookie("password", passwd)
+    resp.set_cookie("username", userData["username"], expires=expiry)
+    resp.set_cookie("firstName", userData["first_name"], expires=expiry)
+    resp.set_cookie("lastName", userData["last_name"], expires=expiry)
+    resp.set_cookie("password", passwd, expires=expiry)
     return resp
 
 # Test status: WORKING
@@ -160,8 +164,11 @@ def createUser():
             "first_name": db_insert_data['FirstName'],
             "last_name": db_insert_data['LastName']
         })
-        resp.set_cookie("username", db_insert_data["Username"])
-        resp.set_cookie("password", "$256$" + hashlib.sha256(db_insert_data["Password"].encode("ascii")).hexdigest())
+        expiry = datetime.now() + timedelta(minutes=20, hours=5)
+        resp.set_cookie("username", db_insert_data["Username"], expires=expiry)
+        resp.set_cookie("password", "$256$" + hashlib.sha256(db_insert_data["Password"].encode("ascii")).hexdigest(), expires=expiry)
+        resp.set_cookie("firstName", db_insert_data["FirstName"], expires=expiry)
+        resp.set_cookie("lastName", db_insert_data["LastName"], expires=expiry)
         return resp
     except exc.IntegrityError:
         return Response(json.dumps(errorSchema(400)), mimetype="application/json", status=400)
@@ -283,7 +290,7 @@ def createContact(userData):
     try:
         # concatenate the first and last name
         full_name = first_name + " " + last_name
-        
+
         # insert new contact info into database.
         # db.execute(text(
         #     "insert into Contacts (UserID, FirstName, LastName, FullName, Phone, Email, Address) VALUES (:user_id, :first_name, :last_name, :full_name, :phone, :email, :address);"),

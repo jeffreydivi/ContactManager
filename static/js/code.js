@@ -1,5 +1,5 @@
 // Use endpoint associated with current server.
-let ENDPOINT = "https://contactmanager.xyz";
+let ENDPOINT = "";
 
 let firstName = "";
 let lastName = "";
@@ -42,7 +42,6 @@ function doLogin()
                 document.getElementById("current-user").innerText = firstName;
 
                 console.log("Login successful");
-                saveCookie();
                 simulatePageChange();
             }
             // If the user isn't found, username/password combo is incorrect
@@ -82,14 +81,14 @@ function doLogOut()
     lastName = "";
     username = "";
     password = "";
-    document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "firstName= ; lastName= ; username= ; password= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 
     // Reset the form
     document.getElementById("login-form").reset();
     document.getElementById("registration-form").reset();
     document.getElementById("loginResult").innerText = "";
     document.getElementById("newUserResult").innerText = "";
-    
+
     console.log("Logout successful");
 
     // Go back to login page
@@ -313,7 +312,7 @@ function createContact() {
     xhr.open("POST", api_url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
-    
+
     try{
         xhr.onreadystatechange = function ()
         {
@@ -332,8 +331,8 @@ function createContact() {
 }
 
 function createContactCard(firstName, lastName, phone, email, address) {
-    
-    document.getElementById("contacts-pane").innerHTML += 
+
+    document.getElementById("contacts-pane").innerHTML +=
 
         "<div class='card' style='width: 25em;'>" +
             "<div class='card-body'>" +
@@ -354,28 +353,29 @@ function createAccount() {
 
     console.log(username)
     console.log(password)
-    
+
     firstName = document.getElementById("new-first").value;
     lastName = document.getElementById("new-last").value;
     username = document.getElementById("new-username").value;
     password = document.getElementById("new-pass").value;
-    
+
     let jsonPayload = '{"first_name" : "' + firstName + '", "last_name" : "' + lastName + '", "username" : "' + username + '", "password" : "' + password + '"}';
     let api_url = ENDPOINT + "/user/";
-    
+
     console.log(jsonPayload);
-    
+
     let xhr = new XMLHttpRequest();
     xhr.open("POST", api_url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    
-    try{
+
+    try {
         xhr.onreadystatechange = function ()
         {
             if (this.readyState == 4 && this.status == 200)
             {
                 document.getElementById("newUserResult").innerText = "Registration successful";
                 console.log("Registration successful");
+                doLoginAfterCreate(true);
             }
             else if (this.readyState == 4 && this.status == 400)
             {
@@ -384,18 +384,16 @@ function createAccount() {
                 return;
             }
         };
-        xhr.send(jsonPayload);
-        saveCookie();
-        doLoginAfterCreate();
+        xhr.send(jsonPayload)
     }
     catch(err){
         document.getElementById("newUserResult").innerHTML = err.message;
     }
-    
+
 }
 
 // STATUS: working
-function doLoginAfterCreate() 
+function doLoginAfterCreate(doAnimate)
 {
     readCookie();
     console.log(username + " " + password);
@@ -406,12 +404,12 @@ function doLoginAfterCreate()
 
 function readCookie()
 {
-	var data = document.cookie;
-	var splits = data.split(",");
-	for(var i = 0; i < splits.length; i++) 
+	let data = document.cookie;
+	let splits = data.split(";");
+	for (let i = 0; i < splits.length; i++)
 	{
-        var thisOne = splits[i].trim();
-		var tokens = thisOne.split("=");
+        let thisOne = splits[i].trim();
+		let tokens = thisOne.split("=");
 		if( tokens[0] == "firstName" )
 		{
 			firstName = tokens[1];
@@ -431,13 +429,6 @@ function readCookie()
 	}
 }
 
-function saveCookie()
-{
-    let minutes = 20;
-	let date = new Date();
-	date.setTime(date.getTime()+(minutes*60*1000));
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",username=" + username + ",password=" + password + ";expires=" + date.toGMTString();
-}
 
 // Function to simulate login page change
 function simulatePageChange()
@@ -489,4 +480,9 @@ function switchForms()
         registerForm.style.display = "none";
         register.style.display = "none";
     }
+}
+
+window.onload = (evt) => {
+    if (document.cookie.indexOf("password=") != -1)
+        doLoginAfterCreate(false);
 }
