@@ -147,9 +147,11 @@ def createUser():
     :return: User
     """
     data = request.get_json(force=True)
+    username = data["username"]
+    if username == "" or username == " " or data["password"] == "":
+        return Response(json.dumps(errorSchema(400, description="Username or password not set.")), mimetype="application/json", status=400)
     first_name = data["first_name"]
     last_name = data["last_name"]
-    username = data["username"]
     password = bcrypt.hashpw(data["password"].encode(encoding="ascii"), bcrypt.gensalt()).decode("ascii")
     try:
         db.execute(
@@ -287,6 +289,9 @@ def createContact(userData):
         address = data['address']
     except:
         address = ""
+
+    if first_name == "" and last_name == "" and phone == "" and email == "" and address == "":
+        return Response(json.dumps(errorSchema(400, description="Tried to create an empty contact.")), mimetype="application/json", status=400)
 
     try:
         # concatenate the first and last name
