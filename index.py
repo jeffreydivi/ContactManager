@@ -465,7 +465,7 @@ def deleteContact(userData, id):
 
     # method i tried to delete contact by id from database. iffy on sql syntax.
     db.execute(text("DELETE FROM Contacts WHERE id = :id "), id=id)
-    return errorSchema(200)
+    return errorSchema(200, description="Contact successfully deleted.")
 
 
 if __name__ == "__main__":
