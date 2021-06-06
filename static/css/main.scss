@@ -350,3 +350,10 @@ body {
     height: 100px;
     padding: 10px;
 }
+
+@media (prefers-color-scheme: dark) {
+    .card {
+        background-color: #1b1b1b;
+        color: white;
+    }
+}
