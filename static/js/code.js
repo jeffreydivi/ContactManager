@@ -6,6 +6,8 @@ let lastName = "";
 let username = "";
 let password = "";
 
+let prevSearch = "";
+
 function doLogin()
 {
     firstName = "";
@@ -271,6 +273,8 @@ function searchContactList() {
     // get search value
     console.log("Searching for " + document.getElementById("searchVal").value);
     let search = document.getElementById("searchVal").value;
+    // Save the previous search
+    prevSearch = search;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", api_url, true);
@@ -317,12 +321,13 @@ function searchContactList() {
 function getContactsList() {
     document.getElementById("contacts-pane").innerHTML = "";
 
-    let api_url = ENDPOINT + "/contact/list/";
+    let api_url = ENDPOINT + "/contact/search/";
 
-    let search = "";
+    let search = prevSearch;
+    console.log("Previous search was: " + search);
 
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", api_url, true);
+    xhr.open("POST", api_url, true);
     let jsonPayload = JSON.stringify({"search":search});
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
@@ -388,11 +393,11 @@ function createContact() {
             if (this.readyState == 4 && this.status == 200)
             {
                 console.log("Contact added");
+
+                getContactsList();
             }
         };
         xhr.send(jsonPayload);
-        // not final contact card
-        // createContactCard(contactFirstName, contactLastName, phone, email, address);
     }
     catch(err){
         console.error("error in createContact: " + err.message);
@@ -401,12 +406,6 @@ function createContact() {
 
 function saveContactInfo(id) {
     localStorage.setItem("id", id);
-
-    // document.getElementById("edit-contact-first-name").value = contactFirstName;
-    // document.getElementById("edit-contact-last-name").value = contactLastName;
-    // document.getElementById("edit-contact-phone").value = contactPhone;
-    // document.getElementById("edit-contact-email").value = contactEmail;
-    // document.getElementById("edit-contact-address").value = contactAddress;
 }
 
 function createContactCard(firstName, lastName, phone, email, address, id) {
