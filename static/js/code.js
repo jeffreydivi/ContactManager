@@ -232,9 +232,9 @@ function getSingleContact() {
             {
                 console.log("Single contact request returned");
 
-                
+
                 let jsonObject = JSON.parse(xhr.responseText);
-                
+
                 console.log("Got contact info for: " + jsonObject.first_name);
 
                 document.getElementById("edit-contact-first-name").value = jsonObject.first_name;
@@ -571,7 +571,7 @@ function switchForms()
     else
     {
         loginForm.style.display = "block";
-        title.style.display = "block";
+        title.style.display = "inline";
 
         registerForm.style.display = "none";
         register.style.display = "none";
