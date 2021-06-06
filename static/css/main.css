@@ -260,7 +260,7 @@ body {
     background-color: #1b1b1b;
     color: #AEC2E4; }
 
-  .popup-title, form > label[for], span[aria-hidden], #login-form > a {
+  .popup-title, form > label[for], span[aria-hidden], #login-form > a, #registration-form > a {
     color: #AEC2E4; }
 
   .modal-header.modal-header {
