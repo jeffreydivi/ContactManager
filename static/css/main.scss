@@ -334,6 +334,19 @@ body {
 }
 
 .contact-card {
-    max-width: 100%;
+    width: 100%;
     position: relative;
+}
+
+
+#noContacts {
+    color: white;
+    padding: 30px;
+    opacity: 0.5;
+    text-align: center;
+}
+
+#noContacts > img {
+    height: 100px;
+    padding: 10px;
 }

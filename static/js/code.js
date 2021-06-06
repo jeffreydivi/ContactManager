@@ -265,6 +265,11 @@ function searchContactList() {
                 // contactList = xhr.response;
                 let jsonObject = JSON.parse(xhr.responseText);
 
+                if (jsonObject.length === 0)
+                    document.getElementById("noContacts").style.display = "block";
+                else
+                    document.getElementById("noContacts").style.display = "none";
+
                 for (var i = 0; i < jsonObject.length; i++)
                 {
                     console.log("Contact found: " + jsonObject[i].first_name);
@@ -527,6 +532,37 @@ function phoneNumberIfy(str) {
 }
 
 window.onload = (evt) => {
-    if (document.cookie.indexOf("password=") != -1)
+    // Log in automatically (if possible)
+    if (document.cookie.indexOf("password=") !== -1)
         doLoginAfterCreate(false);
+
+    // Click-enter-to-submit code
+    document.getElementById("searchVal").onkeydown = (evt) => {
+        if (evt.key === "Enter")
+            searchContactList();
+    }
+    document.getElementById("password").onkeydown = (evt) => {
+        if (evt.key === "Enter")
+            doLogin();
+    }
+    document.getElementById("username").onkeydown = (evt) => {
+        if (evt.key === "Enter")
+            doLogin();
+    }
+    document.getElementById("new-username").onkeydown = (evt) => {
+        if (evt.key === "Enter")
+            createAccount();
+    }
+    document.getElementById("new-password").onkeydown = (evt) => {
+        if (evt.key === "Enter")
+            createAccount();
+    }
+    document.getElementById("new-first").onkeydown = (evt) => {
+        if (evt.key === "Enter")
+            createAccount();
+    }
+    document.getElementById("new-last").onkeydown = (evt) => {
+        if (evt.key === "Enter")
+            createAccount();
+    }
 }
