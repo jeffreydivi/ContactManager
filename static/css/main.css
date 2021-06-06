@@ -214,11 +214,12 @@ body {
 
 .pfp {
   border-radius: 50%;
-  float: right; }
+  float: right;
+  width: 75px; }
 
 #contacts-pane {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(25em, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
   max-width: 100%; }
 
 .contact-card {
@@ -235,6 +236,9 @@ body {
   height: 100px;
   padding: 10px; }
 
+@media (max-width: 500px) {
+  .pfp {
+    display: none; } }
 @media (prefers-color-scheme: dark) {
   .card.card {
     background-color: #1b1b1b;

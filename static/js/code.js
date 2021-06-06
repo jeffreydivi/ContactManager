@@ -422,7 +422,7 @@ function createContactCard(firstName, lastName, phone, email, address, id) {
 
         `<div class='card contact-card'>
         <div class='card-body'>
-            <img class="pfp" src="https://www.gravatar.com/avatar/${md5(email.trim().toLowerCase())}?d=retro">
+            <img class="pfp" src="https://www.gravatar.com/avatar/${md5(email.trim().toLowerCase())}?d=retro&size=225">
             <h5 class='card-title'>
                 <span id='contact-first-name'>${firstName}</span>
                 <span id='contact-last-name'>${lastName}</span>
