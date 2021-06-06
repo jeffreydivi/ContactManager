@@ -109,14 +109,16 @@ function doLogOut()
 function deleteContact() {
     // contactID needs to be set to the contact the user is trying to access
     // **8 is a placeholder for testing**
-    let contactID = 8;
+    let contactID = localStorage.getItem('id');
+    console.log("Contact ID: " + contactID);
     let api_url = ENDPOINT + "/contact/" + contactID + "/";
-    let contact;
 
     // send xhr request using xhr.send() and make sure contactID is correct
 
     let xhr = new XMLHttpRequest();
     xhr.open("DELETE", api_url, true);
+    let jsonPayload = JSON.stringify({"id":contactID});
+
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
 
@@ -126,8 +128,11 @@ function deleteContact() {
             if (this.readyState == 4 && this.status == 200)
             {
                 console.log("Contact deleted");
-                contact = xhr.response
-                console.log(contact);
+
+                // TO DO: re-search for previous search
+                // re-search for all contacts
+                getContactsList();
+
             }
             else if (this.readyState == 4 && this.status == 401)
             {
@@ -142,7 +147,7 @@ function deleteContact() {
                 console.error("Contact not found.");
             }
         };
-        xhr.send();
+        xhr.send(jsonPayload);
     }
     catch(err){
         console.error("error in getSingleContact: " + err.message);
@@ -153,17 +158,21 @@ function deleteContact() {
 function editContact() {
     // contactID needs to be set to the contact the user is trying to access
     // **8 is a placeholder for testing**
-    let contactID = 8;
+    let contactID = localStorage.getItem('id');
+    console.log("Contact ID: " + contactID);
     let api_url = ENDPOINT + "/contact/" + contactID + "/";
-    let contact;
 
-    // pull data using getElementByID.value in edit screen
-    // set that equal to the body of the xhr request
-    // send body to index.py with xhr.send();
-    // contact updated
+    let contactFirstName = document.getElementById("edit-contact-first-name").value;
+    let contactLastName = document.getElementById("edit-contact-last-name").value;
+    let contactPhone = document.getElementById("edit-contact-phone").value;
+    let contactEmail = document.getElementById("edit-contact-email").value;
+    let contactAddress = document.getElementById("edit-contact-address").value;
 
     let xhr = new XMLHttpRequest();
     xhr.open("PATCH", api_url, true);
+
+    let jsonPayload = JSON.stringify({"first_name":contactFirstName, "last_name":contactLastName, "phone":contactPhone, "email":contactEmail, "address":contactAddress});
+
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
 
@@ -173,8 +182,10 @@ function editContact() {
             if (this.readyState == 4 && this.status == 200)
             {
                 console.log("Single contact request returned");
-                contact = xhr.response
-                console.log(contact);
+
+                // TO DO: re-search for previous search
+                // re-search for all contacts
+                getContactsList();
             }
             else if (this.readyState == 4 && this.status == 401)
             {
@@ -189,7 +200,7 @@ function editContact() {
                 console.error("Contact not found.");
             }
         };
-        xhr.send();
+        xhr.send(jsonPayload);
     }
     catch(err){
         console.error("error in getSingleContact: " + err.message);
@@ -200,12 +211,14 @@ function editContact() {
 function getSingleContact() {
     // contactID needs to be set to the contact the user is trying to access
     // **8 is a placeholder for testing**
-    let contactID = 8;
+    let contactID = localStorage.getItem('id');
     let api_url = ENDPOINT + "/contact/" + contactID + "/";
-    let contact;
 
     let xhr = new XMLHttpRequest();
     xhr.open("GET", api_url, true);
+
+    let jsonPayload = JSON.stringify({"id":contactID});
+
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
 
@@ -215,8 +228,17 @@ function getSingleContact() {
             if (this.readyState == 4 && this.status == 200)
             {
                 console.log("Single contact request returned");
-                contact = xhr.response
-                console.log(contact);
+
+                
+                let jsonObject = JSON.parse(xhr.responseText);
+                
+                console.log("Got contact info for: " + jsonObject.first_name);
+
+                document.getElementById("edit-contact-first-name").value = jsonObject.first_name;
+                document.getElementById("edit-contact-last-name").value = jsonObject.last_name;
+                document.getElementById("edit-contact-phone").value = jsonObject.phone;
+                document.getElementById("edit-contact-email").value = jsonObject.email;
+                document.getElementById("edit-contact-address").value = jsonObject.address;
             }
             else if (this.readyState == 4 && this.status == 401)
             {
@@ -231,7 +253,7 @@ function getSingleContact() {
                 console.error("Contact not found.");
             }
         };
-        xhr.send();
+        xhr.send(jsonPayload);
     }
     catch(err){
         console.error("error in getSingleContact: " + err.message);
@@ -272,9 +294,10 @@ function searchContactList() {
 
                 for (var i = 0; i < jsonObject.length; i++)
                 {
+                    console.log(jsonObject[i]);
                     console.log("Contact found: " + jsonObject[i].first_name);
 
-                    createContactCard(jsonObject[i].first_name, jsonObject[i].last_name, jsonObject[i].phone, jsonObject[i].email, jsonObject[i].address);
+                    createContactCard(jsonObject[i].first_name, jsonObject[i].last_name, jsonObject[i].phone, jsonObject[i].email, jsonObject[i].address, jsonObject[i].id);
                 }
 
             }
@@ -292,11 +315,15 @@ function searchContactList() {
 
 // STATUS: working
 function getContactsList() {
+    document.getElementById("contacts-pane").innerHTML = "";
+
     let api_url = ENDPOINT + "/contact/list/";
-    let contactList;
+
+    let search = "";
 
     let xhr = new XMLHttpRequest();
     xhr.open("GET", api_url, true);
+    let jsonPayload = JSON.stringify({"search":search});
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
 
@@ -306,15 +333,27 @@ function getContactsList() {
             if (this.readyState == 4 && this.status == 200)
             {
                 console.log("Contact list recieved");
-                contactList = xhr.response
-                console.log(contactList);
+                let jsonObject = JSON.parse(xhr.responseText);
+
+                if (jsonObject.length === 0)
+                    document.getElementById("noContacts").style.display = "block";
+                else
+                    document.getElementById("noContacts").style.display = "none";
+
+                for (var i = 0; i < jsonObject.length; i++)
+                {
+                    console.log(jsonObject[i]);
+                    console.log("Contact found: " + jsonObject[i].first_name);
+
+                    createContactCard(jsonObject[i].first_name, jsonObject[i].last_name, jsonObject[i].phone, jsonObject[i].email, jsonObject[i].address, jsonObject[i].id);
+                }
             }
             else if (this.readyState == 4 && this.status == 401)
             {
                 console.error("You are not logged in.");
             }
         };
-        xhr.send();
+        xhr.send(jsonPayload);
     }
     catch(err){
         console.error("error in getContactsList: " + err.message);
@@ -353,35 +392,45 @@ function createContact() {
         };
         xhr.send(jsonPayload);
         // not final contact card
-        createContactCard(contactFirstName, contactLastName, phone, email, address);
+        // createContactCard(contactFirstName, contactLastName, phone, email, address);
     }
     catch(err){
         console.error("error in createContact: " + err.message);
     }
 }
 
-function createContactCard(firstName, lastName, phone, email, address) {
+function saveContactInfo(id) {
+    localStorage.setItem("id", id);
+
+    // document.getElementById("edit-contact-first-name").value = contactFirstName;
+    // document.getElementById("edit-contact-last-name").value = contactLastName;
+    // document.getElementById("edit-contact-phone").value = contactPhone;
+    // document.getElementById("edit-contact-email").value = contactEmail;
+    // document.getElementById("edit-contact-address").value = contactAddress;
+}
+
+function createContactCard(firstName, lastName, phone, email, address, id) {
 
     document.getElementById("contacts-pane").innerHTML +=
 
         `<div class='card contact-card'>
-    <div class='card-body'>
-        <img class="pfp" src="https://www.gravatar.com/avatar/${md5(email.trim().toLowerCase())}?d=retro">
-        <h5 class='card-title'>
-            <span id='contact-first-name'>${firstName}</span>
-            <span id='contact-last-name'>${lastName}</span>
-        </h5>
-        <p class='card-text'>
-            <span id='contact-phone'>Phone: ${phoneNumberIfy(phone)}</span>
-            <br>
-            <span id='contact-email'>Email: ${email}</span>
-            <br>
-            <span id='contact-add'>Address: ${address}</span>
-        </p>
-        <button type='button' class='edit-btn btn btn-primary mr-2' id='edit-btn' data-toggle='modal' data-target='#edit-contact-popup'>Edit</button>
-        <button type='button' class='btn btn-danger delete-btn' id='delete-btn' data-toggle='modal' data-target='#delete-contact-popup'>Delete</button>
-    </div>
-</div>`;
+        <div class='card-body'>
+            <img class="pfp" src="https://www.gravatar.com/avatar/${md5(email.trim().toLowerCase())}?d=retro">
+            <h5 class='card-title'>
+                <span id='contact-first-name'>${firstName}</span>
+                <span id='contact-last-name'>${lastName}</span>
+            </h5>
+            <p class='card-text'>
+                <span id='contact-phone'>Phone: ${phoneNumberIfy(phone)}</span>
+                <br>
+                <span id='contact-email'>Email: ${email}</span>
+                <br>
+                <span id='contact-add'>Address: ${address}</span>
+            </p>
+            <button type='button' class='edit-btn btn btn-primary mr-2' id='edit-btn' data-toggle='modal' data-target='#edit-contact-popup' onclick='saveContactInfo(${id}); getSingleContact()'>Edit</button>
+            <button type='button' class='btn btn-danger delete-btn' id='delete-btn' data-toggle='modal' data-target='#delete-contact-popup' onclick='saveContactInfo(${id})'>Delete</button>
+        </div>
+    </div>`;
 }
 
 // STATUS: working
