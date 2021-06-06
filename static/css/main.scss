@@ -352,8 +352,37 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-    .card {
+    .card.card {
         background-color: #1b1b1b;
         color: white;
+    }
+    .form-control.form-control {
+        border: none;
+        color: white;
+        background-color: #141414;
+    }
+    .form-control.form-control:focus {
+        background: #101010;
+        color: white!important;
+    }
+    #contacts-page, .login-container {
+        background-color: rgba(27, 27, 27, 0.75);
+        color: white;
+    }
+    .nav-bar.nav-bar > a {
+        color: #AEC2E4;
+    }
+    .modal-content.modal-content {
+        background-color: #1b1b1b;
+        color: #AEC2E4;
+    }
+    .popup-title, form > label[for], span[aria-hidden], #login-form > a {
+        color: #AEC2E4;
+    }
+    .modal-header.modal-header {
+        border-bottom-color: #101010;
+    }
+    .modal-footer.modal-footer {
+        border-top-color: #101010;
     }
 }
