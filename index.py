@@ -407,6 +407,22 @@ def editContact(userData, id):
 
     id = db_org_data["ID"]
 
+    # Blank out contact == deletion.
+    if first_name == "" and last_name == "" and phone == "" and email == "" and address == "":
+        db.execute(text("DELETE FROM Contacts WHERE id = :id "), id=id)
+        # Return a blank object and an ID of -1 to indicate that it's been deleted.
+        return {
+            "id": -1,
+            "user_id": "",
+            "first_name": "",
+            "last_name": "",
+            "full_name": "",
+            "creation": "",
+            "phone": "",
+            "email": "",
+            "address": ""
+        }
+
     try:
         # concatenate the first and last name
         full_name = first_name + " " + last_name
