@@ -98,6 +98,7 @@ function doLogOut()
     // Reset the form
     document.getElementById("login-form").reset();
     document.getElementById("registration-form").reset();
+    document.getElementById("add-contact-form").reset();
     document.getElementById("loginResult").innerText = "";
     document.getElementById("newUserResult").innerText = "";
 
@@ -365,6 +366,10 @@ function getContactsList() {
     }
 }
 
+function clearAddContactForm() {
+    document.getElementById("add-contact-form").reset();
+}
+
 // STATUS: working
 function createContact() {
     let contactFirstName = "";
@@ -394,7 +399,10 @@ function createContact() {
             {
                 console.log("Contact added");
 
+                // re-search
                 getContactsList();
+                // clear the contact form
+                clearAddContactForm();
             }
         };
         xhr.send(jsonPayload);

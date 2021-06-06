@@ -61,11 +61,6 @@
                 <div class="contact-space-nav">
                     <button class="new-contact-btn" id="new-contact-btn" data-toggle="modal" data-target="#add-contact-popup"><span class="new-contact-label">New Contact </span><span><img src="/static/images/contact.svg" class="contact-image" alt="Contact"></span></button>
 
-                    <!-- testing for javascript methods getSingleContact(), getContactsList(), deleteContact() -->
-                    <!-- <button class="new-contact-btn" id="new-contact-btn"><span class="new-contact-label" onclick="deleteContact();">Delete contact</span><span><img src="/static/images/contact.svg" class="contact-image" alt="Contact"></span></button> -->
-                    <!-- <button class="new-contact-btn" id="new-contact-btn"><span class="new-contact-label" onclick="getContactsList();">Contact list</span><span><img src="/static/images/contact.svg" class="contact-image" alt="Contact"></span></button> -->
-                    <!-- <button class="new-contact-btn" id="new-contact-btn"><span class="new-contact-label" onclick="getSingleContact();">Single contact</span><span><img src="/static/images/contact.svg" class="contact-image" alt="Contact"></span></button> -->
-
 
                     <div class="contact-search-bar input-group" style="width: 350px">
                         <input type="search" class="search-bar form-control rounded" id="searchVal" placeholder="Search"/>
@@ -82,18 +77,11 @@
                 </div>
                 <div class="contacts" id="contacts-pane">
                     <!-- default contact card, div tags appended in createContactCard in code.js -->
-                    <!-- <div class="card" style="width: 25em;">
-                        <div class="card-body">
-                            <h5 class="card-title"><span id="contact-first-name">First </span><span id="contact-last-name">Last</span></h5>
-                            <p class="card-text"><span id="contact-phone">Phone: </span><br/><span id="contact-email"> Email: </span><br/><span id="contact-add"> Address: </span></p>
-                            <button type="button" class="edit-btn btn btn-primary" id="edit-btn" data-toggle="modal" data-target="#edit-contact-popup">Edit</button>
-                            <button type="button" class="btn btn-danger delete-btn" id="delete-btn" data-toggle="modal" data-target="#delete-contact-popup">Delete</button>
-                        </div>
-                    </div> -->
                 </div>
 
             </div>
         </div>
+        <!-- Add Contact Modal -->
         <div class="modal fade" id="add-contact-popup" tabindex="-1" role="dialog" aria-labelledby="add-contact-popup-title" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -104,7 +92,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="" class="add-contact">
+                        <form action="" class="add-contact" id="add-contact-form">
                             <label for="first-name">First Name</label>
                             <input type="text" id="new-contact-first-name" class="contact-first-name form-control rounded" placeholder="First name" style="width: 300px"/>
 
@@ -122,8 +110,8 @@
                         </form>
                     </div>
                     <div class="modal-footer new-contact-buttons">
-                        <button type="button" class="btn btn-danger cancel-new-contact" data-dismiss="modal" id="cancel-new-contact-btn">Cancel</button>
-                        <button type="button" class="save-new-contact btn btn-primary" id="save-new-contact-btn" onclick="createContact()">Save</button>
+                        <button type="button" class="btn btn-danger cancel-new-contact" data-dismiss="modal" id="cancel-new-contact-btn" onclick="clearAddContactForm()">Cancel</button>
+                        <button type="button" class="save-new-contact btn btn-primary" id="save-new-contact-btn" onclick="createContact()" data-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -159,7 +147,7 @@
                 </div>
                 <div class="modal-footer edit-buttons">
                     <button type="button" class="btn btn-danger close-edit" data-dismiss="modal" id="close-edit-btn">Close</button>
-                    <button type="button" class="save-edit btn btn-primary" id="save-edit-btn" onclick="editContact()">Save changes</button>
+                    <button type="button" class="save-edit btn btn-primary" id="save-edit-btn" onclick="editContact()" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
         </div>
@@ -180,7 +168,7 @@
                     </form>
                 </div>
                 <div class="modal-footer delete-buttons">
-                    <button type="button" class="btn btn-danger delete-delete" id="delete-delete-btn" onclick="deleteContact()">Delete</button>
+                    <button type="button" class="btn btn-danger delete-delete" id="delete-delete-btn" onclick="deleteContact()" data-dismiss="modal">Delete</button>
                     <button type="button" class="keep-delete btn btn-primary" id = "keep-delete-btn" data-dismiss="modal">Keep</button>
                 </div>
             </div>
