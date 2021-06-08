@@ -591,6 +591,7 @@ function simulatePageChange()
     {
         contactPage.classList.add("page-transition");
         contactPage.style.display = "block";
+        document.getElementById("noContacts").style.display = "block";
         loginPage.style.display = "none";
     }
     else
