@@ -14,9 +14,9 @@
 <body background="/static/images/background.svg">
     <!-- Login/Register Page -->
     <div class="login-register" id="login-register" style="display: block">
-        <h1><img id="title" src="/static/images/logo.svg" title="Magikk Contacts"><span id="register" style="display: none">Register</span></h1>
+        <h1><img class="form-animate-in" id="title" src="/static/images/logo.svg" title="Magikk Contacts"><span id="register" style="display: none">Register</span></h1>
         <div class="login-container">
-            <div class="login" id="login" style="display: block">
+            <div class="login form-animate-in" id="login" style="display: block">
                 <form action="" id="login-form">
                     <label for="username">Username</label>
                     <input type="text" id="username" class="username form-control rounded" placeholder="Enter your username" style="width: 300px"/>
@@ -110,6 +110,7 @@
                             <label for="address">Address</label>
                             <input type="text" id="new-contact-address" class="contact-address form-control rounded" placeholder="Address" style="width: 300px"/>
                         </form>
+                        <span id="addContactResult"></span>
                     </div>
                     <div class="modal-footer new-contact-buttons">
                         <button type="button" class="btn btn-danger cancel-new-contact" data-dismiss="modal" id="cancel-new-contact-btn" onclick="clearAddContactForm()">Cancel</button>

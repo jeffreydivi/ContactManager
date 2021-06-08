@@ -8,6 +8,7 @@ let password = "";
 
 let prevSearch = "";
 
+
 function doLogin()
 {
     firstName = "";
@@ -21,6 +22,7 @@ function doLogin()
 
     // Set the success or failure of the login
     document.getElementById("loginResult").innerText = "";
+    document.getElementById("newUserResult").innerText = "";
 
     let request = new XMLHttpRequest();
     request.open("GET", ENDPOINT + "/user/");
@@ -368,6 +370,7 @@ function getContactsList() {
 
 function clearAddContactForm() {
     document.getElementById("add-contact-form").reset();
+    document.getElementById("addContactResult").innerText = "";
 }
 
 // STATUS: working
@@ -377,6 +380,8 @@ function createContact() {
     let phone = "";
     let email = "";
     let address = "";
+
+    document.getElementById("addContactResult").innerText = "";
 
     contactFirstName = document.getElementById("new-contact-first-name").value;
     contactLastName = document.getElementById("new-contact-last-name").value;
@@ -398,6 +403,7 @@ function createContact() {
             if (this.readyState == 4 && this.status == 200)
             {
                 console.log("Contact added");
+                document.getElementById("addContactResult").innerText = "Contact successfully added";
 
                 // re-search
                 getContactsList();
@@ -446,6 +452,9 @@ function createAccount() {
     lastName = "";
     username = "";
     password = "";
+
+    document.getElementById("loginResult").innerText = "";
+    document.getElementById("newUserResult").innerText = "";
 
     console.log(username)
     console.log(password)
@@ -529,11 +538,15 @@ function readCookie()
 // Function to simulate login page change
 function simulatePageChange()
 {
+    document.getElementById("loginResult").innerText = "";
+    document.getElementById("newUserResult").innerText = "";
+    
     let loginPage = document.getElementById("login-register");
     let contactPage = document.getElementById("user-contacts");
 
     if (contactPage.style.display === "none")
     {
+        contactPage.classList.add("page-transition");
         contactPage.style.display = "block";
         loginPage.style.display = "none";
     }
@@ -554,6 +567,9 @@ function simulatePageChange()
 // Function to switch from login to register form and vice versa
 function switchForms()
 {
+    document.getElementById("loginResult").innerText = "";
+    document.getElementById("newUserResult").innerText = "";
+
     let loginForm = document.getElementById("login");
     let registerForm = document.getElementById("new-user");
 
@@ -565,8 +581,12 @@ function switchForms()
         registerForm.style.display = "block";
         register.style.display = "block";
 
+        registerForm.classList.add("form-animate-in");
+        register.classList.add("form-animate-in");
+
         loginForm.style.display = "none";
         title.style.display = "none";
+
     }
     else
     {
