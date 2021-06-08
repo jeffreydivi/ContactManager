@@ -1,5 +1,5 @@
 // Use endpoint associated with current server.
-let ENDPOINT = "";
+let ENDPOINT = "https://contactmanager.xyz";
 
 let firstName = "";
 let lastName = "";
@@ -110,10 +110,8 @@ function doLogOut()
     simulatePageChange();
 }
 
-// STATUS: logic working, needs connection to user interface
+// STATUS: working
 function deleteContact() {
-    // contactID needs to be set to the contact the user is trying to access
-    // **8 is a placeholder for testing**
     let contactID = localStorage.getItem('id');
     console.log("Contact ID: " + contactID);
     let api_url = ENDPOINT + "/contact/" + contactID + "/";
@@ -159,10 +157,8 @@ function deleteContact() {
     }
 }
 
-// STATUS: WIP
+// STATUS: working
 function editContact() {
-    // contactID needs to be set to the contact the user is trying to access
-    // **8 is a placeholder for testing**
     let contactID = localStorage.getItem('id');
     console.log("Contact ID: " + contactID);
     let api_url = ENDPOINT + "/contact/" + contactID + "/";
@@ -172,6 +168,8 @@ function editContact() {
     let contactPhone = document.getElementById("edit-contact-phone").value;
     let contactEmail = document.getElementById("edit-contact-email").value;
     let contactAddress = document.getElementById("edit-contact-address").value;
+
+    $('#edit-contact-popup').modal('hide');
 
     let xhr = new XMLHttpRequest();
     xhr.open("PATCH", api_url, true);
@@ -265,8 +263,7 @@ function getSingleContact() {
     }
 }
 
-// STATUS: JS partially finished
-// Waiting on API python function for search to be finished before full js implementation
+// STATUS: working
 function searchContactList() {
     // clear old search results
     document.getElementById("contacts-pane").innerHTML = "";
@@ -350,8 +347,8 @@ function getContactsList() {
 
                 for (var i = 0; i < jsonObject.length; i++)
                 {
-                    console.log(jsonObject[i]);
-                    console.log("Contact found: " + jsonObject[i].first_name);
+                    // console.log(jsonObject[i]);
+                    // console.log("Contact found: " + jsonObject[i].first_name);
 
                     createContactCard(jsonObject[i].first_name, jsonObject[i].last_name, jsonObject[i].phone, jsonObject[i].email, jsonObject[i].address, jsonObject[i].id);
                 }
@@ -373,6 +370,51 @@ function clearAddContactForm() {
     document.getElementById("addContactResult").innerText = "";
 }
 
+function checkContactFields(functionCall) {
+
+    if (functionCall.localeCompare('edit-close') == 0)
+    {
+        document.getElementById("edit-empty-field-error").innerText = "";
+        $('#edit-contact-popup').modal('hide');
+        return;
+    }
+    else if (functionCall.localeCompare('add-close') == 0)
+    {
+        document.getElementById("create-empty-field-error").innerText = "";
+        $('#add-contact-popup').modal('hide');
+        clearAddContactForm();
+        return;
+    }
+
+    let contactFirstName = "";
+    let contactLastName = "";
+    let phone = "";
+    let email = "";
+    let address = "";
+    let blank = "";
+
+    contactFirstName = document.getElementById(functionCall + "-contact-first-name").value;
+    contactLastName = document.getElementById(functionCall + "-contact-last-name").value;
+    phone = document.getElementById(functionCall + "-contact-phone").value;
+    email = document.getElementById(functionCall + "-contact-email").value;
+    address = document.getElementById(functionCall + "-contact-address").value;
+
+
+    if (contactFirstName.localeCompare(blank) == 0 && contactLastName.localeCompare(blank) == 0
+        && phone.localeCompare(blank) == 0 && email.localeCompare(blank) == 0 && address.localeCompare(blank) == 0)
+        {
+            document.getElementById(functionCall + "-empty-field-error").innerText = "Cannot save empty contact";
+        }
+    else
+        {
+            document.getElementById(functionCall + "-empty-field-error").innerText = "";
+            if (functionCall.localeCompare('create') == 0)
+                createContact();
+            else if (functionCall.localeCompare('edit') == 0)
+                editContact();
+        }
+}
+
 // STATUS: working
 function createContact() {
     let contactFirstName = "";
@@ -381,13 +423,14 @@ function createContact() {
     let email = "";
     let address = "";
 
+    contactFirstName = document.getElementById("create-contact-first-name").value;
+    contactLastName = document.getElementById("create-contact-last-name").value;
+    phone = document.getElementById("create-contact-phone").value;
+    email = document.getElementById("create-contact-email").value;
+    address = document.getElementById("create-contact-address").value;
+                        
+    $('#add-contact-popup').modal('hide');
     document.getElementById("addContactResult").innerText = "";
-
-    contactFirstName = document.getElementById("new-contact-first-name").value;
-    contactLastName = document.getElementById("new-contact-last-name").value;
-    phone = document.getElementById("new-contact-phone").value;
-    email = document.getElementById("new-contact-email").value;
-    address = document.getElementById("new-contact-address").value;
 
     let jsonPayload = '{"first_name" : "' + contactFirstName + '", "last_name" : "' + contactLastName + '", "phone" : "' + phone + '", "email" : "' + email + '", "address" : "' + address + '"}';
     let api_url = ENDPOINT + "/contact/add/";
