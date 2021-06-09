@@ -114,7 +114,7 @@
                     </div>
                     <div class="modal-footer new-contact-buttons">
                         <strong class="text-danger pr-5 mr-5" id="create-empty-field-error"></strong>
-                        <button type="button" class="btn btn-danger cancel-new-contact" data-dismiss="modal" id="cancel-new-contact-btn" onclick="clearAddContactForm()">Cancel</button>
+                        <button type="button" class="btn btn-danger cancel-new-contact" id="cancel-new-contact-btn" onclick="checkContactFields('add-close')">Cancel</button>
                         <button type="button" class="save-new-contact btn btn-primary" id="save-new-contact-btn" onclick="checkContactFields('create')">Save</button>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
                 </div>
                 <div class="modal-footer edit-buttons" id="edit-modal-footer">
                     <strong class="text-danger pr-5 mr-5" id="edit-empty-field-error"></strong>
-                    <button type="button" class="btn btn-danger close-edit" data-dismiss="modal" id="close-edit-btn">Close</button>
+                    <button type="button" class="btn btn-danger close-edit" onclick="checkContactFields('edit-close')" id="close-edit-btn">Close</button>
                     <button type="button" class="save-edit btn btn-primary" id="save-edit-btn" onclick="checkContactFields('edit')">Save</button>
                 </div>
             </div>
