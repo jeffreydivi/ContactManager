@@ -267,9 +267,6 @@ function getSingleContact() {
 
 // STATUS: working
 function searchContactList() {
-    // clear old search results
-    document.getElementById("contacts-pane").innerHTML = "";
-
     let api_url = ENDPOINT + "/contact/search/";
 
     // get search value
@@ -287,7 +284,12 @@ function searchContactList() {
     try{
         xhr.onreadystatechange = function ()
         {
-            if (this.readyState == 4 && this.status == 200)
+            if (this.readyState === 4)
+            {
+                // clear old search results
+                document.getElementById("contacts-pane").innerHTML = "";
+            }
+            if (this.readyState === 4 && this.status === 200)
             {
                 console.log("Search query returned");
                 // contactList = xhr.response;
@@ -310,7 +312,7 @@ function searchContactList() {
                     document.querySelector("#noContacts > h3").innerText = "No Contacts Found";
 
             }
-            else if (this.readyState == 4 && this.status == 401)
+            else if (this.readyState === 4 && this.status === 401)
             {
                 console.error("You are not logged in.");
             }
