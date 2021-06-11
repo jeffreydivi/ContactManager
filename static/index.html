@@ -72,7 +72,7 @@
 
                 <!-- Contact card boxes appended here -->
 
-                <div id="noContacts">
+                <div id="noContacts" class="animate">
                     <img src="/static/images/search.svg" class="search-image" alt="Search">
                     <h3>No Contacts Found</h3>
                     <p>Try searching for a contact, or create a new one.</p>
@@ -96,19 +96,19 @@
                     <div class="modal-body">
                         <form action="" class="add-contact" id="add-contact-form">
                             <label for="first-name">First Name</label>
-                            <input type="text" id="create-contact-first-name" class="contact-first-name form-control rounded" placeholder="First name" style="width: 300px"/>
+                            <input type="text" id="create-contact-first-name" class="contact-first-name form-control rounded" placeholder="First name"/>
 
                             <label for="last-name">Last Name</label>
-                            <input type="text" id="create-contact-last-name" class="contact-last-name form-control rounded" placeholder="Last name" style="width: 300px"/>
+                            <input type="text" id="create-contact-last-name" class="contact-last-name form-control rounded" placeholder="Last name"/>
 
                             <label for="phone">Phone</label>
-                            <input type="text" id="create-contact-phone" class="contact-phone form-control rounded" placeholder="Phone number" style="width: 300px"/>
+                            <input type="text" id="create-contact-phone" class="contact-phone form-control rounded" placeholder="Phone number"/>
 
                             <label for="email">Email</label>
-                            <input type="text" id="create-contact-email" class="contact-email form-control rounded" placeholder="Email" style="width: 300px"/>
+                            <input type="text" id="create-contact-email" class="contact-email form-control rounded" placeholder="Email"/>
 
                             <label for="address">Address</label>
-                            <input type="text" id="create-contact-address" class="contact-address form-control rounded" placeholder="Address" style="width: 300px"/>
+                            <input type="text" id="create-contact-address" class="contact-address form-control rounded" placeholder="Address"/>
                         </form>
                         <span id="addContactResult"></span>
                     </div>
@@ -135,21 +135,22 @@
                 <div class="modal-body">
                     <form action="" class="edit-contact">
                         <label for="first-name">First Name</label>
-                        <input type="text" id="edit-contact-first-name" class="contact-first-name form-control rounded" style="width: 300px"/>
+                        <input type="text" id="edit-contact-first-name" class="contact-first-name form-control rounded"/>
                         <label for="last-name">Last Name</label>
-                        <input type="text" id="edit-contact-last-name" class="contact-last-name form-control rounded" style="width: 300px"/>
+                        <input type="text" id="edit-contact-last-name" class="contact-last-name form-control rounded"/>
 
                         <label for="phone">Phone</label>
-                        <input type="text" id="edit-contact-phone" class="contact-phone form-control rounded" style="width: 300px"/>
+                        <input type="text" id="edit-contact-phone" class="contact-phone form-control rounded"/>
 
                         <label for="email">Email</label>
-                        <input type="text" id="edit-contact-email" class="contact-email form-control rounded" style="width: 300px"/>
+                        <input type="text" id="edit-contact-email" class="contact-email form-control rounded"/>
 
                         <label for="address">Address</label>
-                        <input type="text" id="edit-contact-address" class="contact-address form-control rounded" style="width: 300px"/>
+                        <input type="text" id="edit-contact-address" class="contact-address form-control rounded"/>
                     </form>
                 </div>
                 <div class="modal-footer edit-buttons" id="edit-modal-footer">
+                    <p id="created_date"></p>
                     <strong class="text-danger pr-5 mr-5" id="edit-empty-field-error"></strong>
                     <button type="button" class="btn btn-danger close-edit" onclick="checkContactFields('edit-close')" id="close-edit-btn">Close</button>
                     <button type="button" class="save-edit btn btn-primary" id="save-edit-btn" onclick="checkContactFields('edit')">Save</button>

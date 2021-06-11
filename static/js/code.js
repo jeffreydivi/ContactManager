@@ -8,7 +8,6 @@ let password = "";
 
 let prevSearch = "";
 
-
 function doLogin()
 {
     firstName = "";
@@ -237,11 +236,14 @@ function getSingleContact() {
 
                 console.log("Got contact info for: " + jsonObject.first_name);
 
+                let dateObject = new Date(jsonObject.creation);
+
                 document.getElementById("edit-contact-first-name").value = jsonObject.first_name;
                 document.getElementById("edit-contact-last-name").value = jsonObject.last_name;
                 document.getElementById("edit-contact-phone").value = jsonObject.phone;
                 document.getElementById("edit-contact-email").value = jsonObject.email;
                 document.getElementById("edit-contact-address").value = jsonObject.address;
+                document.getElementById("created_date").innerText = `Created on ${dateObject.toLocaleDateString()} at ${dateObject.toLocaleTimeString()}.`;
             }
             else if (this.readyState == 4 && this.status == 401)
             {
@@ -428,7 +430,7 @@ function createContact() {
     phone = document.getElementById("create-contact-phone").value;
     email = document.getElementById("create-contact-email").value;
     address = document.getElementById("create-contact-address").value;
-                        
+
     $('#add-contact-popup').modal('hide');
     document.getElementById("addContactResult").innerText = "";
 
@@ -583,7 +585,7 @@ function simulatePageChange()
 {
     document.getElementById("loginResult").innerText = "";
     document.getElementById("newUserResult").innerText = "";
-    
+
     let loginPage = document.getElementById("login-register");
     let contactPage = document.getElementById("user-contacts");
 
@@ -656,31 +658,30 @@ window.onload = (evt) => {
         doLoginAfterCreate(false);
 
     // Click-enter-to-submit code
-    document.getElementById("searchVal").onkeydown = (evt) => {
-        if (evt.key === "Enter")
-            searchContactList();
+    document.getElementById("searchVal").onkeyup = (evt) => {
+        searchContactList();
     }
-    document.getElementById("password").onkeydown = (evt) => {
-        if (evt.key === "Enter")
-            doLogin();
-    }
-    document.getElementById("username").onkeydown = (evt) => {
+    document.getElementById("password").onkeyup = (evt) => {
         if (evt.key === "Enter")
             doLogin();
     }
-    document.getElementById("new-username").onkeydown = (evt) => {
+    document.getElementById("username").onkeyup = (evt) => {
+        if (evt.key === "Enter")
+            doLogin();
+    }
+    document.getElementById("new-username").onkeyup = (evt) => {
         if (evt.key === "Enter")
             createAccount();
     }
-    document.getElementById("new-password").onkeydown = (evt) => {
+    document.getElementById("new-password").onkeyup = (evt) => {
         if (evt.key === "Enter")
             createAccount();
     }
-    document.getElementById("new-first").onkeydown = (evt) => {
+    document.getElementById("new-first").onkeyup = (evt) => {
         if (evt.key === "Enter")
             createAccount();
     }
-    document.getElementById("new-last").onkeydown = (evt) => {
+    document.getElementById("new-last").onkeyup = (evt) => {
         if (evt.key === "Enter")
             createAccount();
     }

@@ -395,11 +395,23 @@ body {
 }
 
 .contact-card {
-    animation: Slide_Up 1.5s ease;
+    animation: Fade_In 0.5s ease-in-out;
 }
 
 .animate {
     animation: Slide_Up 1.5s ease;
+}
+
+@keyframes Fade_In {
+    0% {
+        opacity: 0;
+    }
+    15% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 @keyframes Slide_Up {
@@ -461,4 +473,8 @@ body {
 
 body {
     background: url(/static/images/background.png) repeat;
+}
+
+form > input {
+    width: 100%;
 }
