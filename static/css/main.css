@@ -278,6 +278,9 @@ body {
 .animate {
   animation: Slide_Up 1.5s ease; }
 
+.animate#noContacts {
+  animation: Slide_Up_Lite 1.5s ease; }
+
 @keyframes Fade_In {
   0% {
     opacity: 0; }
@@ -291,6 +294,13 @@ body {
     transform: translateY(25px); }
   100% {
     opacity: 100%;
+    transform: translateY(0); } }
+@keyframes Slide_Up_Lite {
+  0% {
+    opacity: 0%;
+    transform: translateY(25px); }
+  100% {
+    opacity: 50%;
     transform: translateY(0); } }
 .form-animate-in {
   animation: Slide_Right 1.5s ease; }

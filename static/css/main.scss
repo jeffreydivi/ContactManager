@@ -341,8 +341,9 @@ body {
 
 
 #noContacts {
-    color: rgba(0, 0, 0, 0.5);
+    color: white;
     padding: 30px;
+    opacity: 0.5;
     text-align: center;
 }
 
@@ -401,6 +402,10 @@ body {
     animation: Slide_Up 1.5s ease;
 }
 
+.animate#noContacts {
+    animation: Slide_Up_Lite 1.5s ease;
+}
+
 @keyframes Fade_In {
     0% {
         opacity: 0;
@@ -420,6 +425,17 @@ body {
     }
     100% {
         opacity: 100%;
+        transform: translateY(0);
+    }
+}
+
+@keyframes Slide_Up_Lite {
+    0% {
+        opacity: 0%;
+        transform: translateY(25px);
+    }
+    100% {
+        opacity: 50%;
         transform: translateY(0);
     }
 }
