@@ -306,6 +306,9 @@ function searchContactList() {
                     createContactCard(jsonObject[i].first_name, jsonObject[i].last_name, jsonObject[i].phone, jsonObject[i].email, jsonObject[i].address, jsonObject[i].id);
                 }
 
+                if (jsonObject.length === 0)
+                    document.querySelector("#noContacts > h3").innerText = "No Contacts Found";
+
             }
             else if (this.readyState == 4 && this.status == 401)
             {
