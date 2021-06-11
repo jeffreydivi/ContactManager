@@ -84,6 +84,7 @@ components:
       type: object
       required:
         - username
+        - first_name
       properties:
         first_name:
           type: string
@@ -104,6 +105,7 @@ components:
           required:
             - user_id
             - creation
+            - first_name
           properties:
             user_id:
               type: integer
@@ -118,6 +120,8 @@ components:
       description: A complete single user entry.
     EditContact:
       type: object
+      required:
+        - first_name
       properties:
         first_name:
           type: string
@@ -146,6 +150,7 @@ components:
           required:
             - user_id
             - id
+            - first_name
           properties:
             user_id:
               type: integer
@@ -214,7 +219,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
         '400':
-          description: Errs if the user already exists.
+          description: Errs if the user already exists or another issue occurs during user acocunt creation.
           content:
             application/json:
               schema:

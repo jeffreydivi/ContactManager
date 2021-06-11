@@ -730,7 +730,7 @@
             defs["Contact"] = {
   "description" : "A complete single contact entry.",
   "allOf" : [ {
-    "required" : [ "id", "user_id" ],
+    "required" : [ "first_name", "id", "user_id" ],
     "type" : "object",
     "properties" : {
       "user_id" : {
@@ -754,6 +754,7 @@
   } ]
 };
             defs["EditContact"] = {
+  "required" : [ "first_name" ],
   "type" : "object",
   "properties" : {
     "first_name" : {
@@ -785,7 +786,7 @@
   "description" : "The user-editable sections of a contact entry."
 };
             defs["EditUser"] = {
-  "required" : [ "username" ],
+  "required" : [ "first_name", "username" ],
   "type" : "object",
   "properties" : {
     "first_name" : {
@@ -910,7 +911,7 @@
             defs["User"] = {
   "description" : "A complete single user entry.",
   "allOf" : [ {
-    "required" : [ "creation", "user_id" ],
+    "required" : [ "creation", "first_name", "user_id" ],
     "type" : "object",
     "properties" : {
       "user_id" : {
@@ -1300,7 +1301,7 @@ except ApiException as e:
                                 </div>
                             </div>
 
-                            <h3> Status: 400 - Errs if the user already exists. </h3>
+                            <h3> Status: 400 - Errs if the user already exists or another issue occurs during user acocunt creation. </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
@@ -1315,7 +1316,7 @@ except ApiException as e:
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Errs if the user already exists.",
+  "description" : "Errs if the user already exists or another issue occurs during user acocunt creation.",
   "content" : {
     "application/json" : {
       "schema" : {

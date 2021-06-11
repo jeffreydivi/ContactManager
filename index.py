@@ -147,12 +147,29 @@ def createUser():
     :return: User
     """
     data = request.get_json(force=True)
-    username = data["username"]
-    if username == "" or username == " " or data["password"] == "":
+    try:
+        username = data["username"]
+        if username == "" or username == " " or data["password"] == "" or data["password"] == " ":
+            return Response(json.dumps(errorSchema(400, description="Username or password not set.")), mimetype="application/json", status=400)
+    except:
         return Response(json.dumps(errorSchema(400, description="Username or password not set.")), mimetype="application/json", status=400)
-    first_name = data["first_name"]
-    last_name = data["last_name"]
-    password = bcrypt.hashpw(data["password"].encode(encoding="ascii"), bcrypt.gensalt()).decode("ascii")
+
+    try:
+        first_name = data["first_name"]
+        if first_name == "" or first_name == " ":
+            return Response(json.dumps(errorSchema(400, description="First name not set.")), mimetype="application/json", status=400)
+    except:
+        return Response(json.dumps(errorSchema(400, description="First name not set.")), mimetype="application/json", status=400)
+
+    try:
+        last_name = data["last_name"]
+    except:
+        last_name = ""
+
+    try:
+        password = bcrypt.hashpw(data["password"].encode(encoding="ascii"), bcrypt.gensalt()).decode("ascii")
+    except:
+        return Response(json.dumps(errorSchema(400, description="Username or password not set.")), mimetype="application/json", status=400)
     try:
         db.execute(
             text("insert into Users (FirstName, LastName, Username, Password) VALUES(:first, :last, :user, :passwd);"),
@@ -267,8 +284,10 @@ def createContact(userData):
     # retrieving info from the form to create a new contact.
     try:
         first_name = data['first_name']
+        if first_name == "" or first_name == " ":
+            return Response(json.dumps(errorSchema(400, description="First name not set.")), mimetype="application/json", status=400)
     except:
-        first_name = ""
+        return Response(json.dumps(errorSchema(400, description="First name not set.")), mimetype="application/json", status=400)
 
     try:
         last_name = data['last_name']
@@ -382,6 +401,8 @@ def editContact(userData, id):
     # retrieving info from the form to edit a contact
     try:
         first_name = data['first_name']
+        if first_name == "" or first_name == " ":
+            return Response(json.dumps(errorSchema(400, description="First name not set.")), mimetype="application/json", status=400)
     except:
         first_name = db_org_data["FirstName"]
 
