@@ -442,3 +442,23 @@ body {
         transform: scale(1);
     }
 }
+
+.contact-space {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-color: rgba(128,128,128,.3) transparent;
+    scrollbar-width: thin;
+}
+
+.contact-space::-webkit-scrollbar {
+    background: 0 0;
+    width: 7px;
+    height: 5px;
+}
+.contact-space::-webkit-scrollbar-thumb {
+    background: rgba(128,128,128,.3);
+    border-radius: 5px;
+}
+
+body {
+    background: url(/static/images/background.png) repeat;
+}
