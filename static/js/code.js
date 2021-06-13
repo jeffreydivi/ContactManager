@@ -95,6 +95,8 @@ function doLogOut()
 
     // clear contacts pane
     document.getElementById("contacts-pane").innerHTML = "";
+    document.getElementById("noContacts").style.display = "block";
+    document.querySelector("#noContacts > h3").innerText = "Start Your Journey.";
 
     // Reset the form
     document.getElementById("login-form").reset();
