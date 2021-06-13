@@ -156,17 +156,18 @@ def createUser():
 
     try:
       first_name = data["first_name"]
+      last_name = data["last_name"]
       if first_name == "" or first_name == " ":
-          return Response(json.dumps(errorSchema(400, description="First or last name not set")), mimetype="application/json", status=400)
+          return Response(json.dumps(errorSchema(400, description="First name not set")), mimetype="application/json", status=400)
     except:
-        return Response(json.dumps(errorSchema(400, description="First or last name not set")), mimetype="application/json", status=400)
+        return Response(json.dumps(errorSchema(400, description="First name not set")), mimetype="application/json", status=400)
 
-    try:
-        last_name = data["last_name"]
-        if last_name == "" or last_name == " ":
-            return Response(json.dumps(errorSchema(400, description="First or last name not set")), mimetype="application/json", status=400)
-    except:
-        return Response(json.dumps(errorSchema(400, description="First or last name not set")), mimetype="application/json", status=400)
+    # try:
+    #     last_name = data["last_name"]
+    #     if last_name == "" or last_name == " ":
+    #         return Response(json.dumps(errorSchema(400, description="Last name not set")), mimetype="application/json", status=400)
+    # except:
+    #     return Response(json.dumps(errorSchema(400, description="Last name not set")), mimetype="application/json", status=400)
 
     try:
         password = bcrypt.hashpw(data["password"].encode(encoding="ascii"), bcrypt.gensalt()).decode("ascii")
