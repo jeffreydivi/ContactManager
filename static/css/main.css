@@ -226,6 +226,12 @@ body {
   width: 100%;
   position: relative; }
 
+#newUserResult {
+    display: block;
+    text-align: center;
+    margin-top: 0.5em;
+    font-size: 1.0em; }
+
 #noContacts {
   color: white;
   padding: 30px;

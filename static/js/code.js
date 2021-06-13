@@ -539,11 +539,11 @@ function createAccount() {
             }
             else if (this.readyState == 4 && this.status == 400)
             {
-                document.getElementById("newUserResult").innerText = "User with this username already exits";
-                console.error("User with this username already exits");
+                document.getElementById("newUserResult").innerText = xhr.response.description;
                 return;
             }
         };
+        xhr.responseType = "json";
         xhr.send(jsonPayload)
     }
     catch(err){

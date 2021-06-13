@@ -71,7 +71,7 @@ def authenticate(d):
         try:
             auth = request.authorization
             if not auth:
-                return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=401)
+                return Response(json.dumps(errorSchema(401)), mimetype="application/json", status=403)
             # (do database checking code here)
             # Access username/password via auth["username"] and auth["password"].
 
@@ -155,16 +155,26 @@ def createUser():
         return Response(json.dumps(errorSchema(400, description="Username or password not set.")), mimetype="application/json", status=400)
 
     try:
-        first_name = data["first_name"]
-        if first_name == "" or first_name == " ":
-            return Response(json.dumps(errorSchema(400, description="First name not set.")), mimetype="application/json", status=400)
+      first_name = data["first_name"]
+      if first_name == "" or first_name == " ":
+          return Response(json.dumps(errorSchema(400, description="First or last name not set.")), mimetype="application/json", status=400)
     except:
-        return Response(json.dumps(errorSchema(400, description="First name not set.")), mimetype="application/json", status=400)
+        return Response(json.dumps(errorSchema(400, description="First or last name not set.")), mimetype="application/json", status=400)
 
     try:
         last_name = data["last_name"]
+        if last_name == "" or last_name == " ":
+            return Response(json.dumps(errorSchema(400, description="First or last name not set.")), mimetype="application/json", status=400)
     except:
-        last_name = ""
+        return Response(json.dumps(errorSchema(400, description="First or last name not set.")), mimetype="application/json", status=400)
+
+
+    try:
+        first_name = data["first_name"], last_name = data["last_name"]
+        if first_name == "" or first_name == " " or last_name == "" or last_name == " ":
+            return Response(json.dumps(errorSchema(400, description="First or last name not set.")), mimetype="application/json", status=400)
+    except:
+        return Response(json.dumps(errorSchema(400, description="First or last name not set.")), mimetype="application/json", status=400)
 
     try:
         password = bcrypt.hashpw(data["password"].encode(encoding="ascii"), bcrypt.gensalt()).decode("ascii")
