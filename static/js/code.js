@@ -18,6 +18,8 @@ function doLogin()
     username = document.getElementById("username").value;
     password = document.getElementById("password").value;
 
+    document.getElementById("searchVal").value = "";
+
 
     // Set the success or failure of the login
     document.getElementById("loginResult").innerText = "";
@@ -95,8 +97,9 @@ function doLogOut()
 
     // clear contacts pane
     document.getElementById("contacts-pane").innerHTML = "";
-    document.getElementById("noContacts").style.display = "block";
     document.querySelector("#noContacts > h3").innerText = "Start Your Journey.";
+    document.getElementById("noContacts").style.display = "block";
+    document.getElementById("searchVal").value = "";
 
     // Reset the form
     document.getElementById("login-form").reset();
