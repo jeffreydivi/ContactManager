@@ -1,5 +1,5 @@
 // Use endpoint associated with current server.
-let ENDPOINT = "";
+let ENDPOINT = "https://contactmanager.xyz";
 
 let firstName = "";
 let lastName = "";
@@ -404,6 +404,7 @@ function checkContactFields(functionCall) {
     let email = "";
     let address = "";
     let blank = "";
+    let space = " ";
 
     contactFirstName = document.getElementById(functionCall + "-contact-first-name").value;
     contactLastName = document.getElementById(functionCall + "-contact-last-name").value;
@@ -412,19 +413,31 @@ function checkContactFields(functionCall) {
     address = document.getElementById(functionCall + "-contact-address").value;
 
 
-    if (contactFirstName.localeCompare(blank) == 0 && contactLastName.localeCompare(blank) == 0
-        && phone.localeCompare(blank) == 0 && email.localeCompare(blank) == 0 && address.localeCompare(blank) == 0)
-        {
+    if ( (contactFirstName.localeCompare(blank) == 0 || contactFirstName.localeCompare(space) == 0) && 
+         (contactLastName.localeCompare(blank) == 0 || contactLastName.localeCompare(space) == 0) && 
+         (phone.localeCompare(blank) == 0 || phone.localeCompare(space) == 0) && 
+         (email.localeCompare(blank) == 0 || email.localeCompare(space) == 0) && 
+         (address.localeCompare(blank) == 0 || address.localeCompare(space) == 0) ) {
             document.getElementById(functionCall + "-empty-field-error").innerText = "Cannot save empty contact";
+            return;
+    }
+    else if (contactFirstName.localeCompare(blank) == 0 || contactFirstName.localeCompare(space) == 0) {
+        document.getElementById(functionCall + "-empty-field-error").innerText = "First name field is required";
+            return;
+
+    }
+    else {
+
+        if (contactFirstName.localeCompare(blank)) {
+
         }
-    else
-        {
-            document.getElementById(functionCall + "-empty-field-error").innerText = "";
-            if (functionCall.localeCompare('create') == 0)
-                createContact();
-            else if (functionCall.localeCompare('edit') == 0)
-                editContact();
-        }
+
+        document.getElementById(functionCall + "-empty-field-error").innerText = "";
+        if (functionCall.localeCompare('create') == 0)
+            createContact();
+        else if (functionCall.localeCompare('edit') == 0)
+            editContact();
+    }
 }
 
 // STATUS: working
