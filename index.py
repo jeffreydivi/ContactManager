@@ -147,29 +147,32 @@ def createUser():
     :return: User
     """
     data = request.get_json(force=True)
+    
     try:
         username = data["username"]
         if username == "" or username == " " or data["password"] == "" or data["password"] == " ":
             return Response(json.dumps(errorSchema(400, description="Username or password not set")), mimetype="application/json", status=400)
     except:
         return Response(json.dumps(errorSchema(400, description="Username or password not set")), mimetype="application/json", status=400)
+        
+    try:
+        names = db.execute(text("SELECT * FROM Users where Username=:username;"),username=username).fetchone() 
+        
+        if names is not None:
+            # throw error username already taken
+            return Response(json.dumps(errorSchema(400, description="Username already taken!")), mimetype="application/json", status=400)
+    except:
+        return Response(json.dumps(errorSchema(400, description="Username already taken!")), mimetype="application/json", status=400)
 
     try:
       first_name = data["first_name"]
       last_name = data["last_name"]
       if first_name == "" or first_name == " ":
-          return Response(json.dumps(errorSchema(400, description="First name not set")), mimetype="application/json", status=400)
+          return Response(json.dumps(errorSchema(400, description="First name not set!")), mimetype="application/json", status=400)
     except:
-        return Response(json.dumps(errorSchema(400, description="First name not set")), mimetype="application/json", status=400)
-    
-    try:
-        data = db.execute(text("SELECT * FROM Users where Username=:username;"),username=username).fetchone() 
-        
-        if data is not None:
-            # throw error username already taken
-            return Response(json.dumps(errorSchema(400, description="Username already taken!")), mimetype="application/json", status=400)
-    except:
-        pass
+        return Response(json.dumps(errorSchema(400, description="First name not set!")), mimetype="application/json", status=400)
+
+
 
     # try:
     #     last_name = data["last_name"]
