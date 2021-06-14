@@ -1,5 +1,5 @@
 // Use endpoint associated with current server.
-let ENDPOINT = "https://contactmanager.xyz";
+let ENDPOINT = "";
 
 let firstName = "";
 let lastName = "";
