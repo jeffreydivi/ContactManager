@@ -635,6 +635,11 @@ function simulatePageChange()
 // Function to switch from login to register form and vice versa
 function switchForms()
 {
+    firstName = document.getElementById("new-first").value = "";
+    lastName = document.getElementById("new-last").value = "";
+    username = document.getElementById("new-username").value = "";
+    password = document.getElementById("new-pass").value = "";
+	
     document.getElementById("loginResult").innerText = "";
     document.getElementById("newUserResult").innerText = "";
 
