@@ -161,6 +161,15 @@ def createUser():
           return Response(json.dumps(errorSchema(400, description="First name not set")), mimetype="application/json", status=400)
     except:
         return Response(json.dumps(errorSchema(400, description="First name not set")), mimetype="application/json", status=400)
+    
+    try:
+        data = db.execute(text("SELECT * FROM Users where Username=:username;"),username=username).fetchone() 
+        
+        if data is not None:
+            # throw error username already taken
+            return Response(json.dumps(errorSchema(400, description="Username already taken!")), mimetype="application/json", status=400)
+    except:
+        pass
 
     # try:
     #     last_name = data["last_name"]
